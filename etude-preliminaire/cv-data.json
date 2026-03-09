@@ -1,0 +1,101 @@
+{
+    "titre": "Lead Développeur Full-Stack | .NET & Pilotage de Projets",
+    "entete": {
+        "nom": "Tony BESNARD",
+        "adresse": "9 Bis rue Haute, 41400 Chissay-en-Touraine",
+        "telephone": "+33 6 12 12 21 15",
+        "email": "tony.besnard@gmail.com",
+        "github": "https://github.com/tobesnard"
+    },
+    "profil": "Lead Développeur et Chef de Projet avec une solide expertise en Javascript, C# et en programmation orientée objet. J’accompagne le développement de solutions robustes et évolutives grâce à la Clean Architecture. Habitué au pilotage d’équipes en mode Agile, je m’assure de transformer des besoins techniques complexes en outils fonctionnels, performants et maintenables.",
+    "formation": [
+        {
+            "annee": 2010,
+            "diplome": "Cursus Ingénieur Informatique (3ème année)",
+            "etablissement": "SUPINFO",
+            "lieu": "Tours"
+        },
+        {
+            "annee": 2008,
+            "diplome": "Titre Professionnel de Développeur Informatique",
+            "etablissement": "AFPA",
+            "lieu": "Blois"
+        },
+        {
+            "annee": 2005,
+            "diplome": "Technicien Réseaux et Télécommunications d'entreprise",
+            "etablissement": "Consulcom",
+            "lieu": "Rouen"
+        }
+    ],
+    "competences": {
+        "techniques": {
+            "developpement": [
+                "C# (.NET 8.0)",
+                "PHP 8.x",
+                "JS (Vanilla/Vue.js)",
+                "C",
+                "Assembleur"
+            ],
+            "architecture_et_conception": [
+                "Clean Architecture",
+                "Design Patterns",
+                "POO",
+                "UML",
+                "Modélisation",
+                "Modernisation Legacy"
+            ],
+            "frameworks_et_mobile": [
+                ".NET MAUI",
+                "Android"
+            ],
+            "systemes_et_administration": [
+                "Windows",
+                "Linux",
+                "PowerShell",
+                "Bash"
+            ]
+        },
+        "transverses": {
+            "pilotage_et_methodes": [
+                "Management d'équipe",
+                "Cycle de vie (SDLC)",
+                "Agile (SCRUM/XP)",
+                "Git"
+            ],
+            "expertise": [
+                "Analyse des besoins",
+                "Stratégie technique",
+                "Gestion client",
+                "Résolution de problèmes complexes"
+            ]
+        }
+    },
+    "experience_professionnelle": [
+        {
+            "titre": "Lead Développeur Full-Stack & Chef de Projet",
+            "entreprise": "Pharmavitale",
+            "periode": "2023-2025",
+            "description": "Réécriture complète du logiciel de gestion d'officine (LGO) vers une application web moderne (PHP/Vue.js) après une migration depuis VB. Pilotage d'équipe en méthodologies SCRUM et XP, modélisation de l'architecture via UML et développement de modules critiques en C# (.NET). Responsable du cycle de vie du projet : spécifications techniques, tests, déploiement, sécurité et maintenance évolutive."
+        },
+        {
+            "titre": "Expérience de vie et engagement | Accompagnement spécialisé",
+            "entreprise": null,
+            "periode": "2015-2021",
+            "description": "Expérience en milieu médico-social dédiée à l'accompagnement de personnes en situation de handicap sévère. Cette période a renforcé mon intelligence émotionnelle et mon leadership, me permettant d'aligner rigueur technique et écoute active au service des besoins utilisateurs."
+        },
+        {
+            "titre": "Fondateur",
+            "entreprise": "NT Service",
+            "periode": "2011-2014",
+            "description": "Création et gestion d'une entreprise individuelle spécialisée en développement de solutions numériques. Conception de sites internet dynamiques (PHP, Vanilla JS) et développement d'applications mobiles natives Android (Java). Pilotage complet de la relation client, de l'analyse des besoins techniques jusqu'à la livraison et au déploiement des outils digitaux."
+        },
+        {
+            "titre": "Technicien Systèmes, Réseaux & Électronique",
+            "entreprise": null,
+            "periode": "2004-2010",
+            "description": "Installation et maintenance de solutions de téléphonie (PABX/IPBX) et informatiques pour PME, incluant la programmation système, la formation des utilisateurs et le support à distance. Réalisation de tests et dépannages sur cartes électroniques, programmation et débogage de microcontrôleurs et circuits logiques en C et Assembleur."
+        }
+    ],
+    "centres_d_interets": "Passion pour la technique centrée sur la résolution régulière de challenges de cybersécurité sur Root-Me, complétée par des intérêts pour la domotique, la gastronomie et la pratique de la natation."
+}

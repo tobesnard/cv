@@ -1,0 +1,111 @@
+{
+  "personal": {
+    "name": "Tony BESNARD",
+    "title": "Lead Développeur Full-Stack | .NET",
+    "subtitle": "& Pilotage de Projets",
+    "address": "9 Bis rue Haute, 41400 Chissay-en-Touraine",
+    "phone": "+33 6 12 12 21 15",
+    "email": "tony.besnard@gmail.com",
+    "github": "https://github.com/tobesnard",
+    "photo": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/photo-78upYOfuItCOnySQtQ1XSgpEAGpane.jpg"
+  },
+  "profile": "Lead Développeur et Chef de Projet avec une solide expertise en JavaScript, C# et en programmation objet. J'accompagne les équipes dans la mise en place de solutions robustes et évolutives. Habitué au pilotage de projets Agile, je transforme les besoins métiers en outils concrets et maintenables.",
+  "competences": {
+    "developpement": [
+      {
+        "name": "C# (.NET 8.0)",
+        "level": 5
+      },
+      {
+        "name": "PHP 8.x",
+        "level": 4
+      },
+      {
+        "name": "JS (Vanilla/Vue.js)",
+        "level": 5
+      },
+      {
+        "name": "C Assembleur",
+        "level": 3
+      }
+    ],
+    "architecture": [
+      {
+        "name": "Architecture & Conception",
+        "level": 5
+      },
+      {
+        "name": "Frameworks & Mobile",
+        "level": 4
+      }
+    ]
+  },
+  "transverses": {
+    "pilotage": [
+      {
+        "name": "Pilotage & Méthodes",
+        "level": 5
+      },
+      {
+        "name": "Pilotage & Méthodes",
+        "level": 4
+      },
+      {
+        "name": "Transverses",
+        "level": 4
+      },
+      {
+        "name": "Expertise",
+        "level": 5
+      }
+    ]
+  },
+  "experience": [
+    {
+      "company": "Pharmavitale",
+      "period": "2023-2025",
+      "title": "Lead Développeur Full-Stack",
+      "tasks": [
+        "Réécriture complète de l'outil de gestion d'officine (LGO) vers JavaScript (LGO) vers une application web moderne avec migration d'un triple en méthode SCRUM avec (PHP/Vue.js)",
+        "Pilotage technique et encadrement du backlog avec VB/VBA, à structurer, maintenir et faire évoluer la modélisation en méthodologies SCRUM, Agile en UML et développements en C# (.NET)",
+        "Responsable du cycle de vie projet : spécifications, tests, déploiement et maintenance évolutive"
+      ]
+    },
+    {
+      "company": "NT Service",
+      "period": "2011-2014",
+      "title": "Fondateur",
+      "subtitle": "Expérience de vie et engagement",
+      "tasks": [
+        "Transformation d'architectures (Que l'anglais monde, tiare, incoordonnée aux pastilles cette questions préparées dans leurs eus tassés)"
+      ]
+    },
+    {
+      "company": "Systèmes, Réseaux & Électronique",
+      "period": "2004-2014",
+      "title": "Technicien",
+      "tasks": []
+    }
+  ],
+  "formation": [
+    {
+      "year": "2010",
+      "title": "Cursus Ingénieur Informatique",
+      "school": "SUPINFO - Tours",
+      "level": "Bac+5"
+    },
+    {
+      "year": "2008",
+      "title": "Titre Professionnel de Développeur",
+      "school": "AFPA - Tours",
+      "level": ""
+    },
+    {
+      "year": "2005",
+      "title": "Technicien Réseaux et Télécommunications d'entreprise",
+      "school": "Consulcom - Rouen",
+      "level": ""
+    }
+  ],
+  "interests": "Passion pour la technique centrée sur la résolution régulière de challenges de cybersécurité sur Root-Me sur Root-Me, compétitions pour la domotique, gastronomique, et pratique de la natation."
+}

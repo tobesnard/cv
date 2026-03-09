@@ -1,0 +1,48 @@
+{
+  "colors": {
+    "primary": "#00d4aa",
+    "primaryDark": "#00b894",
+    "primaryLight": "#00ffcc",
+    "secondary": "#1a365d",
+    "background": "#0a1628",
+    "backgroundLight": "#0d1f3c",
+    "backgroundCard": "rgba(13, 31, 60, 0.85)",
+    "text": "#ffffff",
+    "textMuted": "#94a3b8",
+    "textSecondary": "#64748b",
+    "accent": "#f59e0b",
+    "accentOrange": "#ff6b35",
+    "border": "rgba(0, 212, 170, 0.3)",
+    "borderLight": "rgba(0, 212, 170, 0.15)"
+  },
+  "fonts": {
+    "heading": "'Rajdhani', sans-serif",
+    "body": "'Roboto', sans-serif"
+  },
+  "spacing": {
+    "xs": "0.25rem",
+    "sm": "0.5rem",
+    "md": "1rem",
+    "lg": "1.5rem",
+    "xl": "2rem",
+    "xxl": "3rem"
+  },
+  "print": {
+    "pageWidth": "210mm",
+    "pageHeight": "297mm",
+    "marginTop": "8mm",
+    "marginBottom": "8mm",
+    "marginLeft": "8mm",
+    "marginRight": "8mm"
+  },
+  "assets": {
+    "background": "/src/assets/images/background.png",
+    "photo": "/src/assets/images/photo.jpg"
+  },
+  "skillLevels": {
+    "icon": "square",
+    "maxLevel": 5,
+    "activeColor": "#00d4aa",
+    "inactiveColor": "rgba(0, 212, 170, 0.2)"
+  }
+}

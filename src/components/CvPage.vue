@@ -1,39 +1,16 @@
-<script setup>
-import { ref, computed } from 'vue'
-import cvData from '../data/cv-data.json'
-import designConfig from '../data/design-config.json'
-
-const data = ref(cvData)
-const config = ref(designConfig)
-
-const renderSkillLevel = (level, maxLevel = 5) => {
-  return Array.from({ length: maxLevel }, (_, i) => i < level)
-}
-
-const cssProps = computed(() => {
-  const props = {}
-
-  // Couleurs
-  Object.entries(config.value.colors).forEach(([key, value]) => {
-    props[`--color-${key}`] = value
-  })
-
-  // Polices
-  Object.entries(config.value.fonts).forEach(([key, value]) => {
-    props[`--font-${key}`] = value
-  })
-
-  // Tailles
-  Object.entries(config.value.fontSizes).forEach(([key, value]) => {
-    props[`--size-${key}`] = value
-  })
-
-  return props
-})
-</script>
-
 <template>
   <div class="cv-container" :style="cssProps">
+    <DefineCard v-slot="{ title, customClass, $slots }">
+      <section :class="['cv-card-section', customClass]">
+        <div v-if="title" class="card-header">
+          <h3 class="section-title">{{ title.toUpperCase() }}</h3>
+        </div>
+        <div class="card-body">
+          <component :is="$slots.default" />
+        </div>
+      </section>
+    </DefineCard>
+
     <div class="cv-page">
       <!-- Background -->
       <div class="cv-background" :style="{ backgroundImage: `url(${config.assets.background})` }"></div>
@@ -91,20 +68,19 @@ const cssProps = computed(() => {
         </header>
 
         <!-- Profile Section -->
-        <section class="section profile-section">
-          <h3 class="section-title">PROFIL</h3>
+        <ReuseCard title="PROFIL" customClass="profile-section">
           <p class="profile-text">{{ data.profil }}</p>
-        </section>
+        </ReuseCard>
 
         <!-- Main Content Grid -->
         <div class="main-grid">
           <!-- Left Column -->
-          <div class="left-column">
-            <!-- Competences -->
-            <section class="section" v-for="(section, cat) in data.competences" :key="cat">
-              <h3 class="section-title">{{ cat.toUpperCase() }}</h3>
+          <div customClass="left-column">
 
-              <div class="skills-group" v-for="(skills, category) in section" :key="category">
+            <ReuseCard :title="section_name" customClass="transverses-section"
+              v-for="(competences, section_name) in data.competences" :key="title">
+
+              <div class="skills-group" v-for="(skills, category) in competences" :key="category">
                 <h4 class="skills-subtitle">
                   <span class="skill-icon"></span>
                   {{ category }}
@@ -115,52 +91,95 @@ const cssProps = computed(() => {
                   </div>
                 </div>
               </div>
-            </section>
+            </ReuseCard>
+
 
           </div>
 
+
+
+
+
           <!-- Right Column -->
-          <div class="right-column">
+          <ReuseCard customClass="right-column" title="EXPÉRIENCE PROFESSIONNELLE">
             <!-- Experience -->
             <section class="section">
-              <h3 class="section-title">EXPERIENCE PROFESSIONELLE</h3>
 
               <div v-for="exp in data.experience_professionnelle" :key="exp.entreprise" class="experience-item">
                 <div class="exp-header">
-                  <h4 class="exp-title">{{ exp.titre }} | {{ exp.entreprise || '' }} ({{ exp.periode }})</h4>
+                  <h4 class="skills-subtitle exp-title">
+                    <span class="skill-icon"></span>
+                    {{ exp.titre }} | {{ exp.entreprise || '' }} ({{ exp.periode }})
+                  </h4>
                 </div>
                 <p class="profile-text" style="font-size: 8.5pt; opacity: 0.9;">{{ exp.description }}</p>
               </div>
             </section>
-          </div>
+          </ReuseCard>
         </div>
 
         <!-- Footer Grid -->
         <div class="footer-grid">
           <!-- Formation -->
-          <section class="section formation-section">
-            <h3 class="section-title">FORMATION</h3>
+          <ReuseCard title="FORMATION" customClass="formation-section">
             <div class="formation-list">
               <div v-for="edu in data.formation" :key="edu.annee" class="formation-item">
                 <span class="formation-year">{{ edu.annee }}</span>
                 <div class="formation-details">
                   <span class="formation-title">{{ edu.diplome }}</span>
-                  <span class="formation-school"> - {{ edu.etablissement }} ({{ edu.lieu }})</span>
+                  <span class="formation-school"> - {{ edu.etablissement }} </span>
                 </div>
               </div>
             </div>
-          </section>
+          </ReuseCard>
 
           <!-- Interests -->
-          <section class="section interests-section">
-            <h3 class="section-title">CENTRES D'INTÉRÊT</h3>
+          <ReuseCard title="CENTRES D'INTÉRÊT" customClass="interests-section">
             <p class="interests-text">{{ data.centres_d_interets }}</p>
-          </section>
+          </ReuseCard>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+
+<script setup>
+import { ref, computed } from 'vue'
+import { createReusableTemplate } from '@vueuse/core'
+import cvData from '../data/cv-data.json'
+import designConfig from '../data/design-config.json'
+
+const [DefineCard, ReuseCard] = createReusableTemplate()
+
+const data = ref(cvData)
+const config = ref(designConfig)
+
+const renderSkillLevel = (level, maxLevel = 5) => {
+  return Array.from({ length: maxLevel }, (_, i) => i < level)
+}
+
+const cssProps = computed(() => {
+  const props = {}
+
+  // Couleurs
+  Object.entries(config.value.colors).forEach(([key, value]) => {
+    props[`--color-${key}`] = value
+  })
+
+  // Polices
+  Object.entries(config.value.fonts).forEach(([key, value]) => {
+    props[`--font-${key}`] = value
+  })
+
+  // Tailles
+  Object.entries(config.value.fontSizes).forEach(([key, value]) => {
+    props[`--size-${key}`] = value
+  })
+
+  return props
+})
+</script>
 
 <style scoped>
 .cv-container {
@@ -188,6 +207,7 @@ const cssProps = computed(() => {
   background-size: cover;
   background-position: center;
   opacity: 0.4;
+  filter: blur(1px);
 }
 
 .cv-content {
@@ -205,10 +225,13 @@ const cssProps = computed(() => {
   margin-bottom: 5mm;
   padding-bottom: 5mm;
   border-bottom: 1px solid var(--color-borderLight, rgba(0, 212, 170, 0.2));
+  gap: 8mm;
 }
 
 .header-left {
   flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .title {
@@ -218,7 +241,7 @@ const cssProps = computed(() => {
 .title-main {
   display: block;
   font-family: var(--font-heading, 'Rajdhani', sans-serif);
-  font-size: var(--size-titleMain, 28pt);
+  font-size: var(--size-titleMain, 22pt);
   font-weight: 700;
   color: var(--color-primary, #00d4aa);
   line-height: 1.1;
@@ -227,23 +250,23 @@ const cssProps = computed(() => {
 .title-sub {
   display: block;
   font-family: var(--font-heading, 'Rajdhani', sans-serif);
-  font-size: var(--size-titleSub, 18pt);
+  font-size: var(--size-titleSub, 14pt);
   font-weight: 500;
   color: var(--color-text, #ffffff);
 }
 
 .name {
   font-family: var(--font-heading, 'Rajdhani', sans-serif);
-  font-size: var(--size-name, 22pt);
+  font-size: var(--size-name, 18pt);
   font-weight: 600;
   color: var(--color-text, #ffffff);
-  margin: 3mm 0;
+  /* margin: 2mm 0; */
 }
 
 .contact-info {
   display: flex;
   flex-direction: column;
-  gap: 1.5mm;
+  /* gap: 1.5mm; */
 }
 
 .contact-item {
@@ -271,8 +294,8 @@ const cssProps = computed(() => {
 }
 
 .photo-container {
-  width: 45mm;
-  height: 45mm;
+  width: 35mm;
+  height: 35mm;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -317,21 +340,37 @@ const cssProps = computed(() => {
   font-size: var(--size-sectionTitle, 12pt);
   font-weight: 700;
   color: var(--color-primary, #00d4aa);
-  margin: 0 0 3mm 0;
-  padding-bottom: 1.5mm;
-  border-bottom: 2px solid var(--color-primary, #00d4aa);
+  margin: 0;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-/* Profile */
-.profile-section {
-  background: var(--color-backgroundCard, rgba(13, 31, 60, 0.7));
-  padding: 4mm;
-  border-radius: 2mm;
-  border: 1px solid var(--color-borderLight, rgba(0, 212, 170, 0.2));
+/* Card Section Base Style */
+.cv-card-section {
+  background: var(--color-backgroundCard, rgba(13, 31, 60, 0.4));
+  border-radius: 0;
+  position: relative;
+  margin-bottom: 4mm;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  /* Bordure en dégradé */
+  border: 1px solid;
+  border-image-source: linear-gradient(135deg, var(--color-primary, #00d4aa) 0%, transparent 100%);
+  border-image-slice: 1;
 }
 
+.card-header {
+  background: rgba(0, 0, 0, 0.3);
+  /* Plus foncé que la card */
+  padding: 1mm 3mm;
+  border-bottom: 1px solid var(--color-borderLight, rgba(0, 212, 170, 0.15));
+}
+
+.card-body {
+  padding: 4mm;
+}
+
+/* Profile */
 .profile-text {
   font-family: var(--font-body, 'Roboto', sans-serif);
   font-size: var(--size-body, 9pt);
@@ -350,10 +389,7 @@ const cssProps = computed(() => {
 
 .left-column,
 .right-column {
-  background: var(--color-backgroundCard, rgba(13, 31, 60, 0.7));
-  padding: 4mm;
-  border-radius: 2mm;
-  border: 1px solid var(--color-borderLight, rgba(0, 212, 170, 0.2));
+  margin-bottom: 0;
 }
 
 /* Skills */
@@ -362,14 +398,10 @@ const cssProps = computed(() => {
 }
 
 .skills-subtitle {
-  font-family: var(--font-heading, 'Rajdhani', sans-serif);
-  font-size: var(--size-small, 10pt);
-  font-weight: 600;
-  color: var(--color-text, #ffffff);
   margin: 0 0 2mm 0;
   display: flex;
   align-items: center;
-  gap: 2mm;
+  gap: 1mm;
 }
 
 .skills-subtitle::before {
@@ -481,7 +513,8 @@ const cssProps = computed(() => {
   margin: 0 0 1mm 0;
 }
 
-.exp-title {
+.exp-title,
+.skills-subtitle {
   font-family: var(--font-body, 'Roboto', sans-serif);
   font-size: var(--size-body, 9pt);
   font-weight: 500;
@@ -511,10 +544,7 @@ const cssProps = computed(() => {
 
 .formation-section,
 .interests-section {
-  background: var(--color-backgroundCard, rgba(13, 31, 60, 0.7));
-  padding: 4mm;
-  border-radius: 2mm;
-  border: 1px solid var(--color-borderLight, rgba(0, 212, 170, 0.2));
+  margin-bottom: 0;
 }
 
 .formation-list {

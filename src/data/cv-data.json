@@ -30,7 +30,7 @@
     }
   ],
   "competences": {
-    "techniques": {
+    "Compétences Techniques": {
       "Développement": [
         "C# (.NET 8.0)",
         "PHP 8.x",
@@ -39,8 +39,8 @@
       ],
       "Architecture et Conception": [
         "Clean Architecture",
-        "Design Patterns",
         "POO",
+        "Design Patterns",
         "UML",
         "Modélisation",
         "Modernisation Legacy"
@@ -56,7 +56,7 @@
         "Bash"
       ]
     },
-    "transverses": {
+    "Compétences Transverses": {
       "Pilotage et Méthodes": [
         "Management d'équipe",
         "Cycle de vie (SDLC)",

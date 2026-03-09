@@ -6,9 +6,9 @@
     "secondary": "#1a365d",
     "background": "#0a1628",
     "backgroundLight": "#0d1f3c",
-    "backgroundCard": "rgba(13, 31, 60, 0.85)",
+    "backgroundCard": "rgba(13, 31, 60, 0.65)",
     "text": "#ffffff",
-    "textMuted": "#94a3b8",
+    "textMuted": "#cde1ff",
     "textSecondary": "#64748b",
     "accent": "#f59e0b",
     "accentOrange": "#ff6b35",
@@ -21,10 +21,10 @@
     "body": "'Roboto', sans-serif"
   },
   "fontSizes": {
-    "titleMain": "28pt",
-    "titleSub": "20pt",
-    "name": "20pt",
-    "sectionTitle": "14pt",
+    "titleMain": "20pt",
+    "titleSub": "16pt",
+    "name": "16pt",
+    "sectionTitle": "10pt",
     "body": "8.5pt",
     "small": "7pt"
   },

@@ -13,11 +13,20 @@
     "accent": "#f59e0b",
     "accentOrange": "#ff6b35",
     "border": "rgba(0, 212, 170, 0.3)",
-    "borderLight": "rgba(0, 212, 170, 0.15)"
+    "borderLight": "rgba(0, 212, 170, 0.15)",
+    "backgroundDark": "#050d1a"
   },
   "fonts": {
     "heading": "'Rajdhani', sans-serif",
     "body": "'Roboto', sans-serif"
+  },
+  "fontSizes": {
+    "titleMain": "28pt",
+    "titleSub": "20pt",
+    "name": "20pt",
+    "sectionTitle": "14pt",
+    "body": "8.5pt",
+    "small": "7pt"
   },
   "spacing": {
     "xs": "0.25rem",

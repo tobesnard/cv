@@ -34,8 +34,7 @@
                 "C# (.NET 8.0)",
                 "PHP 8.x",
                 "JS (Vanilla/Vue.js)",
-                "C",
-                "Assembleur"
+                "C / Assembleur"
             ],
             "architecture_et_conception": [
                 "Clean Architecture",

@@ -9,10 +9,31 @@ const config = ref(designConfig)
 const renderSkillLevel = (level, maxLevel = 5) => {
   return Array.from({ length: maxLevel }, (_, i) => i < level)
 }
+
+const cssProps = computed(() => {
+  const props = {}
+
+  // Couleurs
+  Object.entries(config.value.colors).forEach(([key, value]) => {
+    props[`--color-${key}`] = value
+  })
+
+  // Polices
+  Object.entries(config.value.fonts).forEach(([key, value]) => {
+    props[`--font-${key}`] = value
+  })
+
+  // Tailles
+  Object.entries(config.value.fontSizes).forEach(([key, value]) => {
+    props[`--size-${key}`] = value
+  })
+
+  return props
+})
 </script>
 
 <template>
-  <div class="cv-container">
+  <div class="cv-container" :style="cssProps">
     <div class="cv-page">
       <!-- Background -->
       <div class="cv-background" :style="{ backgroundImage: `url(${config.assets.background})` }"></div>
@@ -23,17 +44,18 @@ const renderSkillLevel = (level, maxLevel = 5) => {
         <header class="cv-header">
           <div class="header-left">
             <h1 class="title">
-              <span class="title-main">{{ data.personal.title }}</span>
-              <span class="title-sub">{{ data.personal.subtitle }}</span>
+              <span class="title-main">{{ data.titre }}</span>
+              <span class="title-sub">{{ data.subtitle }}</span>
+              <hr>
             </h1>
-            <h2 class="name">{{ data.personal.name }}</h2>
+            <h2 class="name">{{ data.entete.nom }}</h2>
             <div class="contact-info">
               <div class="contact-item">
                 <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                   <circle cx="12" cy="10" r="3"></circle>
                 </svg>
-                <span>{{ data.personal.address }}</span>
+                <span>{{ data.entete.adresse }}</span>
               </div>
               <div class="contact-item">
                 <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -41,7 +63,7 @@ const renderSkillLevel = (level, maxLevel = 5) => {
                     d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
                   </path>
                 </svg>
-                <span>{{ data.personal.phone }}</span>
+                <span>{{ data.entete.telephone }}</span>
               </div>
               <div class="contact-item">
                 <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -49,21 +71,21 @@ const renderSkillLevel = (level, maxLevel = 5) => {
                     d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
                   </path>
                 </svg>
-                <a :href="data.personal.github" target="_blank" rel="noopener noreferrer">{{
-                  data.personal.github.replace('https://', '') }}</a>
+                <a :href="data.entete.github" target="_blank" rel="noopener noreferrer">{{
+                  data.entete.github.replace('https://', '') }}</a>
               </div>
               <div class="contact-item">
                 <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                   <polyline points="22,6 12,13 2,6"></polyline>
                 </svg>
-                <a :href="'mailto:' + data.personal.email">{{ data.personal.email }}</a>
+                <a :href="'mailto:' + data.entete.email">{{ data.entete.email }}</a>
               </div>
             </div>
           </div>
           <div class="header-right">
             <div class="photo-container">
-              <img :src="config.assets.photo" :alt="data.personal.name" class="photo" />
+              <img :src="config.assets.photo" :alt="data.entete.nom" class="photo" />
             </div>
           </div>
         </header>
@@ -71,7 +93,7 @@ const renderSkillLevel = (level, maxLevel = 5) => {
         <!-- Profile Section -->
         <section class="section profile-section">
           <h3 class="section-title">PROFIL</h3>
-          <p class="profile-text">{{ data.profile }}</p>
+          <p class="profile-text">{{ data.profil }}</p>
         </section>
 
         <!-- Main Content Grid -->
@@ -79,58 +101,22 @@ const renderSkillLevel = (level, maxLevel = 5) => {
           <!-- Left Column -->
           <div class="left-column">
             <!-- Competences -->
-            <section class="section">
-              <h3 class="section-title">COMPETENCES</h3>
+            <section class="section" v-for="(section, cat) in data.competences" :key="cat">
+              <h3 class="section-title">{{ cat.toUpperCase() }}</h3>
 
-              <div class="skills-group">
+              <div class="skills-group" v-for="(skills, category) in section" :key="category">
                 <h4 class="skills-subtitle">
                   <span class="skill-icon"></span>
-                  Développement
+                  {{ category }}
                 </h4>
                 <div class="skills-list">
-                  <div v-for="skill in data.competences.developpement" :key="skill.name" class="skill-item">
-                    <span class="skill-icon-box"></span>
-                    <span class="skill-name">{{ skill.name }}</span>
-                    <div class="skill-level">
-                      <span v-for="(filled, index) in renderSkillLevel(skill.level)" :key="index"
-                        :class="['level-box', { filled }]"></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="skills-group">
-                <h4 class="skills-subtitle">
-                  <span class="skill-icon"></span>
-                  Architecture & Conception
-                </h4>
-                <div class="skills-list">
-                  <div v-for="skill in data.competences.architecture" :key="skill.name" class="skill-item">
-                    <span class="skill-icon-box"></span>
-                    <span class="skill-name">{{ skill.name }}</span>
-                    <div class="skill-level">
-                      <span v-for="(filled, index) in renderSkillLevel(skill.level)" :key="index"
-                        :class="['level-box', { filled }]"></span>
-                    </div>
+                  <div class="skill-item">
+                    {{ skills.join(', ') }}
                   </div>
                 </div>
               </div>
             </section>
 
-            <!-- Transverses -->
-            <section class="section">
-              <h3 class="section-title">TRANSVERSES</h3>
-              <div class="transverse-grid">
-                <div v-for="skill in data.transverses.pilotage" :key="skill.name" class="transverse-item">
-                  <span class="skill-icon-box"></span>
-                  <span class="skill-name">{{ skill.name }}</span>
-                  <div class="skill-level">
-                    <span v-for="(filled, index) in renderSkillLevel(skill.level)" :key="index"
-                      :class="['level-box', { filled }]"></span>
-                  </div>
-                </div>
-              </div>
-            </section>
           </div>
 
           <!-- Right Column -->
@@ -139,16 +125,11 @@ const renderSkillLevel = (level, maxLevel = 5) => {
             <section class="section">
               <h3 class="section-title">EXPERIENCE PROFESSIONELLE</h3>
 
-              <div v-for="exp in data.experience" :key="exp.company" class="experience-item">
+              <div v-for="exp in data.experience_professionnelle" :key="exp.entreprise" class="experience-item">
                 <div class="exp-header">
-                  <h4 class="exp-company">{{ exp.company }}</h4>
-                  <span class="exp-period">{{ exp.period }}</span>
+                  <h4 class="exp-title">{{ exp.titre }} | {{ exp.entreprise || '' }} ({{ exp.periode }})</h4>
                 </div>
-                <p v-if="exp.subtitle" class="exp-subtitle">{{ exp.subtitle }}</p>
-                <p class="exp-title">{{ exp.title }}</p>
-                <ul v-if="exp.tasks.length" class="exp-tasks">
-                  <li v-for="(task, index) in exp.tasks" :key="index">{{ task }}</li>
-                </ul>
+                <p class="profile-text" style="font-size: 8.5pt; opacity: 0.9;">{{ exp.description }}</p>
               </div>
             </section>
           </div>
@@ -160,12 +141,11 @@ const renderSkillLevel = (level, maxLevel = 5) => {
           <section class="section formation-section">
             <h3 class="section-title">FORMATION</h3>
             <div class="formation-list">
-              <div v-for="edu in data.formation" :key="edu.year" class="formation-item">
-                <span class="formation-year">{{ edu.year }}</span>
+              <div v-for="edu in data.formation" :key="edu.annee" class="formation-item">
+                <span class="formation-year">{{ edu.annee }}</span>
                 <div class="formation-details">
-                  <span class="formation-title">{{ edu.title }}</span>
-                  <span v-if="edu.level" class="formation-level">({{ edu.level }})</span>
-                  <span class="formation-school"> - {{ edu.school }}</span>
+                  <span class="formation-title">{{ edu.diplome }}</span>
+                  <span class="formation-school"> - {{ edu.etablissement }} ({{ edu.lieu }})</span>
                 </div>
               </div>
             </div>
@@ -174,7 +154,7 @@ const renderSkillLevel = (level, maxLevel = 5) => {
           <!-- Interests -->
           <section class="section interests-section">
             <h3 class="section-title">CENTRES D'INTÉRÊT</h3>
-            <p class="interests-text">{{ data.interests }}</p>
+            <p class="interests-text">{{ data.centres_d_interets }}</p>
           </section>
         </div>
       </div>
@@ -189,14 +169,14 @@ const renderSkillLevel = (level, maxLevel = 5) => {
   justify-content: center;
   align-items: flex-start;
   padding: 20px;
-  background: #050d1a;
+  background: var(--color-background-dark, #050d1a);
 }
 
 .cv-page {
   width: 210mm;
   min-height: 297mm;
   position: relative;
-  background: #0a1628;
+  background: var(--color-background, #0a1628);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   overflow: hidden;
 }
@@ -224,7 +204,7 @@ const renderSkillLevel = (level, maxLevel = 5) => {
   align-items: flex-start;
   margin-bottom: 5mm;
   padding-bottom: 5mm;
-  border-bottom: 1px solid rgba(0, 212, 170, 0.2);
+  border-bottom: 1px solid var(--color-borderLight, rgba(0, 212, 170, 0.2));
 }
 
 .header-left {
@@ -237,26 +217,26 @@ const renderSkillLevel = (level, maxLevel = 5) => {
 
 .title-main {
   display: block;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 28pt;
+  font-family: var(--font-heading, 'Rajdhani', sans-serif);
+  font-size: var(--size-titleMain, 28pt);
   font-weight: 700;
-  color: #00d4aa;
+  color: var(--color-primary, #00d4aa);
   line-height: 1.1;
 }
 
 .title-sub {
   display: block;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 18pt;
+  font-family: var(--font-heading, 'Rajdhani', sans-serif);
+  font-size: var(--size-titleSub, 18pt);
   font-weight: 500;
-  color: #ffffff;
+  color: var(--color-text, #ffffff);
 }
 
 .name {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 22pt;
+  font-family: var(--font-heading, 'Rajdhani', sans-serif);
+  font-size: var(--size-name, 22pt);
   font-weight: 600;
-  color: #ffffff;
+  color: var(--color-text, #ffffff);
   margin: 3mm 0;
 }
 
@@ -270,20 +250,20 @@ const renderSkillLevel = (level, maxLevel = 5) => {
   display: flex;
   align-items: center;
   gap: 2mm;
-  font-family: 'Roboto', sans-serif;
-  font-size: 9pt;
-  color: #94a3b8;
+  font-family: var(--font-body, 'Roboto', sans-serif);
+  font-size: var(--size-body, 9pt);
+  color: var(--color-textMuted, #94a3b8);
 }
 
 .contact-item a {
-  color: #00d4aa;
+  color: var(--color-primary, #00d4aa);
   text-decoration: none;
 }
 
 .contact-item .icon {
   width: 12px;
   height: 12px;
-  color: #00d4aa;
+  color: var(--color-primary, #00d4aa);
 }
 
 .header-right {
@@ -291,18 +271,40 @@ const renderSkillLevel = (level, maxLevel = 5) => {
 }
 
 .photo-container {
-  width: 30mm;
-  height: 30mm;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 3px solid #00d4aa;
-  box-shadow: 0 0 20px rgba(0, 212, 170, 0.3);
+  width: 45mm;
+  height: 45mm;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: visible;
+}
+
+.photo-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-primary, #00d4aa);
+  clip-path: polygon(29% 0%, 71% 0%, 100% 29%, 100% 71%, 71% 100%, 29% 100%, 0% 71%, 0% 29%, 29% 0%, 29.5% 1%, 1% 29.5%, 1% 70.5%, 29.5% 99%, 70.5% 99%, 99% 70.5%, 99% 29.5%, 70.5% 1%, 29.5% 1%);
+  z-index: 2;
+}
+
+.photo-container::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  background: var(--color-primary, #00d4aa);
+  clip-path: polygon(29% 0%, 71% 0%, 100% 29%, 100% 71%, 71% 100%, 29% 100%, 0% 71%, 0% 29%, 29% 0%, 29.5% 1%, 1% 29.5%, 1% 70.5%, 29.5% 99%, 70.5% 99%, 99% 70.5%, 99% 29.5%, 70.5% 1%, 29.5% 1%);
+  z-index: 2;
+  opacity: 0.6;
 }
 
 .photo {
-  width: 100%;
-  height: 100%;
+  width: calc(100% - 14px);
+  height: calc(100% - 14px);
   object-fit: cover;
+  clip-path: polygon(29% 0%, 71% 0%, 100% 29%, 100% 71%, 71% 100%, 29% 100%, 0% 71%, 0% 29%);
+  background: var(--color-background, #0a1628);
 }
 
 /* Sections */
@@ -311,29 +313,29 @@ const renderSkillLevel = (level, maxLevel = 5) => {
 }
 
 .section-title {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 12pt;
+  font-family: var(--font-heading, 'Rajdhani', sans-serif);
+  font-size: var(--size-sectionTitle, 12pt);
   font-weight: 700;
-  color: #00d4aa;
+  color: var(--color-primary, #00d4aa);
   margin: 0 0 3mm 0;
   padding-bottom: 1.5mm;
-  border-bottom: 2px solid #00d4aa;
+  border-bottom: 2px solid var(--color-primary, #00d4aa);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 /* Profile */
 .profile-section {
-  background: rgba(13, 31, 60, 0.7);
+  background: var(--color-backgroundCard, rgba(13, 31, 60, 0.7));
   padding: 4mm;
   border-radius: 2mm;
-  border: 1px solid rgba(0, 212, 170, 0.2);
+  border: 1px solid var(--color-borderLight, rgba(0, 212, 170, 0.2));
 }
 
 .profile-text {
-  font-family: 'Roboto', sans-serif;
-  font-size: 9pt;
-  color: #e2e8f0;
+  font-family: var(--font-body, 'Roboto', sans-serif);
+  font-size: var(--size-body, 9pt);
+  color: var(--color-textMuted, #e2e8f0);
   line-height: 1.5;
   margin: 0;
 }
@@ -341,17 +343,17 @@ const renderSkillLevel = (level, maxLevel = 5) => {
 /* Main Grid */
 .main-grid {
   display: grid;
-  grid-template-columns: 1fr 1.3fr;
+  grid-template-columns: 0.7fr 1.5fr;
   gap: 5mm;
   margin-bottom: 4mm;
 }
 
 .left-column,
 .right-column {
-  background: rgba(13, 31, 60, 0.7);
+  background: var(--color-backgroundCard, rgba(13, 31, 60, 0.7));
   padding: 4mm;
   border-radius: 2mm;
-  border: 1px solid rgba(0, 212, 170, 0.2);
+  border: 1px solid var(--color-borderLight, rgba(0, 212, 170, 0.2));
 }
 
 /* Skills */
@@ -360,10 +362,10 @@ const renderSkillLevel = (level, maxLevel = 5) => {
 }
 
 .skills-subtitle {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 10pt;
+  font-family: var(--font-heading, 'Rajdhani', sans-serif);
+  font-size: var(--size-small, 10pt);
   font-weight: 600;
-  color: #ffffff;
+  color: var(--color-text, #ffffff);
   margin: 0 0 2mm 0;
   display: flex;
   align-items: center;
@@ -375,7 +377,7 @@ const renderSkillLevel = (level, maxLevel = 5) => {
   display: inline-block;
   width: 8px;
   height: 8px;
-  background: #00d4aa;
+  background: var(--color-primary, #00d4aa);
 }
 
 .skills-list {
@@ -388,15 +390,15 @@ const renderSkillLevel = (level, maxLevel = 5) => {
   display: flex;
   align-items: center;
   gap: 2mm;
-  font-family: 'Roboto', sans-serif;
-  font-size: 8.5pt;
-  color: #e2e8f0;
+  font-family: var(--font-body, 'Roboto', sans-serif);
+  font-size: var(--size-body, 8.5pt);
+  color: var(--color-textMuted, #e2e8f0);
 }
 
 .skill-icon-box {
   width: 6px;
   height: 6px;
-  background: #00d4aa;
+  background: var(--color-primary, #00d4aa);
   flex-shrink: 0;
 }
 
@@ -412,12 +414,12 @@ const renderSkillLevel = (level, maxLevel = 5) => {
 .level-box {
   width: 8px;
   height: 8px;
-  background: rgba(0, 212, 170, 0.2);
-  border: 1px solid rgba(0, 212, 170, 0.4);
+  background: var(--color-borderLight, rgba(0, 212, 170, 0.2));
+  border: 1px solid var(--color-border, rgba(0, 212, 170, 0.4));
 }
 
 .level-box.filled {
-  background: #00d4aa;
+  background: var(--color-primary, #00d4aa);
 }
 
 /* Transverses */
@@ -433,14 +435,14 @@ const renderSkillLevel = (level, maxLevel = 5) => {
   gap: 2mm;
   font-family: 'Roboto', sans-serif;
   font-size: 8.5pt;
-  color: #e2e8f0;
+  color: var(--color-textMuted, #e2e8f0);
 }
 
 /* Experience */
 .experience-item {
   margin-bottom: 4mm;
   padding-bottom: 3mm;
-  border-bottom: 1px solid rgba(0, 212, 170, 0.1);
+  border-bottom: 1px solid var(--color-borderLight, rgba(0, 212, 170, 0.1));
 }
 
 .experience-item:last-child {
@@ -460,39 +462,39 @@ const renderSkillLevel = (level, maxLevel = 5) => {
   font-family: 'Rajdhani', sans-serif;
   font-size: 11pt;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--color-text, #ffffff);
   margin: 0;
 }
 
 .exp-period {
   font-family: 'Roboto', sans-serif;
   font-size: 9pt;
-  color: #00d4aa;
+  color: var(--color-primary, #00d4aa);
   font-weight: 500;
 }
 
 .exp-subtitle {
-  font-family: 'Roboto', sans-serif;
-  font-size: 9pt;
+  font-family: var(--font-body, 'Roboto', sans-serif);
+  font-size: var(--size-body, 9pt);
   font-style: italic;
-  color: #94a3b8;
+  color: var(--color-textMuted, #94a3b8);
   margin: 0 0 1mm 0;
 }
 
 .exp-title {
-  font-family: 'Roboto', sans-serif;
-  font-size: 9pt;
+  font-family: var(--font-body, 'Roboto', sans-serif);
+  font-size: var(--size-body, 9pt);
   font-weight: 500;
-  color: #00d4aa;
+  color: var(--color-primary, #00d4aa);
   margin: 0 0 2mm 0;
 }
 
 .exp-tasks {
   margin: 0;
   padding-left: 4mm;
-  font-family: 'Roboto', sans-serif;
-  font-size: 8pt;
-  color: #cbd5e1;
+  font-family: var(--font-body, 'Roboto', sans-serif);
+  font-size: var(--size-small, 8pt);
+  color: var(--color-textSecondary, #cbd5e1);
   line-height: 1.5;
 }
 
@@ -509,10 +511,10 @@ const renderSkillLevel = (level, maxLevel = 5) => {
 
 .formation-section,
 .interests-section {
-  background: rgba(13, 31, 60, 0.7);
+  background: var(--color-backgroundCard, rgba(13, 31, 60, 0.7));
   padding: 4mm;
   border-radius: 2mm;
-  border: 1px solid rgba(0, 212, 170, 0.2);
+  border: 1px solid var(--color-borderLight, rgba(0, 212, 170, 0.2));
 }
 
 .formation-list {
@@ -524,14 +526,14 @@ const renderSkillLevel = (level, maxLevel = 5) => {
 .formation-item {
   display: flex;
   gap: 3mm;
-  font-family: 'Roboto', sans-serif;
-  font-size: 8.5pt;
-  color: #e2e8f0;
+  font-family: var(--font-body, 'Roboto', sans-serif);
+  font-size: var(--size-body, 8.5pt);
+  color: var(--color-textMuted, #e2e8f0);
 }
 
 .formation-year {
   font-weight: 700;
-  color: #00d4aa;
+  color: var(--color-primary, #00d4aa);
   min-width: 10mm;
 }
 
@@ -544,17 +546,17 @@ const renderSkillLevel = (level, maxLevel = 5) => {
 }
 
 .formation-level {
-  color: #00d4aa;
+  color: var(--color-primary, #00d4aa);
 }
 
 .formation-school {
-  color: #94a3b8;
+  color: var(--color-textMuted, #94a3b8);
 }
 
 .interests-text {
-  font-family: 'Roboto', sans-serif;
-  font-size: 8.5pt;
-  color: #e2e8f0;
+  font-family: var(--font-body, 'Roboto', sans-serif);
+  font-size: var(--size-body, 8.5pt);
+  color: var(--color-textMuted, #e2e8f0);
   line-height: 1.5;
   margin: 0;
 }

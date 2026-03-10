@@ -14,7 +14,8 @@
 
     <div class="cv-page font-body">
       <!-- Background -->
-      <div class="cv-background" :style="{ backgroundImage: `url(${config.assets.background})` }"></div>
+      <div v-if="activeBackgroundImage" class="cv-background"
+        :style="{ backgroundImage: `url(${activeBackgroundImage})` }"></div>
 
       <!-- Content -->
       <div class="cv-content">
@@ -152,7 +153,8 @@ import { createReusableTemplate } from '@vueuse/core'
 import { Printer as PrinterIcon, Sun as SunIcon, Moon as MoonIcon } from 'lucide-vue-next'
 import cvData from '../data/cv-data.json'
 import designConfig from '../data/design-config.json'
-import backgroundImage from '@/assets/images/background.png'
+import backgroundImageDark from '@/assets/images/background.png'
+import backgroundImageLight from '@/assets/images/background.png'
 import photoImage from '@/assets/images/photo.jpg'
 
 // Import icons
@@ -170,6 +172,8 @@ const isDarkMode = ref(config.value.defaultTheme === 'dark')
 
 // Couleurs actives = couleurs partagées + couleurs du thème courant
 const currentTheme = computed(() => config.value.themes[isDarkMode.value ? 'dark' : 'light'])
+
+const activeBackgroundImage = computed(() => currentTheme.value.backgroundImage)
 
 const activeColors = computed(() => {
   const { typography, ...themeColors } = currentTheme.value
@@ -196,7 +200,8 @@ const icons = {
 }
 
 // Overwrite asset paths with imported URLs for Vite processing
-config.value.assets.background = backgroundImage
+if (config.value.themes.dark.backgroundImage) config.value.themes.dark.backgroundImage = backgroundImageDark
+if (config.value.themes.light.backgroundImage) config.value.themes.light.backgroundImage = backgroundImageLight
 config.value.assets.photo = photoImage
 
 const toggleTheme = () => {

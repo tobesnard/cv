@@ -482,13 +482,12 @@ const cssProps = computed(() => {
 
 
 .photo {
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: 115%;
   object-fit: cover;
   border-radius: 4mm;
   transform: rotate(-45deg);
   scale: 1.15;
-  object-position: center 80%;
 }
 
 .photo-wrapper {

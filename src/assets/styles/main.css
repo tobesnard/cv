@@ -27,6 +27,7 @@
   /* Fonts */
   --font-heading: 'Rajdhani', sans-serif;
   --font-body: 'Roboto', sans-serif;
+  --font-mono: 'Roboto Mono', monospace;
 
   /* Spacing */
   --spacing-xs: 0.25rem;
@@ -63,7 +64,9 @@ body {
 
 /* Print media query */
 @media print {
-  html, body {
+
+  html,
+  body {
     width: var(--page-width);
     height: var(--page-height);
     margin: 0;

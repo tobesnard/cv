@@ -487,7 +487,7 @@ const cssProps = computed(() => {
   object-fit: cover;
   border-radius: 4mm;
   transform: rotate(-45deg);
-  scale: 1.25;
+  scale: 1.15;
 }
 
 .photo-wrapper {

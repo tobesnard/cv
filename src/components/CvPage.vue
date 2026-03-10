@@ -456,8 +456,8 @@ const cssProps = computed(() => {
 }
 
 .photo-container {
-  width: 36mm;
-  height: 36mm;
+  width: 42mm;
+  height: 42mm;
   display: flex;
   justify-content: center;
   align-items: center;

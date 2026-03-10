@@ -155,7 +155,7 @@ import cvData from '../data/cv-data.json'
 import designConfig from '../data/design-config.json'
 import backgroundImageDark from '@/assets/images/background.png'
 import backgroundImageLight from '@/assets/images/background.png'
-import photoImage from '@/assets/images/photo.jpg'
+import photoImage from '@/assets/images/photo-profile-amelioree.png'
 
 // Import icons
 import userIcon from '@/assets/icons/user.svg'
@@ -524,8 +524,7 @@ const cssProps = computed(() => {
 }
 
 .card-header {
-  background: rgba(0, 0, 0, 0.3);
-  background-image: linear-gradient(to right, lab(75.8446 -52.9604 7.9406 / 0.1) 0%, rgba(0, 0, 0, 0) 100%);
+  background-image: var(--color-cardHeaderGradient);
   padding: 2mm 3mm;
   border-bottom: 1px solid var(--color-borderLight, rgba(0, 212, 170, 0.15));
   display: flex;
@@ -538,7 +537,7 @@ const cssProps = computed(() => {
   height: 14px;
   flex-shrink: 0;
   display: block;
-  filter: brightness(0) saturate(100%) invert(67%) sepia(86%) saturate(458%) hue-rotate(120deg) brightness(96%) contrast(101%);
+  filter: var(--color-iconFilter);
 }
 
 .card-body {

@@ -1,21 +1,92 @@
 {
+  "defaultTheme": "dark",
+  "themes": {
+    "dark": {
+      "background": "#0a1628",
+      "backgroundLight": "#0d1f3c",
+      "backgroundCard": "rgba(13, 31, 60, 0.65)",
+      "backgroundDark": "#050d1a",
+      "text": "#ffffff",
+      "textMuted": "#cde1ff",
+      "textSecondary": "#64748b",
+      "border": "rgba(0, 212, 170, 0.3)",
+      "borderLight": "rgba(0, 212, 170, 0.15)",
+      "backgroundProfilePicture": "#fafafa",
+      "sectionTitle": "#00b894",
+      "typography": {
+        "title": {
+          "color": "primary"
+        },
+        "subtitle": {
+          "color": "text"
+        },
+        "name": {
+          "color": "text"
+        },
+        "contact": {
+          "color": "textMuted"
+        },
+        "cardTitle": {
+          "color": "primary"
+        },
+        "sectionTitle": {
+          "color": "text"
+        },
+        "body": {
+          "color": "textMuted"
+        },
+        "date": {
+          "color": "primary"
+        }
+      }
+    },
+    "light": {
+      "background": "#ffffff",
+      "backgroundLight": "#f8fafc",
+      "backgroundCard": "rgba(255, 255, 255, 0.9)",
+      "backgroundDark": "#f1f5f9",
+      "text": "#1e293b",
+      "textMuted": "#475569",
+      "textSecondary": "#94a3b8",
+      "border": "rgba(0, 180, 148, 0.25)",
+      "borderLight": "rgba(0, 180, 148, 0.12)",
+      "backgroundProfilePicture": "#f1f5f9",
+      "sectionTitle": "#00896e",
+      "typography": {
+        "title": {
+          "color": "primaryDark"
+        },
+        "subtitle": {
+          "color": "text"
+        },
+        "name": {
+          "color": "text"
+        },
+        "contact": {
+          "color": "textMuted"
+        },
+        "cardTitle": {
+          "color": "primaryDark"
+        },
+        "sectionTitle": {
+          "color": "text"
+        },
+        "body": {
+          "color": "textMuted"
+        },
+        "date": {
+          "color": "primaryDark"
+        }
+      }
+    }
+  },
   "colors": {
     "primary": "#00d4aa",
-    "primaryDark": "#00b894",
+    "primaryDark": "#000000",
     "primaryLight": "#00ffcc",
     "secondary": "#1a365d",
-    "background": "#0a1628",
-    "backgroundLight": "#0d1f3c",
-    "backgroundCard": "rgba(13, 31, 60, 0.65)",
-    "text": "#ffffff",
-    "textMuted": "#cde1ff",
-    "textSecondary": "#64748b",
     "accent": "#f59e0b",
-    "accentOrange": "#ff6b35",
-    "border": "rgba(0, 212, 170, 0.3)",
-    "borderLight": "rgba(0, 212, 170, 0.15)",
-    "backgroundDark": "#050d1a",
-    "backgroundProfilePicture": "#fafafa"
+    "accentOrange": "#ff6b35"
   },
   "fonts": {
     "primary": "'Roboto', sans-serif",

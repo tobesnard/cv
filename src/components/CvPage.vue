@@ -166,7 +166,26 @@ const [DefineCard, ReuseCard] = createReusableTemplate()
 
 const data = ref(cvData)
 const config = ref(designConfig)
-const isDarkMode = ref(true)
+const isDarkMode = ref(config.value.defaultTheme === 'dark')
+
+// Couleurs actives = couleurs partagées + couleurs du thème courant
+const currentTheme = computed(() => config.value.themes[isDarkMode.value ? 'dark' : 'light'])
+
+const activeColors = computed(() => {
+  const { typography, ...themeColors } = currentTheme.value
+  return { ...config.value.colors, ...themeColors }
+})
+
+// Typography active = base + surcharges du thème courant
+const activeTypography = computed(() => {
+  const base = config.value.typography
+  const overrides = currentTheme.value.typography || {}
+  const merged = {}
+  for (const [section, values] of Object.entries(base)) {
+    merged[section] = { ...values, ...(overrides[section] || {}) }
+  }
+  return merged
+})
 
 const icons = {
   user: userIcon,
@@ -182,22 +201,6 @@ config.value.assets.photo = photoImage
 
 const toggleTheme = () => {
   isDarkMode.value = !isDarkMode.value
-  if (!isDarkMode.value) {
-    config.value.colors.background = '#ffffff'
-    config.value.colors.backgroundLight = '#f8fafc'
-    config.value.colors.backgroundCard = 'rgba(255, 255, 255, 0.9)'
-    config.value.colors.text = '#1e293b'
-    config.value.colors.textMuted = '#475569'
-    config.value.colors.backgroundDark = '#f1f5f9'
-  } else {
-    // Restore dark mode (values from original config)
-    config.value.colors.background = '#0a1628'
-    config.value.colors.backgroundLight = '#0d1f3c'
-    config.value.colors.backgroundCard = 'rgba(13, 31, 60, 0.65)'
-    config.value.colors.text = '#ffffff'
-    config.value.colors.textMuted = '#cde1ff'
-    config.value.colors.backgroundDark = '#050d1a'
-  }
 }
 
 const printPage = () => {
@@ -218,8 +221,8 @@ const renderSkillLevel = (level, maxLevel = 5) => {
 const cssProps = computed(() => {
   const props = {}
 
-  // Couleurs
-  Object.entries(config.value.colors).forEach(([key, value]) => {
+  // Couleurs (partagées + thème actif)
+  Object.entries(activeColors.value).forEach(([key, value]) => {
     props[`--color-${key}`] = value
   })
 
@@ -230,11 +233,11 @@ const cssProps = computed(() => {
     })
   }
 
-  // Typographie groupée
-  Object.entries(config.value.typography).forEach(([section, values]) => {
+  // Typographie groupée (base + surcharges du thème)
+  Object.entries(activeTypography.value).forEach(([section, values]) => {
     Object.entries(values).forEach(([prop, value]) => {
       // Résolution des couleurs nommées
-      if (prop === 'color' && config.value.colors[value]) {
+      if (prop === 'color' && activeColors.value[value]) {
         props[`--font-${section}-${prop}`] = `var(--color-${value})`
       }
       // Résolution des polices nommées (primary, secondary, etc.)

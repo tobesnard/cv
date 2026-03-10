@@ -353,24 +353,21 @@ const cssProps = computed(() => {
   width: 150px;
   justify-content: flex-start;
   padding-left: 11px;
-  /* Ajusté pour compenser l'icône de 20px dans un bouton de 42px */
-  gap: 10px;
+  gap: 8px;
   background: var(--color-primary, #00d4aa);
   color: var(--color-background, #0a1628);
 }
 
 .button-text {
   display: none;
-  opacity: 0;
-  transition: opacity 0.2s ease;
   font-family: var(--font-family-secondary);
   font-weight: 600;
   font-size: 14px;
+  line-height: 20px;
 }
 
 .action-button:hover .button-text {
   display: inline;
-  opacity: 1;
 }
 
 @media print {
@@ -386,7 +383,7 @@ const cssProps = computed(() => {
   align-items: flex-start;
   margin-bottom: 5mm;
   padding-bottom: 5mm;
-  border-bottom: 1px solid var(--color-borderLight, rgba(0, 212, 170, 0.2));
+  /* border-bottom: 1px solid var(--color-borderLight, rgba(0, 212, 170, 0.2)); */
   gap: 8mm;
 }
 
@@ -442,6 +439,7 @@ const cssProps = computed(() => {
 
 .header-right {
   flex-shrink: 0;
+  margin-right: 3mm;
 }
 
 .photo-container {
@@ -468,18 +466,7 @@ const cssProps = computed(() => {
   box-shadow: 0 0 20px rgba(0, 212, 170, 0.3);
 }
 
-.photo-container::after {
-  content: '';
-  position: absolute;
-  width: 2.5mm;
-  height: 2.5mm;
-  background: var(--color-primary, #00d4aa);
-  border-radius: 0.5mm;
-  top: -1.75mm;
-  right: -1.75mm;
-  transform: rotate(45deg);
-  box-shadow: -37.75mm 37.75mm 0 var(--color-primary, #00d4aa);
-}
+
 
 .photo {
   width: 100%;

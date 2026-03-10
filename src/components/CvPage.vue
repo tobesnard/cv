@@ -155,7 +155,7 @@ import cvData from '../data/cv-data.json'
 import designConfig from '../data/design-config.json'
 import backgroundImageDark from '@/assets/images/background.png'
 import backgroundImageLight from '@/assets/images/background.png'
-import photoImage from '@/assets/images/photo-profile-amelioree.png'
+import photoImage from '@/assets/images/photo-profil-ameliore.png'
 
 // Import icons
 import userIcon from '@/assets/icons/user.svg'

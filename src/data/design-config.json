@@ -3,6 +3,7 @@
   "themes": {
     "dark": {
       "backgroundImage": "/src/assets/images/background.png",
+      "iconFilter": "brightness(0) saturate(100%) invert(67%) sepia(86%) saturate(458%) hue-rotate(120deg) brightness(96%) contrast(101%)",
       "background": "#0a1628",
       "backgroundLight": "#0d1f3c",
       "backgroundCard": "rgba(13, 31, 60, 0.65)",
@@ -38,22 +39,26 @@
         },
         "date": {
           "color": "primary"
+        },
+        "link": {
+          "color": "primary"
         }
       }
     },
     "light": {
       "backgroundImage": "",
-      "background": "#ffffff",
-      "backgroundLight": "#f8fafc",
-      "backgroundCard": "rgba(255, 255, 255, 0.9)",
+      "iconFilter": "brightness(0) saturate(100%) invert(67%) sepia(86%) saturate(458%) hue-rotate(120deg) brightness(57%) contrast(101%)",
+      "background": "#f8fafc",
+      "backgroundLight": "#ffffff",
+      "backgroundCard": "#ffffff",
       "backgroundDark": "#f1f5f9",
-      "text": "#1e293b",
+      "text": "#0f172a",
       "textMuted": "#475569",
-      "textSecondary": "#94a3b8",
-      "border": "rgba(0, 180, 148, 0.25)",
-      "borderLight": "rgba(0, 180, 148, 0.12)",
-      "backgroundProfilePicture": "#f1f5f9",
-      "sectionTitle": "#00896e",
+      "textSecondary": "#64748b",
+      "border": "rgba(0, 125, 99, 0.2)",
+      "borderLight": "rgba(0, 125, 99, 0.1)",
+      "backgroundProfilePicture": "#e2e8f0",
+      "sectionTitle": "#007d63",
       "typography": {
         "title": {
           "color": "primaryDark"
@@ -78,6 +83,9 @@
         },
         "date": {
           "color": "primaryDark"
+        },
+        "link": {
+          "color": "primaryDark"
         }
       }
     }
@@ -86,9 +94,9 @@
     "primary": "#00d4aa",
     "primaryDark": "#007d63",
     "primaryLight": "#00ffcc",
-    "secondary": "#1a365d",
-    "accent": "#f59e0b",
-    "accentOrange": "#ff6b35"
+    "secondary": "#1e293b",
+    "accent": "#d97706",
+    "accentOrange": "#ea580c"
   },
   "fonts": {
     "primary": "'Roboto', sans-serif",
@@ -131,8 +139,8 @@
   "skillLevels": {
     "icon": "square",
     "maxLevel": 5,
-    "activeColor": "#00d4aa",
-    "inactiveColor": "rgba(0, 212, 170, 0.2)"
+    "activeColor": "#007d63",
+    "inactiveColor": "#e2e8f0"
   },
   "typography": {
     "title": {
@@ -141,12 +149,12 @@
       "weight": "bold",
       "lineHeight": "tight",
       "letterSpacing": "wide",
-      "color": "primary"
+      "color": "primaryDark"
     },
     "subtitle": {
       "family": "secondary",
       "size": "xlarge",
-      "weight": "regular",
+      "weight": "medium",
       "lineHeight": "relaxed",
       "letterSpacing": "normal",
       "color": "text"
@@ -154,7 +162,7 @@
     "name": {
       "family": "primary",
       "size": "name",
-      "weight": "semibold",
+      "weight": "bold",
       "lineHeight": "tight",
       "letterSpacing": "medium",
       "color": "text"
@@ -170,10 +178,10 @@
     "cardTitle": {
       "family": "secondary",
       "size": "body",
-      "weight": "semibold",
+      "weight": "bold",
       "lineHeight": "relaxed",
       "letterSpacing": "caps",
-      "color": "primary"
+      "color": "primaryDark"
     },
     "sectionTitle": {
       "family": "secondary",
@@ -194,9 +202,17 @@
     "date": {
       "family": "monospace",
       "size": "small",
-      "weight": "regular",
+      "weight": "semibold",
       "lineHeight": "normal",
       "letterSpacing": "normal",
+      "color": "primaryDark"
+    },
+    "link": {
+      "family": "primary",
+      "size": "medium",
+      "weight": "regular",
+      "lineHeight": "normal",
+      "letterSpacing": "tight",
       "color": "primary"
     }
   }

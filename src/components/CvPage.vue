@@ -54,12 +54,12 @@
               <div class="contact-row">
                 <div class="contact-item">
                   <img src="@/assets/icons/github.svg" class="icon" alt="GitHub" />
-                  <a :href="data.entete.github" target="_blank" rel="noopener noreferrer">{{
+                  <a :href="data.entete.github" target="_blank" rel="noopener noreferrer" class="font-link">{{
                     data.entete.github.replace('https://', '') }}</a>
                 </div>
                 <div class="contact-item">
                   <img src="@/assets/icons/mail.svg" class="icon" alt="Email" />
-                  <a :href="'mailto:' + data.entete.email">{{ data.entete.email }}</a>
+                  <a :href="'mailto:' + data.entete.email" class="font-link">{{ data.entete.email }}</a>
                 </div>
               </div>
             </div>
@@ -432,14 +432,22 @@ const cssProps = computed(() => {
 }
 
 .contact-item a {
-  color: var(--color-primary, #00d4aa);
   text-decoration: none;
+}
+
+.font-link {
+  color: var(--font-link-color) !important;
+  font-family: var(--font-link-family) !important;
+  font-size: var(--font-link-size) !important;
+  font-weight: var(--font-link-weight) !important;
+  line-height: var(--font-link-lineHeight) !important;
+  letter-spacing: var(--font-link-letterSpacing) !important;
 }
 
 .contact-item .icon {
   width: 12px;
   height: 12px;
-  filter: brightness(0) saturate(100%) invert(67%) sepia(86%) saturate(458%) hue-rotate(120deg) brightness(96%) contrast(101%);
+  filter: var(--color-iconFilter);
 }
 
 .header-right {

@@ -14,35 +14,43 @@
     "accentOrange": "#ff6b35",
     "border": "rgba(0, 212, 170, 0.3)",
     "borderLight": "rgba(0, 212, 170, 0.15)",
-    "backgroundDark": "#050d1a"
+    "backgroundDark": "#050d1a",
+    "backgroundProfilePicture": "#fafafa"
   },
   "fonts": {
-    "heading": "'Rajdhani', sans-serif",
-    "body": "'Roboto', sans-serif"
+    "primary": "'Roboto', sans-serif",
+    "secondary": "'Rajdhani', sans-serif",
+    "monospace": "'JetBrains Mono', monospace"
   },
   "fontSizes": {
-    "titleMain": "20pt",
-    "titleSub": "16pt",
-    "name": "16pt",
-    "sectionTitle": "10pt",
+    "small": "8pt",
     "body": "9pt",
-    "small": "7pt"
+    "medium": "10pt",
+    "large": "12pt",
+    "xlarge": "14pt",
+    "name": "17pt",
+    "xxlarge": "20pt"
   },
-  "spacing": {
-    "xs": "0.25rem",
-    "sm": "0.5rem",
-    "md": "1rem",
-    "lg": "1.5rem",
-    "xl": "2rem",
-    "xxl": "3rem"
+  "fontWeights": {
+    "light": "300",
+    "regular": "400",
+    "medium": "500",
+    "semibold": "600",
+    "bold": "700"
   },
-  "print": {
-    "pageWidth": "210mm",
-    "pageHeight": "297mm",
-    "marginTop": "8mm",
-    "marginBottom": "8mm",
-    "marginLeft": "8mm",
-    "marginRight": "8mm"
+  "lineHeights": {
+    "tight": "1.2",
+    "relaxed": "1.3",
+    "normal": "1.4",
+    "loose": "1.5"
+  },
+  "letterSpacings": {
+    "none": "0",
+    "tight": "0.01em",
+    "normal": "0.02em",
+    "medium": "0.03em",
+    "wide": "0.05em",
+    "caps": "0.5pt"
   },
   "assets": {
     "background": "/src/assets/images/background.png",
@@ -53,5 +61,71 @@
     "maxLevel": 5,
     "activeColor": "#00d4aa",
     "inactiveColor": "rgba(0, 212, 170, 0.2)"
+  },
+  "typography": {
+    "title": {
+      "family": "secondary",
+      "size": "xxlarge",
+      "weight": "bold",
+      "lineHeight": "tight",
+      "letterSpacing": "wide",
+      "color": "primary"
+    },
+    "subtitle": {
+      "family": "secondary",
+      "size": "xlarge",
+      "weight": "regular",
+      "lineHeight": "relaxed",
+      "letterSpacing": "normal",
+      "color": "text"
+    },
+    "name": {
+      "family": "primary",
+      "size": "name",
+      "weight": "semibold",
+      "lineHeight": "tight",
+      "letterSpacing": "medium",
+      "color": "text"
+    },
+    "contact": {
+      "family": "primary",
+      "size": "medium",
+      "weight": "regular",
+      "lineHeight": "normal",
+      "letterSpacing": "tight",
+      "color": "textMuted"
+    },
+    "cardTitle": {
+      "family": "secondary",
+      "size": "body",
+      "weight": "semibold",
+      "lineHeight": "relaxed",
+      "letterSpacing": "caps",
+      "color": "primary"
+    },
+    "sectionTitle": {
+      "family": "secondary",
+      "size": "body",
+      "weight": "bold",
+      "lineHeight": "relaxed",
+      "letterSpacing": "normal",
+      "color": "text"
+    },
+    "body": {
+      "family": "primary",
+      "size": "body",
+      "weight": "regular",
+      "lineHeight": "loose",
+      "letterSpacing": "tight",
+      "color": "textMuted"
+    },
+    "date": {
+      "family": "monospace",
+      "size": "small",
+      "weight": "regular",
+      "lineHeight": "normal",
+      "letterSpacing": "normal",
+      "color": "primary"
+    }
   }
 }

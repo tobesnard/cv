@@ -30,14 +30,14 @@
     }
   ],
   "competences": {
-    "Compétences Techniques": {
+    "Compétences": {
       "Développement": [
         "C# (.NET 8.0)",
         "PHP 8.x",
         "JS (Vanilla/Vue.js)",
         "C / Assembleur"
       ],
-      "Architecture et Conception": [
+      "Architecture": [
         "Clean Architecture",
         "POO",
         "Design Patterns",
@@ -45,19 +45,19 @@
         "Modélisation",
         "Modernisation Legacy"
       ],
-      "Frameworks et Mobile": [
+      "Frameworks": [
         ".NET MAUI",
         "Android"
       ],
-      "Systèmes et Administration": [
+      "Systèmes": [
         "Windows",
         "Linux",
         "PowerShell",
         "Bash"
       ]
     },
-    "Compétences Transverses": {
-      "Pilotage et Méthodes": [
+    "Transverses": {
+      "Pilotage": [
         "Management d'équipe",
         "Cycle de vie (SDLC)",
         "Agile (SCRUM/XP)",
@@ -79,7 +79,7 @@
       "description": "Réécriture complète du logiciel de gestion d'officine (LGO) vers une application web moderne (PHP/Vue.js) après une migration depuis VB. Pilotage d'équipe en méthodologies SCRUM et XP, modélisation de l'architecture via UML et développement de modules critiques en C# (.NET). Responsable du cycle de vie du projet : spécifications techniques, tests, déploiement, sécurité et maintenance évolutive."
     },
     {
-      "titre": "Expérience de vie et engagement | Accompagnement spécialisé",
+      "titre": "Expérience de vie et engagement",
       "entreprise": null,
       "periode": "2015-2021",
       "description": "Expérience en milieu médico-social dédiée à l'accompagnement de personnes en situation de handicap sévère. Cette période a renforcé mon intelligence émotionnelle et mon leadership, me permettant d'aligner rigueur technique et écoute active au service des besoins utilisateurs."

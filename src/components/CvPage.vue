@@ -1,9 +1,10 @@
 <template>
   <div class="cv-container" :style="cssProps">
-    <DefineCard v-slot="{ title, customClass, $slots }">
+    <DefineCard v-slot="{ title, icon, customClass, $slots }">
       <section :class="['cv-card-section', customClass]">
-        <div v-if="title" class="card-header">
-          <h3 class="section-title">{{ title.toUpperCase() }}</h3>
+        <div v-if="title" class="card-header font-card-title">
+          <img v-if="icon" :src="icon" class="card-icon icon" alt="" />
+          <h3 class="card-title">{{ title }}</h3>
         </div>
         <div class="card-body">
           <component :is="$slots.default" />
@@ -11,7 +12,7 @@
       </section>
     </DefineCard>
 
-    <div class="cv-page">
+    <div class="cv-page font-body">
       <!-- Background -->
       <div class="cv-background" :style="{ backgroundImage: `url(${config.assets.background})` }"></div>
 
@@ -21,54 +22,46 @@
         <header class="cv-header">
           <div class="header-left">
             <h1 class="title">
-              <span class="title-main">{{ data.titre }}</span>
-              <span class="title-sub">{{ data.subtitle }}</span>
-              <hr>
+              <span class="title-main font-title">{{ data.titre.toUpperCase() }}</span>
+              <span class="title-sub font-subtitle">{{ data.subtitle }}</span>
+              <!-- <hr> -->
             </h1>
-            <h2 class="name">{{ data.entete.nom }}</h2>
-            <div class="contact-info">
-              <div class="contact-item">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                  <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-                <span>{{ data.entete.adresse }}</span>
+            <h2 class="name font-name">{{ data.entete.nom }}</h2>
+            <div class="contact-info font-contact">
+              <div class="contact-row">
+                <div class="contact-item">
+                  <img src="@/assets/icons/map-pin.svg" class="icon" alt="Location" />
+                  <span>{{ data.entete.adresse }}</span>
+                </div>
+                <div class="contact-item">
+                  <img src="@/assets/icons/phone.svg" class="icon" alt="Phone" />
+                  <span>{{ data.entete.telephone }}</span>
+                </div>
               </div>
-              <div class="contact-item">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path
-                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
-                  </path>
-                </svg>
-                <span>{{ data.entete.telephone }}</span>
-              </div>
-              <div class="contact-item">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path
-                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
-                  </path>
-                </svg>
-                <a :href="data.entete.github" target="_blank" rel="noopener noreferrer">{{
-                  data.entete.github.replace('https://', '') }}</a>
-              </div>
-              <div class="contact-item">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                  <polyline points="22,6 12,13 2,6"></polyline>
-                </svg>
-                <a :href="'mailto:' + data.entete.email">{{ data.entete.email }}</a>
+              <div class="contact-row">
+                <div class="contact-item">
+                  <img src="@/assets/icons/github.svg" class="icon" alt="GitHub" />
+                  <a :href="data.entete.github" target="_blank" rel="noopener noreferrer">{{
+                    data.entete.github.replace('https://', '') }}</a>
+                </div>
+                <div class="contact-item">
+                  <img src="@/assets/icons/mail.svg" class="icon" alt="Email" />
+                  <a :href="'mailto:' + data.entete.email">{{ data.entete.email }}</a>
+                </div>
               </div>
             </div>
           </div>
           <div class="header-right">
             <div class="photo-container">
-              <img :src="config.assets.photo" :alt="data.entete.nom" class="photo" />
+              <div class="photo-wrapper">
+                <img :src="config.assets.photo" :alt="data.entete.nom" class="photo" />
+              </div>
             </div>
           </div>
         </header>
 
         <!-- Profile Section -->
-        <ReuseCard title="PROFIL" customClass="profile-section">
+        <ReuseCard title="PROFIL" :icon="icons.user" customClass="profile-section">
           <p class="profile-text">{{ data.profil }}</p>
         </ReuseCard>
 
@@ -77,15 +70,15 @@
           <!-- Left Column -->
           <div customClass="left-column">
 
-            <ReuseCard :title="section_name" customClass="transverses-section"
-              v-for="(competences, section_name) in data.competences" :key="title">
+            <ReuseCard :title="section_name" :icon="icons.code" customClass="transverses-section"
+              v-for="(competences, section_name) in data.competences" :key="section_name">
 
               <div class="skills-group" v-for="(skills, category) in competences" :key="category">
-                <h4 class="skills-subtitle">
+                <h4 class="skills-subtitle font-section-title">
                   <span class="skill-icon"></span>
-                  {{ category }}
+                  {{ category.toUpperCase() }}
                 </h4>
-                <div class="skills-list">
+                <div class="skills-list ">
                   <div class="skill-item">
                     {{ skills.join(', ') }}
                   </div>
@@ -101,18 +94,24 @@
 
 
           <!-- Right Column -->
-          <ReuseCard customClass="right-column" title="EXPÉRIENCE PROFESSIONNELLE">
+          <ReuseCard customClass="right-column" :icon="icons.briefcase" title="EXPÉRIENCE PROFESSIONNELLE">
             <!-- Experience -->
-            <section class="section">
-
-              <div v-for="exp in data.experience_professionnelle" :key="exp.entreprise" class="experience-item">
+            <section class="section timeline-container">
+              <div v-for="exp in data.experience_professionnelle" :key="exp.entreprise"
+                class="experience-item timeline-item">
+                <div class="timeline-dot"></div>
                 <div class="exp-header">
-                  <h4 class="skills-subtitle exp-title">
-                    <span class="skill-icon"></span>
-                    {{ exp.titre }} | {{ exp.entreprise || '' }} ({{ exp.periode }})
+                  <h4 class="exp-title">
+                    <span class="exp-title-main font-section-title">
+                      {{ exp.titre }}
+                    </span>
+                    <span class="exp-company" v-if="exp.entreprise">&nbsp;| {{ exp.entreprise || '' }}</span>
                   </h4>
+                  <span class="exp-period font-date">
+                    {{ exp.periode }}
+                  </span>
                 </div>
-                <p class="profile-text" style="font-size: 8.5pt; opacity: 0.9;">{{ exp.description }}</p>
+                <p class="profile-text exp-description">{{ exp.description }}</p>
               </div>
             </section>
           </ReuseCard>
@@ -121,20 +120,20 @@
         <!-- Footer Grid -->
         <div class="footer-grid">
           <!-- Formation -->
-          <ReuseCard title="FORMATION" customClass="formation-section">
+          <ReuseCard title="FORMATION" :icon="icons.graduation" customClass="formation-section">
             <div class="formation-list">
               <div v-for="edu in data.formation" :key="edu.annee" class="formation-item">
                 <span class="formation-year">{{ edu.annee }}</span>
                 <div class="formation-details">
                   <span class="formation-title">{{ edu.diplome }}</span>
-                  <span class="formation-school"> - {{ edu.etablissement }} </span>
+                  <span class="formation-school font-body"> — {{ edu.etablissement }} </span>
                 </div>
               </div>
             </div>
           </ReuseCard>
 
           <!-- Interests -->
-          <ReuseCard title="CENTRES D'INTÉRÊT" customClass="interests-section">
+          <ReuseCard title="CENTRES D'INTÉRÊT" :icon="icons.heart" customClass="interests-section">
             <p class="interests-text">{{ data.centres_d_interets }}</p>
           </ReuseCard>
         </div>
@@ -152,10 +151,25 @@ import designConfig from '../data/design-config.json'
 import backgroundImage from '@/assets/images/background.png'
 import photoImage from '@/assets/images/photo.jpg'
 
+// Import icons
+import userIcon from '@/assets/icons/user.svg'
+import codeIcon from '@/assets/icons/code.svg'
+import briefcaseIcon from '@/assets/icons/briefcase.svg'
+import graduationIcon from '@/assets/icons/graduation-cap.svg'
+import heartIcon from '@/assets/icons/heart.svg'
+
 const [DefineCard, ReuseCard] = createReusableTemplate()
 
 const data = ref(cvData)
 const config = ref(designConfig)
+
+const icons = {
+  user: userIcon,
+  code: codeIcon,
+  briefcase: briefcaseIcon,
+  graduation: graduationIcon,
+  heart: heartIcon
+}
 
 // Overwrite asset paths with imported URLs for Vite processing
 config.value.assets.background = backgroundImage
@@ -173,14 +187,44 @@ const cssProps = computed(() => {
     props[`--color-${key}`] = value
   })
 
-  // Polices
-  Object.entries(config.value.fonts).forEach(([key, value]) => {
-    props[`--font-${key}`] = value
-  })
+  // Polices de base
+  if (config.value.fonts) {
+    Object.entries(config.value.fonts).forEach(([key, value]) => {
+      props[`--font-family-${key}`] = value
+    })
+  }
 
-  // Tailles
-  Object.entries(config.value.fontSizes).forEach(([key, value]) => {
-    props[`--size-${key}`] = value
+  // Typographie groupée
+  Object.entries(config.value.typography).forEach(([section, values]) => {
+    Object.entries(values).forEach(([prop, value]) => {
+      // Résolution des couleurs nommées
+      if (prop === 'color' && config.value.colors[value]) {
+        props[`--font-${section}-${prop}`] = `var(--color-${value})`
+      }
+      // Résolution des polices nommées (primary, secondary, etc.)
+      else if (prop === 'family' && config.value.fonts && config.value.fonts[value]) {
+        props[`--font-${section}-${prop}`] = `var(--font-family-${value})`
+      }
+      // Résolution des tailles nommées (small, medium, etc.)
+      else if (prop === 'size' && config.value.fontSizes && config.value.fontSizes[value]) {
+        props[`--font-${section}-${prop}`] = config.value.fontSizes[value]
+      }
+      // Résolution des graisses nommées (regular, bold, etc.)
+      else if (prop === 'weight' && config.value.fontWeights && config.value.fontWeights[value]) {
+        props[`--font-${section}-${prop}`] = config.value.fontWeights[value]
+      }
+      // Résolution des hauteurs de ligne nommées (tight, normal, etc.)
+      else if (prop === 'lineHeight' && config.value.lineHeights && config.value.lineHeights[value]) {
+        props[`--font-${section}-${prop}`] = config.value.lineHeights[value]
+      }
+      // Résolution des espacements de lettres nommés (none, wide, etc.)
+      else if (prop === 'letterSpacing' && config.value.letterSpacings && config.value.letterSpacings[value]) {
+        props[`--font-${section}-${prop}`] = config.value.letterSpacings[value]
+      }
+      else {
+        props[`--font-${section}-${prop}`] = value
+      }
+    })
   })
 
   return props
@@ -245,42 +289,31 @@ const cssProps = computed(() => {
 
 .title-main {
   display: block;
-  font-family: var(--font-heading, 'Rajdhani', sans-serif);
-  font-size: var(--size-titleMain, 22pt);
-  font-weight: 700;
-  color: var(--color-primary, #00d4aa);
-  line-height: 1.1;
 }
 
 .title-sub {
   display: block;
-  font-family: var(--font-heading, 'Rajdhani', sans-serif);
-  font-size: var(--size-titleSub, 14pt);
-  font-weight: 500;
-  color: var(--color-text, #ffffff);
 }
 
 .name {
-  font-family: var(--font-heading, 'Rajdhani', sans-serif);
-  font-size: var(--size-name, 18pt);
-  font-weight: 600;
-  color: var(--color-text, #ffffff);
-  /* margin: 2mm 0; */
+  padding-bottom: 10pt;
+  ;
 }
 
 .contact-info {
   display: flex;
   flex-direction: column;
-  /* gap: 1.5mm; */
+}
+
+.contact-row {
+  display: flex;
+  gap: 4mm;
 }
 
 .contact-item {
   display: flex;
   align-items: center;
   gap: 2mm;
-  font-family: var(--font-body, 'Roboto', sans-serif);
-  font-size: var(--size-body, 9pt);
-  color: var(--color-textMuted, #94a3b8);
 }
 
 .contact-item a {
@@ -291,7 +324,7 @@ const cssProps = computed(() => {
 .contact-item .icon {
   width: 12px;
   height: 12px;
-  color: var(--color-primary, #00d4aa);
+  filter: brightness(0) saturate(100%) invert(67%) sepia(86%) saturate(458%) hue-rotate(120deg) brightness(96%) contrast(101%);
 }
 
 .header-right {
@@ -299,40 +332,58 @@ const cssProps = computed(() => {
 }
 
 .photo-container {
-  width: 35mm;
-  height: 35mm;
+  width: 36mm;
+  height: 36mm;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
   overflow: visible;
+  padding: 3mm;
+  z-index: 1;
 }
 
 .photo-container::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--color-primary, #00d4aa);
-  clip-path: polygon(29% 0%, 71% 0%, 100% 29%, 100% 71%, 71% 100%, 29% 100%, 0% 71%, 0% 29%, 29% 0%, 29.5% 1%, 1% 29.5%, 1% 70.5%, 29.5% 99%, 70.5% 99%, 99% 70.5%, 99% 29.5%, 70.5% 1%, 29.5% 1%);
-  z-index: 2;
+  background: var(--color-backgroundLight, #14213d);
+  border: 4px solid var(--color-primary, #00d4aa);
+  border-radius: 5.5mm;
+  transform: rotate(45deg);
+  z-index: -1;
+  box-shadow: 0 0 20px rgba(0, 212, 170, 0.3);
 }
 
 .photo-container::after {
   content: '';
   position: absolute;
-  inset: 4px;
+  width: 2.5mm;
+  height: 2.5mm;
   background: var(--color-primary, #00d4aa);
-  clip-path: polygon(29% 0%, 71% 0%, 100% 29%, 100% 71%, 71% 100%, 29% 100%, 0% 71%, 0% 29%, 29% 0%, 29.5% 1%, 1% 29.5%, 1% 70.5%, 29.5% 99%, 70.5% 99%, 99% 70.5%, 99% 29.5%, 70.5% 1%, 29.5% 1%);
-  z-index: 2;
-  opacity: 0.6;
+  border-radius: 0.5mm;
+  top: -1.75mm;
+  right: -1.75mm;
+  transform: rotate(45deg);
+  box-shadow: -37.75mm 37.75mm 0 var(--color-primary, #00d4aa);
 }
 
 .photo {
-  width: calc(100% - 14px);
-  height: calc(100% - 14px);
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  clip-path: polygon(29% 0%, 71% 0%, 100% 29%, 100% 71%, 71% 100%, 29% 100%, 0% 71%, 0% 29%);
-  background: var(--color-background, #0a1628);
+  border-radius: 4mm;
+  transform: rotate(-45deg);
+  scale: 0.95;
+}
+
+.photo-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 4mm;
+  transform: rotate(45deg);
+  background: var(--color-backgroundProfilePicture, white);
 }
 
 /* Sections */
@@ -340,14 +391,9 @@ const cssProps = computed(() => {
   margin-bottom: 4mm;
 }
 
-.section-title {
-  font-family: var(--font-heading, 'Rajdhani', sans-serif);
-  font-size: var(--size-sectionTitle, 12pt);
-  font-weight: 700;
-  color: var(--color-primary, #00d4aa);
+.card-title {
   margin: 0;
   text-transform: uppercase;
-  letter-spacing: 1px;
 }
 
 /* Card Section Base Style */
@@ -358,7 +404,6 @@ const cssProps = computed(() => {
   margin-bottom: 4mm;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
-  /* Bordure en dégradé */
   border: 1px solid;
   border-image-source: linear-gradient(135deg, var(--color-primary, #00d4aa) 0%, transparent 100%);
   border-image-slice: 1;
@@ -366,22 +411,22 @@ const cssProps = computed(() => {
 
 .card-header {
   background: rgba(0, 0, 0, 0.3);
-  /* Plus foncé que la card */
+  background-image: linear-gradient(to right, lab(75.8446 -52.9604 7.9406 / 0.1) 0%, rgba(0, 0, 0, 0) 100%);
   padding: 1mm 3mm;
   border-bottom: 1px solid var(--color-borderLight, rgba(0, 212, 170, 0.15));
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+}
+
+.card-icon {
+  width: 14px;
+  height: 14px;
+  filter: brightness(0) saturate(100%) invert(67%) sepia(86%) saturate(458%) hue-rotate(120deg) brightness(96%) contrast(101%);
 }
 
 .card-body {
   padding: 4mm;
-}
-
-/* Profile */
-.profile-text {
-  font-family: var(--font-body, 'Roboto', sans-serif);
-  font-size: var(--size-body, 9pt);
-  color: var(--color-textMuted, #e2e8f0);
-  line-height: 1.5;
-  margin: 0;
 }
 
 /* Main Grid */
@@ -390,11 +435,6 @@ const cssProps = computed(() => {
   grid-template-columns: 33fr 67fr;
   gap: 5mm;
   margin-bottom: 4mm;
-}
-
-.left-column,
-.right-column {
-  margin-bottom: 0;
 }
 
 /* Skills */
@@ -427,63 +467,34 @@ const cssProps = computed(() => {
   display: flex;
   align-items: center;
   gap: 2mm;
-  font-family: var(--font-body, 'Roboto', sans-serif);
-  font-size: var(--size-body, 8.5pt);
-  color: var(--color-textMuted, #e2e8f0);
-}
-
-.skill-icon-box {
-  width: 6px;
-  height: 6px;
-  background: var(--color-primary, #00d4aa);
-  flex-shrink: 0;
-}
-
-.skill-name {
-  flex: 1;
-}
-
-.skill-level {
-  display: flex;
-  gap: 1mm;
-}
-
-.level-box {
-  width: 8px;
-  height: 8px;
-  background: var(--color-borderLight, rgba(0, 212, 170, 0.2));
-  border: 1px solid var(--color-border, rgba(0, 212, 170, 0.4));
-}
-
-.level-box.filled {
-  background: var(--color-primary, #00d4aa);
-}
-
-/* Transverses */
-.transverse-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 2mm;
-}
-
-.transverse-item {
-  display: flex;
-  align-items: center;
-  gap: 2mm;
-  font-family: 'Roboto', sans-serif;
-  font-size: 8.5pt;
-  color: var(--color-textMuted, #e2e8f0);
 }
 
 /* Experience */
+.timeline-container {
+  position: relative;
+  padding-left: 6mm;
+  margin-left: 2mm;
+  border-left: 1px solid var(--color-border, rgba(0, 212, 170, 0.3));
+}
+
 .experience-item {
-  margin-bottom: 4mm;
-  padding-bottom: 3mm;
-  border-bottom: 1px solid var(--color-borderLight, rgba(0, 212, 170, 0.1));
+  position: relative;
+  margin-bottom: 5mm;
+  padding-bottom: 2mm;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: calc(-6mm - 4.5px);
+  top: 1.5mm;
+  width: 8px;
+  height: 8px;
+  background: var(--color-primary, #00d4aa);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--color-primary, #00d4aa);
 }
 
 .experience-item:last-child {
-  border-bottom: none;
   margin-bottom: 0;
   padding-bottom: 0;
 }
@@ -495,45 +506,33 @@ const cssProps = computed(() => {
   margin-bottom: 1mm;
 }
 
+.exp-title {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  color: var(--color-sectionTitle, #00b894);
+}
+
 .exp-company {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 11pt;
-  font-weight: 600;
-  color: var(--color-text, #ffffff);
+  color: var(--color-primary, #00b894);
   margin: 0;
 }
 
-.exp-period {
-  font-family: 'Roboto', sans-serif;
-  font-size: 9pt;
+.exp-period,
+.formation-year {
   color: var(--color-primary, #00d4aa);
-  font-weight: 500;
 }
 
 .exp-subtitle {
-  font-family: var(--font-body, 'Roboto', sans-serif);
-  font-size: var(--size-body, 9pt);
-  font-style: italic;
   color: var(--color-textMuted, #94a3b8);
   margin: 0 0 1mm 0;
-}
-
-.exp-title,
-.skills-subtitle {
-  font-family: var(--font-body, 'Roboto', sans-serif);
-  font-size: var(--size-body, 9pt);
-  font-weight: 500;
-  color: var(--color-primary, #00d4aa);
-  margin: 0 0 2mm 0;
 }
 
 .exp-tasks {
   margin: 0;
   padding-left: 4mm;
-  font-family: var(--font-body, 'Roboto', sans-serif);
-  font-size: var(--size-small, 8pt);
   color: var(--color-textSecondary, #cbd5e1);
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 .exp-tasks li {
@@ -547,11 +546,6 @@ const cssProps = computed(() => {
   gap: 5mm;
 }
 
-.formation-section,
-.interests-section {
-  margin-bottom: 0;
-}
-
 .formation-list {
   display: flex;
   flex-direction: column;
@@ -561,13 +555,10 @@ const cssProps = computed(() => {
 .formation-item {
   display: flex;
   gap: 3mm;
-  font-family: var(--font-body, 'Roboto', sans-serif);
-  font-size: var(--size-body, 8.5pt);
   color: var(--color-textMuted, #e2e8f0);
 }
 
 .formation-year {
-  font-weight: 700;
   color: var(--color-primary, #00d4aa);
   min-width: 10mm;
 }
@@ -576,25 +567,87 @@ const cssProps = computed(() => {
   flex: 1;
 }
 
-.formation-title {
-  font-weight: 500;
-}
-
-.formation-level {
-  color: var(--color-primary, #00d4aa);
-}
-
-.formation-school {
-  color: var(--color-textMuted, #94a3b8);
-}
-
 .interests-text {
-  font-family: var(--font-body, 'Roboto', sans-serif);
-  font-size: var(--size-body, 8.5pt);
-  color: var(--color-textMuted, #e2e8f0);
-  line-height: 1.5;
   margin: 0;
 }
+
+
+
+.font-date {
+  color: var(--font-date-color) !important;
+  font-family: var(--font-date-family) !important;
+  font-size: var(--font-date-size) !important;
+  font-weight: var(--font-date-weight) !important;
+  line-height: var(--font-date-lineHeight) !important;
+  letter-spacing: var(--font-date-letterSpacing) !important;
+}
+
+.font-title {
+  color: var(--font-title-color) !important;
+  font-family: var(--font-title-family) !important;
+  font-size: var(--font-title-size) !important;
+  font-weight: var(--font-title-weight) !important;
+  line-height: var(--font-title-lineHeight) !important;
+  letter-spacing: var(--font-title-letterSpacing) !important;
+}
+
+.font-subtitle {
+  color: var(--font-subtitle-color) !important;
+  font-family: var(--font-subtitle-family) !important;
+  font-size: var(--font-subtitle-size) !important;
+  font-weight: var(--font-subtitle-weight) !important;
+  line-height: var(--font-subtitle-lineHeight) !important;
+  letter-spacing: var(--font-subtitle-letterSpacing) !important;
+}
+
+.font-name {
+  color: var(--font-name-color) !important;
+  font-family: var(--font-name-family) !important;
+  font-size: var(--font-name-size) !important;
+  font-weight: var(--font-name-weight) !important;
+  line-height: var(--font-name-lineHeight) !important;
+  letter-spacing: var(--font-name-letterSpacing) !important;
+}
+
+.font-contact {
+  color: var(--font-contact-color) !important;
+  font-family: var(--font-contact-family) !important;
+  font-size: var(--font-contact-size) !important;
+  font-weight: var(--font-contact-weight) !important;
+  line-height: var(--font-contact-lineHeight) !important;
+  letter-spacing: var(--font-contact-letterSpacing) !important;
+}
+
+.font-section-title {
+  color: var(--font-sectionTitle-color) !important;
+  font-family: var(--font-cardTitle-family) !important;
+  /* Note: Utilise cardTitle car cardTitle gère les titres de sections */
+  font-size: var(--font-cardTitle-size) !important;
+  font-weight: var(--font-cardTitle-weight) !important;
+  line-height: var(--font-cardTitle-lineHeight) !important;
+  letter-spacing: var(--font-cardTitle-letterSpacing) !important;
+}
+
+.font-card-title {
+  color: var(--font-cardTitle-color) !important;
+  font-family: var(--font-cardTitle-family) !important;
+  font-size: var(--font-cardTitle-size) !important;
+  font-weight: var(--font-cardTitle-weight) !important;
+  line-height: var(--font-cardTitle-lineHeight) !important;
+  letter-spacing: var(--font-cardTitle-letterSpacing) !important;
+}
+
+.font-body {
+  color: var(--font-body-color) !important;
+  font-family: var(--font-body-family) !important;
+  font-size: var(--font-body-size) !important;
+  font-weight: var(--font-body-weight) !important;
+  line-height: var(--font-body-lineHeight) !important;
+  letter-spacing: var(--font-body-letterSpacing) !important;
+  display: inline-block;
+}
+
+
 
 /* Print Styles */
 @media print {

@@ -387,7 +387,7 @@ const cssProps = computed(() => {
 /* Main Grid */
 .main-grid {
   display: grid;
-  grid-template-columns: 0.7fr 1.5fr;
+  grid-template-columns: 33fr 67fr;
   gap: 5mm;
   margin-bottom: 4mm;
 }

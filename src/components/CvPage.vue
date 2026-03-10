@@ -489,7 +489,7 @@ const cssProps = computed(() => {
   transform: rotate(-45deg);
   scale: 1.15;
   display: block;
-  margin: -10% 0 0 auto;
+  margin: -7% 10% 0 auto;
 }
 
 .photo-wrapper {

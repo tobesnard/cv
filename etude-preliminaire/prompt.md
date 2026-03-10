@@ -34,3 +34,18 @@
 * Un exemple de composant Vue utilisant ces données.
 
 Le projet doit être immédiatement fonctionnel après installation des dépendances."
+
+
+
+
+
+---
+
+j'ai mis en ligne mon cv pour un poste de lead développeur à l'adresse https://tobesnard.github.io/cv/ . le projet est en vuejs.
+analyse la  mise en page, la composition et tout les éléments liés aux design (typographie, couleurs, lumière, identité visuelle, technique).
+donne un visuel avec les amélirations. donne un document markdown avec les améliorations sous forme de texte. donne un document html pour synthétiser la chatre graphique.
+
+
+
+
+

@@ -316,12 +316,14 @@ const cssProps = computed(() => {
 }
 
 .action-button svg {
-  display: inline-block;
-  vertical-align: middle;
-  stroke-width: 2.5px;
+  display: block;
   width: 20px;
   height: 20px;
+  min-width: 20px;
+  min-height: 20px;
+  stroke-width: 2.5px;
   margin: 0;
+  flex-shrink: 0;
 }
 
 .action-button {
@@ -355,6 +357,7 @@ const cssProps = computed(() => {
 }
 
 .button-text {
+  display: none;
   opacity: 0;
   transition: opacity 0.2s ease;
   font-family: var(--font-family-secondary);
@@ -363,6 +366,7 @@ const cssProps = computed(() => {
 }
 
 .action-button:hover .button-text {
+  display: inline;
   opacity: 1;
 }
 

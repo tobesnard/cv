@@ -149,11 +149,17 @@ import { ref, computed } from 'vue'
 import { createReusableTemplate } from '@vueuse/core'
 import cvData from '../data/cv-data.json'
 import designConfig from '../data/design-config.json'
+import backgroundImage from '@/assets/images/background.png'
+import photoImage from '@/assets/images/photo.jpg'
 
 const [DefineCard, ReuseCard] = createReusableTemplate()
 
 const data = ref(cvData)
 const config = ref(designConfig)
+
+// Overwrite asset paths with imported URLs for Vite processing
+config.value.assets.background = backgroundImage
+config.value.assets.photo = photoImage
 
 const renderSkillLevel = (level, maxLevel = 5) => {
   return Array.from({ length: maxLevel }, (_, i) => i < level)
@@ -203,7 +209,6 @@ const cssProps = computed(() => {
 .cv-background {
   position: absolute;
   inset: 0;
-  background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/background.png-DSzTWAFYYjrON2NnXoieKBNk9u5swK.jpeg');
   background-size: cover;
   background-position: center;
   opacity: 0.4;

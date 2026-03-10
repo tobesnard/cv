@@ -507,6 +507,7 @@ const cssProps = computed(() => {
 .card-title {
   margin: 0;
   text-transform: uppercase;
+  line-height: 1;
 }
 
 /* Card Section Base Style */
@@ -525,7 +526,7 @@ const cssProps = computed(() => {
 .card-header {
   background: rgba(0, 0, 0, 0.3);
   background-image: linear-gradient(to right, lab(75.8446 -52.9604 7.9406 / 0.1) 0%, rgba(0, 0, 0, 0) 100%);
-  padding: 1mm 3mm;
+  padding: 2mm 3mm;
   border-bottom: 1px solid var(--color-borderLight, rgba(0, 212, 170, 0.15));
   display: flex;
   align-items: center;
@@ -535,6 +536,8 @@ const cssProps = computed(() => {
 .card-icon {
   width: 14px;
   height: 14px;
+  flex-shrink: 0;
+  display: block;
   filter: brightness(0) saturate(100%) invert(67%) sepia(86%) saturate(458%) hue-rotate(120deg) brightness(96%) contrast(101%);
 }
 

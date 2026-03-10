@@ -76,9 +76,8 @@ body {
 
   #app {
     width: var(--page-width);
-    height: var(--page-height);
     min-height: var(--page-height);
-    overflow: hidden;
+    overflow: visible;
   }
 
   * {

@@ -18,13 +18,25 @@
 
       <!-- Content -->
       <div class="cv-content">
+        <!-- Floating Action Buttons (no-print) -->
+        <div class="action-buttons no-print">
+          <button @click="printPage" class="action-button" title="Imprimer">
+            <PrinterIcon :size="20" />
+            <span class="button-text">Imprimer</span>
+          </button>
+          <button @click="toggleTheme" class="action-button" :title="isDarkMode ? 'Light Mode' : 'Dark Mode'">
+            <SunIcon v-if="isDarkMode" :size="20" />
+            <MoonIcon v-else :size="20" />
+            <span class="button-text">{{ isDarkMode ? 'Light Mode' : 'Dark Mode' }}</span>
+          </button>
+        </div>
+
         <!-- Header -->
         <header class="cv-header">
           <div class="header-left">
             <h1 class="title">
               <span class="title-main font-title">{{ data.titre.toUpperCase() }}</span>
               <span class="title-sub font-subtitle">{{ data.subtitle }}</span>
-              <!-- <hr> -->
             </h1>
             <h2 class="name font-name">{{ data.entete.nom }}</h2>
             <div class="contact-info font-contact">
@@ -68,34 +80,25 @@
         <!-- Main Content Grid -->
         <div class="main-grid">
           <!-- Left Column -->
-          <div customClass="left-column">
-
+          <div class="left-column">
             <ReuseCard :title="section_name" :icon="icons.code" customClass="transverses-section"
               v-for="(competences, section_name) in data.competences" :key="section_name">
-
               <div class="skills-group" v-for="(skills, category) in competences" :key="category">
                 <h4 class="skills-subtitle font-section-title">
                   <span class="skill-icon"></span>
                   {{ category.toUpperCase() }}
                 </h4>
-                <div class="skills-list ">
+                <div class="skills-list">
                   <div class="skill-item">
                     {{ skills.join(', ') }}
                   </div>
                 </div>
               </div>
             </ReuseCard>
-
-
           </div>
-
-
-
-
 
           <!-- Right Column -->
           <ReuseCard customClass="right-column" :icon="icons.briefcase" title="EXPÉRIENCE PROFESSIONNELLE">
-            <!-- Experience -->
             <section class="section timeline-container">
               <div v-for="exp in data.experience_professionnelle" :key="exp.entreprise"
                 class="experience-item timeline-item">
@@ -146,6 +149,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { createReusableTemplate } from '@vueuse/core'
+import { Printer as PrinterIcon, Sun as SunIcon, Moon as MoonIcon } from 'lucide-vue-next'
 import cvData from '../data/cv-data.json'
 import designConfig from '../data/design-config.json'
 import backgroundImage from '@/assets/images/background.png'
@@ -162,6 +166,7 @@ const [DefineCard, ReuseCard] = createReusableTemplate()
 
 const data = ref(cvData)
 const config = ref(designConfig)
+const isDarkMode = ref(true)
 
 const icons = {
   user: userIcon,
@@ -174,6 +179,37 @@ const icons = {
 // Overwrite asset paths with imported URLs for Vite processing
 config.value.assets.background = backgroundImage
 config.value.assets.photo = photoImage
+
+const toggleTheme = () => {
+  isDarkMode.value = !isDarkMode.value
+  if (!isDarkMode.value) {
+    config.value.colors.background = '#ffffff'
+    config.value.colors.backgroundLight = '#f8fafc'
+    config.value.colors.backgroundCard = 'rgba(255, 255, 255, 0.9)'
+    config.value.colors.text = '#1e293b'
+    config.value.colors.textMuted = '#475569'
+    config.value.colors.backgroundDark = '#f1f5f9'
+  } else {
+    // Restore dark mode (values from original config)
+    config.value.colors.background = '#0a1628'
+    config.value.colors.backgroundLight = '#0d1f3c'
+    config.value.colors.backgroundCard = 'rgba(13, 31, 60, 0.65)'
+    config.value.colors.text = '#ffffff'
+    config.value.colors.textMuted = '#cde1ff'
+    config.value.colors.backgroundDark = '#050d1a'
+  }
+}
+
+const printPage = () => {
+  console.log('Démarrage de l\'impression...');
+  const elements = document.querySelectorAll('.cv-card-section, .main-grid, .footer-grid, .profile-section');
+  console.log(`Nombre d'éléments de contenu trouvés : ${elements.length}`);
+  elements.forEach((el, i) => {
+    const style = window.getComputedStyle(el);
+    console.log(`Élément ${i} (${el.className}): display=${style.display}, opacity=${style.opacity}, visibility=${style.visibility}`);
+  });
+  window.print();
+}
 
 const renderSkillLevel = (level, maxLevel = 5) => {
   return Array.from({ length: maxLevel }, (_, i) => i < level)
@@ -264,6 +300,76 @@ const cssProps = computed(() => {
   z-index: 1;
   padding: 8mm;
   height: 100%;
+}
+
+/* Floating Action Buttons */
+.action-buttons {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  /* Garde les boutons alignés à droite */
+  gap: 15px;
+  z-index: 1000;
+}
+
+.action-button svg {
+  display: inline-block;
+  vertical-align: middle;
+  stroke-width: 2.5px;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+}
+
+.action-button {
+  background: var(--color-backgroundLight, #0d1f3c);
+  border: 1.5px solid var(--color-primary, #00d4aa);
+  color: var(--color-primary, #00d4aa);
+  padding: 0;
+  border-radius: 50px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  overflow: hidden;
+  transition: width 0.3s ease, background 0.3s ease, color 0.3s ease;
+  white-space: nowrap;
+  width: 42px;
+  height: 42px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  line-height: 1;
+}
+
+.action-button:hover {
+  width: 150px;
+  justify-content: flex-start;
+  padding-left: 11px;
+  /* Ajusté pour compenser l'icône de 20px dans un bouton de 42px */
+  gap: 10px;
+  background: var(--color-primary, #00d4aa);
+  color: var(--color-background, #0a1628);
+}
+
+.button-text {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  font-family: var(--font-family-secondary);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.action-button:hover .button-text {
+  opacity: 1;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
 }
 
 /* Header */
@@ -644,49 +750,91 @@ const cssProps = computed(() => {
   font-weight: var(--font-body-weight) !important;
   line-height: var(--font-body-lineHeight) !important;
   letter-spacing: var(--font-body-letterSpacing) !important;
-  display: inline-block;
 }
 
 
 
-/* Print Styles */
+/* Scoped print: only hide no-print */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+</style>
+
+<style>
+/* Global Print Styles (outside scoped — pas de data-v attribute) */
 @media print {
   @page {
     size: A4 portrait;
     margin: 0;
   }
 
+  /* Reset des conteneurs parents */
   html,
-  body {
-    width: 210mm;
-    height: 297mm;
-    margin: 0;
-    padding: 0;
+  body,
+  #app {
+    width: 210mm !important;
+    height: 297mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: none !important;
   }
 
   .cv-container {
-    padding: 0;
-    min-height: auto;
-    background: none;
+    padding: 0 !important;
+    margin: 0 !important;
+    min-height: 297mm !important;
+    height: 297mm !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    background: none !important;
+    overflow: hidden !important;
   }
 
+  /*
+   * Stratégie : on garde le .cv-page à sa taille réelle (210mm de large)
+   * et on applique un scale uniforme pour que la hauteur totale
+   * tienne dans 297mm. transform-origin en haut à gauche.
+   */
   .cv-page {
-    width: 210mm;
-    height: 297mm;
-    min-height: 297mm;
-    max-height: 297mm;
-    box-shadow: none;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    width: 210mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative !important;
+    display: block !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    transform-origin: top left !important;
+    /* Scale: vertical 0.92 pour tenir en hauteur, horizontal 1.0 pour remplir la largeur A4 */
+    transform: scale(1, 0.92) !important;
   }
 
   .cv-background {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    position: absolute !important;
+    inset: 0 !important;
+    filter: none !important;
+    /* blur casse l'impression */
   }
 
-  .section {
-    break-inside: avoid;
+  /* Désactiver uniquement les effets qui cassent l'impression */
+  .cv-card-section {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Masquer boutons */
+  .no-print,
+  .action-buttons {
+    display: none !important;
+  }
+
+  /* Forcer le rendu des couleurs de fond */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 }
 </style>

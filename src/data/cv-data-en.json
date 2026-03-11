@@ -41,6 +41,7 @@
                 "C# (.NET 8.0)",
                 "PHP 8.x",
                 "Vanilla JS",
+                "TypeScript",
                 "Python",
                 "C / Assembly"
             ],
@@ -68,9 +69,7 @@
                 "AI Agents",
                 "Workflow Automation",
                 "Github Copilot"
-            ]
-        },
-        "Transversal": {
+            ],
             "Management": [
                 "Team Management",
                 "Software Development Life Cycle (SDLC)",

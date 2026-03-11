@@ -147,6 +147,18 @@ const toggleLanguage = () => {
   grid-template-columns: 33fr 67fr;
   gap: 5mm;
   margin-bottom: 4mm;
+  align-items: stretch;
+}
+
+.left-column,
+.right-column-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.left-column> :last-child,
+.right-column-container> :last-child {
+  flex-grow: 1;
 }
 
 .font-date {

@@ -1,23 +1,32 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { ref, computed } from 'vue'
 import { useDynamicStyles } from '../composables/useDynamicStyles'
+import type { DesignConfig, DesignTheme } from '../domain/cv.types'
 
 describe('useDynamicStyles', () => {
     it('should generate correct CSS variables from config', () => {
-        const mockConfig = ref({
+        const mockConfig = ref<DesignConfig>({
+            defaultTheme: 'dark',
+            themes: {
+                dark: {} as DesignTheme,
+                light: {} as DesignTheme
+            },
             colors: { primary: '#00d4aa' },
             fonts: { primary: 'Roboto' },
             fontSizes: { medium: '12pt' },
+            fontWeights: {},
+            lineHeights: {},
+            letterSpacings: {},
             typography: {
                 title: { size: 'medium', color: 'primary' }
             }
         })
 
-        const mockTheme = ref({
+        const mockTheme = computed<DesignTheme>(() => ({
             typography: {
-                title: { color: 'primary' } // Override or match
+                title: { color: 'primary' }
             }
-        })
+        } as DesignTheme))
 
         const { cssProps } = useDynamicStyles(mockConfig, mockTheme)
 

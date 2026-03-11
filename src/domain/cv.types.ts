@@ -13,36 +13,43 @@ export interface ContactInfo {
 
 export interface Entete {
     nom: string;
-    titre: string;
-    subtitle: string;
-    contact: ContactInfo;
+    adresse: string;
+    telephone: string;
+    email: string;
+    github: string;
 }
 
-export interface CompetenceDetail {
-    nom: string;
-    niveau: string;
+export interface SkillGroup {
+    [key: string]: string[];
+}
+
+export interface Competences {
+    [key: string]: SkillGroup;
 }
 
 export interface Experience {
-    poste: string;
-    entreprise: string;
+    titre: string;
+    entreprise: string | null;
     periode: string;
-    missions: string[];
+    description: string;
 }
 
 export interface Formation {
-    annee: string;
+    annee: number | string;
     diplome: string;
     etablissement: string;
+    lieu?: string;
 }
 
 export interface CvData {
+    titre: string;
+    subtitle: string;
     entete: Entete;
     profil: string;
-    competences: Record<string, CompetenceDetail[]>;
+    competences: Competences;
     experience_professionnelle: Experience[];
     formation: Formation[];
-    centres_d_interets: string[];
+    centres_d_interets: string;
 }
 
 export interface DesignTheme {

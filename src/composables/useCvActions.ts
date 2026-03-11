@@ -3,7 +3,6 @@
  * @description Composable regroupant les actions utilisateur et les fonctionnalités utilitaires (ex: Impression et export PDF).
  */
 
-// @ts-ignore - html2pdf does not provide official types
 import html2pdf from 'html2pdf.js'
 import { useAppStore } from '../store/appStore'
 
@@ -90,7 +89,7 @@ export function useCvActions(): UseCvActionsReturn {
             const opt = {
                 margin: 0,
                 filename: fileName,
-                image: { type: 'jpeg', quality: 1 },
+                image: { type: 'jpeg' as const, quality: 1 },
                 html2canvas: {
                     scale: 2,
                     useCORS: true,

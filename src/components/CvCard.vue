@@ -20,7 +20,7 @@ import type { Component } from 'vue';
 
 interface Props {
     title?: string;
-    icon?: string | Component | null;
+    icon?: string | Component | null | undefined;
     customClass?: string;
 }
 

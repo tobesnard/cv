@@ -2,34 +2,33 @@
     <header class="cv-header">
         <div class="header-left">
             <h1 class="title">
-                <span class="title-main font-title">{{ entete.titre?.toUpperCase() }}</span>
-                <span class="title-sub font-subtitle">{{ entete.subtitle }}</span>
+                <span class="title-main font-title">{{ titre?.toUpperCase() }}</span>
+                <span class="title-sub font-subtitle">{{ subtitle }}</span>
             </h1>
             <h2 class="name font-name">{{ entete.nom }}</h2>
 
             <!-- Informations de contact -->
             <div class="contact-info font-contact">
                 <div class="contact-row">
-                    <div class="contact-item">
+                    <div class="contact-item" v-if="entete.adresse">
                         <component :is="icons.MapPin" class="icon" aria-hidden="true" />
                         <span>{{ entete.adresse }}</span>
                     </div>
-                    <div class="contact-item">
+                    <div class="contact-item" v-if="entete.telephone">
                         <component :is="icons.Phone" class="icon" aria-hidden="true" />
                         <span>{{ entete.telephone }}</span>
                     </div>
                 </div>
                 <div class="contact-row">
-                    <div class="contact-item">
+                    <div class="contact-item" v-if="entete.github">
                         <component :is="icons.Github" class="icon" aria-hidden="true" />
-                        <a v-if="entete.github" :href="entete.github" target="_blank" rel="noopener noreferrer"
-                            class="font-link">
+                        <a :href="entete.github" target="_blank" rel="noopener noreferrer" class="font-link">
                             {{ entete.github.replace('https://', '') }}
                         </a>
                     </div>
-                    <div class="contact-item">
+                    <div class="contact-item" v-if="entete.email">
                         <component :is="icons.Mail" class="icon" aria-hidden="true" />
-                        <a v-if="entete.email" :href="'mailto:' + entete.email" class="font-link">
+                        <a :href="'mailto:' + entete.email" class="font-link">
                             {{ entete.email }}
                         </a>
                     </div>
@@ -58,6 +57,8 @@ import type { Component } from 'vue';
 
 defineProps<{
     entete: Entete;
+    titre: string;
+    subtitle: string;
     profilePhoto: string;
     icons: Record<string, Component>;
 }>();

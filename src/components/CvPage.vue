@@ -17,7 +17,7 @@
         </div>
 
         <!-- En-tête : Informations personnelles et Photo -->
-        <CvHeader v-else :entete="{ ...data.entete, titre: data.titre, subtitle: data.subtitle }"
+        <CvHeader v-else :entete="data.entete" :titre="data.titre" :subtitle="data.subtitle"
           :profilePhoto="profilePhoto" :icons="icons" />
 
         <template v-if="data">

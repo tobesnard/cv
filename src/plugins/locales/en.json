@@ -1,0 +1,17 @@
+{
+    "sections": {
+        "profile": "PROFILE",
+        "experience": "WORK EXPERIENCE",
+        "skills": "SKILLS",
+        "education": "EDUCATION",
+        "interests": "INTERESTS"
+    },
+    "actions": {
+        "print": "Print",
+        "toggleTheme": "Toggle Theme",
+        "downloadPdf": "Download PDF"
+    },
+    "status": {
+        "loading": "Loading data..."
+    }
+}

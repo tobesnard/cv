@@ -1,0 +1,17 @@
+{
+    "sections": {
+        "profile": "PROFIL",
+        "experience": "EXPÉRIENCE PROFESSIONNELLE",
+        "skills": "COMPÉTENCES",
+        "education": "FORMATION",
+        "interests": "CENTRES D'INTÉRÊT"
+    },
+    "actions": {
+        "print": "Imprimer",
+        "toggleTheme": "Changer de thème",
+        "downloadPdf": "Télécharger PDF"
+    },
+    "status": {
+        "loading": "Chargement des données..."
+    }
+}

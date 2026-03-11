@@ -1,16 +1,5 @@
 <template>
   <div class="cv-container" :style="cssProps">
-    <DefineCard v-slot="{ title, icon, customClass, $slots }">
-      <section :class="['cv-card-section', customClass]">
-        <div v-if="title" class="card-header font-card-title">
-          <img v-if="icon" :src="icon" class="card-icon icon" alt="" />
-          <h3 class="card-title">{{ title }}</h3>
-        </div>
-        <div class="card-body">
-          <component :is="$slots.default" />
-        </div>
-      </section>
-    </DefineCard>
 
     <div class="cv-page font-body">
       <!-- Background -->
@@ -32,31 +21,30 @@
 
         <template v-if="data">
           <!-- Section Profil / Résumé -->
-          <ReuseCard title="PROFIL" :icon="icons.user" customClass="profile-section">
+          <CvCard title="PROFIL" :icon="icons.user" customClass="profile-section">
             <p class="profile-text">{{ data.profil }}</p>
-          </ReuseCard>
+          </CvCard>
 
           <!-- Grille principale : Compétences et Expériences -->
           <div class="main-grid">
             <!-- Colonne de gauche : Compétences techniques -->
             <div class="left-column">
-              <ReuseCard :title="sectionName" :icon="icons.code" v-for="(competences, sectionName) in data.competences"
+              <CvCard :title="sectionName" :icon="icons.code" v-for="(competences, sectionName) in data.competences"
                 :key="sectionName">
                 <CvSkillSection :data="competences" />
-              </ReuseCard>
+              </CvCard>
             </div>
 
             <!-- Colonne de droite : Expériences Professionnelles (Timeline) -->
             <div class="right-column-container">
-              <ReuseCard title="EXPÉRIENCE PROFESSIONNELLE" :icon="icons.briefcase">
+              <CvCard title="EXPÉRIENCE PROFESSIONNELLE" :icon="icons.briefcase">
                 <CvExperienceTimeline :experiences="data.experience_professionnelle" />
-              </ReuseCard>
+              </CvCard>
             </div>
           </div>
 
           <!-- Pied de page : Formation et Centres d'intérêt -->
-          <CvFooter :formations="data.formation" :centresDInterets="data.centres_d_interets" :icons="icons"
-            :ReuseCard="ReuseCard" />
+          <CvFooter :formations="data.formation" :centresDInterets="data.centres_d_interets" :icons="icons" />
         </template>
       </div>
     </div>
@@ -69,7 +57,6 @@
  * @file CvPage.vue
  * @description Composant principal gérant l'orchestration du CV.
  */
-import { createReusableTemplate } from '@vueuse/core'
 
 /** Import des sous-composants atomiques */
 import CvToolbar from './CvToolbar.vue'
@@ -77,6 +64,7 @@ import CvHeader from './CvHeader.vue'
 import CvSkillSection from './CvSkillSection.vue'
 import CvExperienceTimeline from './CvExperienceTimeline.vue'
 import CvFooter from './CvFooter.vue'
+import CvCard from './CvCard.vue'
 
 /** Importation des composables métier */
 import { useCvData } from '../composables/useCvData'
@@ -102,10 +90,6 @@ const { cssProps } = useDynamicStyles(config, currentTheme)
  */
 const { handlePrint } = useCvActions()
 
-/** 
- * 5. Template pour les cartes de section.
- */
-const [DefineCard, ReuseCard] = createReusableTemplate()
 </script>
 
 <style scoped>
@@ -143,171 +127,6 @@ const [DefineCard, ReuseCard] = createReusableTemplate()
   height: 100%;
 }
 
-/* Header */
-.cv-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 5mm;
-  padding-bottom: 5mm;
-  /* border-bottom: 1px solid var(--color-borderLight, rgba(0, 212, 170, 0.2)); */
-  gap: 8mm;
-}
-
-.header-left {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.title {
-  margin: 0 0 2mm 0;
-}
-
-.title-main {
-  display: block;
-}
-
-.title-sub {
-  display: block;
-}
-
-.name {
-  padding-bottom: 10pt;
-  ;
-}
-
-.contact-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.contact-row {
-  display: flex;
-  gap: 4mm;
-}
-
-.contact-item {
-  display: flex;
-  align-items: center;
-  gap: 2mm;
-}
-
-.contact-item a {
-  text-decoration: none;
-}
-
-.font-link {
-  color: var(--font-link-color) !important;
-  font-family: var(--font-link-family) !important;
-  font-size: var(--font-link-size) !important;
-  font-weight: var(--font-link-weight) !important;
-  line-height: var(--font-link-lineHeight) !important;
-  letter-spacing: var(--font-link-letterSpacing) !important;
-}
-
-.contact-item .icon {
-  width: 12px;
-  height: 12px;
-  filter: var(--color-iconFilter);
-}
-
-.header-right {
-  flex-shrink: 0;
-  margin-right: 3mm;
-}
-
-.photo-container {
-  width: 36mm;
-  height: 36mm;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: visible;
-  padding: 3mm;
-  z-index: 1;
-}
-
-.photo-container::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--color-backgroundLight, #14213d);
-  border: 4px solid var(--color-primary, #00d4aa);
-  border-radius: 5.5mm;
-  transform: rotate(45deg);
-  z-index: -1;
-  box-shadow: 0 0 20px rgba(0, 212, 170, 0.3);
-}
-
-
-
-.photo {
-  width: 80%;
-  height: 115%;
-  object-fit: cover;
-  border-radius: 4mm;
-  transform: rotate(-45deg);
-  scale: 1.15;
-  display: block;
-  margin: -7% 10% 0 auto;
-}
-
-.photo-wrapper {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  border-radius: 4mm;
-  transform: rotate(45deg);
-  background: var(--color-backgroundProfilePicture, white);
-}
-
-/* Sections */
-.section {
-  margin-bottom: 4mm;
-}
-
-.card-title {
-  margin: 0;
-  text-transform: uppercase;
-  line-height: 1;
-}
-
-/* Card Section Base Style */
-.cv-card-section {
-  background: var(--color-backgroundCard, rgba(13, 31, 60, 0.4));
-  border-radius: 0;
-  position: relative;
-  margin-bottom: 4mm;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border: 1px solid;
-  border-image-source: linear-gradient(135deg, var(--color-primary, #00d4aa) 0%, transparent 100%);
-  border-image-slice: 1;
-}
-
-.card-header {
-  background-image: var(--color-cardHeaderGradient);
-  padding: 2mm 3mm;
-  border-bottom: 1px solid var(--color-borderLight, rgba(0, 212, 170, 0.15));
-  display: flex;
-  align-items: center;
-  gap: 2mm;
-}
-
-.card-icon {
-  width: 14px;
-  height: 14px;
-  flex-shrink: 0;
-  display: block;
-  filter: var(--color-iconFilter);
-}
-
-.card-body {
-  padding: 4mm;
-}
-
 /* Main Grid */
 .main-grid {
   display: grid;
@@ -315,143 +134,6 @@ const [DefineCard, ReuseCard] = createReusableTemplate()
   gap: 5mm;
   margin-bottom: 4mm;
 }
-
-/* Skills */
-.skills-group {
-  margin-bottom: 3mm;
-}
-
-.skills-subtitle {
-  margin: 0 0 2mm 0;
-  display: flex;
-  align-items: center;
-  gap: 1mm;
-}
-
-.skills-subtitle::before {
-  content: '';
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  background: var(--color-primary, #00d4aa);
-}
-
-.skills-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5mm;
-}
-
-.skill-item {
-  display: flex;
-  align-items: center;
-  gap: 2mm;
-}
-
-/* Experience */
-.timeline-container {
-  position: relative;
-  padding-left: 6mm;
-  margin-left: 2mm;
-  border-left: 1px solid var(--color-border, rgba(0, 212, 170, 0.3));
-}
-
-.experience-item {
-  position: relative;
-  margin-bottom: 5mm;
-  padding-bottom: 2mm;
-}
-
-.timeline-dot {
-  position: absolute;
-  left: calc(-6mm - 4.5px);
-  top: 1.5mm;
-  width: 8px;
-  height: 8px;
-  background: var(--color-primary, #00d4aa);
-  border-radius: 50%;
-  box-shadow: 0 0 8px var(--color-primary, #00d4aa);
-}
-
-.experience-item:last-child {
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
-
-.exp-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 1mm;
-}
-
-.exp-title {
-  margin: 0;
-  display: flex;
-  align-items: baseline;
-  color: var(--color-sectionTitle, #00b894);
-}
-
-.exp-company {
-  color: var(--color-primary, #00b894);
-  margin: 0;
-}
-
-.exp-period,
-.formation-year {
-  color: var(--color-primary, #00d4aa);
-}
-
-.exp-subtitle {
-  color: var(--color-textMuted, #94a3b8);
-  margin: 0 0 1mm 0;
-}
-
-.exp-tasks {
-  margin: 0;
-  padding-left: 4mm;
-  color: var(--color-textSecondary, #cbd5e1);
-  line-height: 1.4;
-}
-
-.exp-tasks li {
-  margin-bottom: 1mm;
-}
-
-/* Footer Grid */
-.footer-grid {
-  display: grid;
-  grid-template-columns: 67fr 33fr;
-  gap: 5mm;
-}
-
-.formation-list {
-  display: flex;
-  flex-direction: column;
-  gap: 2mm;
-}
-
-.formation-item {
-  display: flex;
-  align-items: center;
-  /* gap: 3mm; */
-  color: var(--color-textMuted, #e2e8f0);
-}
-
-.formation-year {
-  color: var(--color-primary, #00d4aa);
-  min-width: 10mm;
-}
-
-.formation-details {
-  flex: 1;
-}
-
-.interests-text {
-  margin: 0;
-}
-
-
 
 .font-date {
   color: var(--font-date-color) !important;
@@ -526,7 +208,87 @@ const [DefineCard, ReuseCard] = createReusableTemplate()
   letter-spacing: var(--font-body-letterSpacing) !important;
 }
 
+/* Propagation des polices dynamiques aux composants enfants */
+:deep(.font-date) {
+  color: var(--font-date-color) !important;
+  font-family: var(--font-date-family) !important;
+  font-size: var(--font-date-size) !important;
+  font-weight: var(--font-date-weight) !important;
+  line-height: var(--font-date-lineHeight) !important;
+  letter-spacing: var(--font-date-letterSpacing) !important;
+}
 
+:deep(.font-title) {
+  color: var(--font-title-color) !important;
+  font-family: var(--font-title-family) !important;
+  font-size: var(--font-title-size) !important;
+  font-weight: var(--font-title-weight) !important;
+  line-height: var(--font-title-lineHeight) !important;
+  letter-spacing: var(--font-title-letterSpacing) !important;
+}
+
+:deep(.font-subtitle) {
+  color: var(--font-subtitle-color) !important;
+  font-family: var(--font-subtitle-family) !important;
+  font-size: var(--font-subtitle-size) !important;
+  font-weight: var(--font-subtitle-weight) !important;
+  line-height: var(--font-subtitle-lineHeight) !important;
+  letter-spacing: var(--font-subtitle-letterSpacing) !important;
+}
+
+:deep(.font-name) {
+  color: var(--font-name-color) !important;
+  font-family: var(--font-name-family) !important;
+  font-size: var(--font-name-size) !important;
+  font-weight: var(--font-name-weight) !important;
+  line-height: var(--font-name-lineHeight) !important;
+  letter-spacing: var(--font-name-letterSpacing) !important;
+}
+
+:deep(.font-contact) {
+  color: var(--font-contact-color) !important;
+  font-family: var(--font-contact-family) !important;
+  font-size: var(--font-contact-size) !important;
+  font-weight: var(--font-contact-weight) !important;
+  line-height: var(--font-contact-lineHeight) !important;
+  letter-spacing: var(--font-contact-letterSpacing) !important;
+}
+
+:deep(.font-section-title) {
+  color: var(--font-sectionTitle-color) !important;
+  font-family: var(--font-cardTitle-family) !important;
+  font-size: var(--font-cardTitle-size) !important;
+  font-weight: var(--font-cardTitle-weight) !important;
+  line-height: var(--font-cardTitle-lineHeight) !important;
+  letter-spacing: var(--font-cardTitle-letterSpacing) !important;
+}
+
+:deep(.font-card-title) {
+  color: var(--font-cardTitle-color) !important;
+  font-family: var(--font-cardTitle-family) !important;
+  font-size: var(--font-cardTitle-size) !important;
+  font-weight: var(--font-cardTitle-weight) !important;
+  line-height: var(--font-cardTitle-lineHeight) !important;
+  letter-spacing: var(--font-cardTitle-letterSpacing) !important;
+}
+
+:deep(.font-body) {
+  color: var(--font-body-color) !important;
+  font-family: var(--font-body-family) !important;
+  font-size: var(--font-body-size) !important;
+  font-weight: var(--font-body-weight) !important;
+  line-height: var(--font-body-lineHeight) !important;
+  letter-spacing: var(--font-body-letterSpacing) !important;
+}
+
+:deep(.font-link) {
+  color: var(--font-link-color) !important;
+  font-family: var(--font-link-family) !important;
+  font-size: var(--font-link-size) !important;
+  font-weight: var(--font-link-weight) !important;
+  line-height: var(--font-link-lineHeight) !important;
+  letter-spacing: var(--font-link-letterSpacing) !important;
+}
 
 /* Scoped print: only hide no-print */
 @media print {

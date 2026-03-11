@@ -1,6 +1,6 @@
 <template>
     <div class="footer-grid">
-        <ReuseCard title="FORMATION" :icon="icons.graduation" customClass="formation-section">
+        <CvCard title="FORMATION" :icon="icons.graduation" customClass="formation-section">
             <div class="formation-list">
                 <div v-for="edu in formations" :key="edu.annee + edu.diplome" class="formation-item">
                     <span class="formation-year font-date">{{ edu.annee }}</span>
@@ -10,11 +10,11 @@
                     </div>
                 </div>
             </div>
-        </ReuseCard>
+        </CvCard>
 
-        <ReuseCard title="CENTRES D'INTÉRÊT" :icon="icons.heart" customClass="interests-section">
+        <CvCard title="CENTRES D'INTÉRÊT" :icon="icons.heart" customClass="interests-section">
             <p class="interests-text">{{ centresDInterets }}</p>
-        </ReuseCard>
+        </CvCard>
     </div>
 </template>
 
@@ -23,11 +23,12 @@
  * @file CvFooter.vue
  * @description Pied de page du CV : Formation et Centres d'intérêt.
  */
+import CvCard from './CvCard.vue'
+
 defineProps({
     formations: { type: Array, required: true },
     centresDInterets: { type: String, required: true },
-    icons: { type: Object, required: true },
-    ReuseCard: { type: Object, required: true }
+    icons: { type: Object, required: true }
 })
 </script>
 

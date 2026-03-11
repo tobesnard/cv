@@ -9,7 +9,6 @@
     "actions": {
         "print": "Imprimer",
         "toggleTheme": "Changer de thème",
-        "downloadPdf": "Télécharger PDF",
         "toggleLanguage": "Changer la langue"
     },
     "status": {

@@ -9,8 +9,7 @@
       <div class="cv-content">
         <!-- Barre d'outils flottante -->
         <CvToolbar :icons="icons" :isDarkMode="isDarkMode" @print="handlePrint" @toggle-theme="toggleTheme"
-          @toggle-language="toggleLanguage"
-          @download-pdf="downloadPDF(`CV_${data?.entete?.nom?.replace(' ', '_')}.pdf`)" />
+          @toggle-language="toggleLanguage" />
 
         <!-- État de chargement si les données ne sont pas présentes -->
         <div v-if="!data" class="loading-state">
@@ -92,7 +91,7 @@ const { cssProps } = useDynamicStyles(config, currentTheme)
 /** 
  * 4. Actions utilisateur.
  */
-const { handlePrint, downloadPDF } = useCvActions()
+const { handlePrint } = useCvActions()
 
 /**
  * 5. Internationalisation.
@@ -113,14 +112,14 @@ const toggleLanguage = () => {
   justify-content: center;
   align-items: flex-start;
   padding: 20px;
-  background: var(--color-background-dark, #050d1a);
+  background: var(--color-background-dark, #ffffff);
 }
 
 .cv-page {
   width: 210mm;
   min-height: 297mm;
   position: relative;
-  background: var(--color-background, #0a1628);
+  background: var(--color-background, #ffffff);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   overflow: hidden;
 }
@@ -423,7 +422,9 @@ const toggleLanguage = () => {
     margin: 0 !important;
     padding: 0 !important;
     overflow: hidden !important;
-    background: none !important;
+    background-color: var(--color-background) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   .cv-container {
@@ -434,8 +435,10 @@ const toggleLanguage = () => {
     display: flex !important;
     justify-content: center !important;
     align-items: flex-start !important;
-    background: none !important;
+    background: var(--color-background) !important;
     overflow: hidden !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   /*
@@ -449,11 +452,14 @@ const toggleLanguage = () => {
     padding: 0 !important;
     position: relative !important;
     display: block !important;
+    background-color: var(--color-background) !important;
     box-shadow: none !important;
     overflow: visible !important;
     transform-origin: top left !important;
     /* Scale: vertical 0.92 pour tenir en hauteur, horizontal 1.0 pour remplir la largeur A4 */
     transform: scale(1, 0.92) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   .cv-background {

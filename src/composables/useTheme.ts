@@ -4,7 +4,6 @@ import {
     Printer as PrinterIcon,
     Sun as SunIcon,
     Moon as MoonIcon,
-    Download as DownloadIcon,
     Languages as LanguagesIcon,
     User as UserIcon,
     Code as CodeIcon,
@@ -38,7 +37,6 @@ export function useTheme() {
         printer: PrinterIcon,
         sun: SunIcon,
         moon: MoonIcon,
-        download: DownloadIcon,
         languages: LanguagesIcon
     }
 

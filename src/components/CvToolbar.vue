@@ -1,10 +1,6 @@
 <template>
     <!-- Barre d'outils flottante (masquée à l'impression) -->
     <div class="action-buttons no-print">
-        <button @click="$emit('download-pdf')" class="action-button" title="Télécharger le PDF">
-            <component :is="icons.download" :size="20" />
-            <span class="button-text">{{ $t('actions.downloadPdf') }}</span>
-        </button>
         <button @click="$emit('print')" class="action-button" title="Imprimer le CV">
             <component :is="icons.printer" :size="20" />
             <span class="button-text">{{ $t('actions.print') }}</span>
@@ -38,7 +34,6 @@ defineProps<Props>()
 defineEmits<{
     (e: 'print'): void;
     (e: 'toggle-theme'): void;
-    (e: 'download-pdf'): void;
     (e: 'toggle-language'): void;
 }>()
 </script>

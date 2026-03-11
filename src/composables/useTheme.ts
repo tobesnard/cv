@@ -5,6 +5,7 @@ import {
     Sun as SunIcon,
     Moon as MoonIcon,
     Download as DownloadIcon,
+    Languages as LanguagesIcon,
     User as UserIcon,
     Code as CodeIcon,
     Briefcase as BriefcaseIcon,
@@ -37,7 +38,8 @@ export function useTheme() {
         printer: PrinterIcon,
         sun: SunIcon,
         moon: MoonIcon,
-        download: DownloadIcon
+        download: DownloadIcon,
+        languages: LanguagesIcon
     }
 
     /** Mapping direct vers l'état du store */

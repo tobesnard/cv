@@ -12,7 +12,8 @@ import defaultBackgroundImage from '@/assets/images/background.png'
 
 export const useAppStore = defineStore('app', () => {
     // --- ÉTAT (STATE) ---
-    const cvData = ref<CvData>(cvService.getCvData() as CvData)
+    const currentLocale = ref<string>('fr')
+    const cvData = ref<CvData>(cvService.getCvData(currentLocale.value) as CvData)
     const designConfig = ref<DesignConfig>(cvService.getDesignConfig() as DesignConfig)
     const isDarkMode = ref<boolean>(designConfig.value?.defaultTheme === 'dark')
 
@@ -29,6 +30,11 @@ export const useAppStore = defineStore('app', () => {
     })
 
     // --- ACTIONS ---
+    const setLocale = (locale: string) => {
+        currentLocale.value = locale
+        cvData.value = cvService.getCvData(locale)
+    }
+
     const toggleTheme = () => {
         isDarkMode.value = !isDarkMode.value
     }
@@ -43,12 +49,14 @@ export const useAppStore = defineStore('app', () => {
     })
 
     return {
+        currentLocale,
         cvData,
         designConfig,
         isDarkMode,
         currentTheme,
         activeBackgroundImage,
         toggleTheme,
-        syncTheme
+        syncTheme,
+        setLocale
     }
 })

@@ -1,0 +1,115 @@
+{
+    "titre": "Lead Full-Stack Developer | .NET ",
+    "subtitle": "& Project Management",
+    "entete": {
+        "nom": "Tony BESNARD",
+        "adresse": "9 Bis rue Haute — 41400 Chissay-en-Touraine — France",
+        "telephone": "+33 6 12 12 21 15",
+        "email": "tony.besnard@gmail.com",
+        "github": "https://github.com/tobesnard"
+    },
+    "profil": "Lead Developer and Project Manager with solid expertise in Javascript, C#, and object-oriented programming. I support the development of robust and scalable solutions using Clean Architecture. Experienced in leading Agile teams, I ensure complex technical needs are transformed into functional, high-performance, and maintainable tools.",
+    "formation": [
+        {
+            "annee": 2010,
+            "diplome": "Computer Engineering (3rd Year)",
+            "etablissement": "SUPINFO",
+            "lieu": "Tours"
+        },
+        {
+            "annee": 2008,
+            "diplome": "Professional Title in Software Development",
+            "etablissement": "AFPA",
+            "lieu": "Blois"
+        },
+        {
+            "annee": 2005,
+            "diplome": "Network and Telecommunications Technician",
+            "etablissement": "Consulcom",
+            "lieu": "Rouen"
+        },
+        {
+            "annee": 2003,
+            "diplome": "DUT Electrical Engineering and Industrial Computing (2nd Year)",
+            "etablissement": "University of Tours",
+            "lieu": "Tours"
+        }
+    ],
+    "competences": {
+        "Skills": {
+            "Development": [
+                "C# (.NET 8.0)",
+                "PHP 8.x",
+                "Vanilla JS",
+                "Python",
+                "C / Assembly"
+            ],
+            "Architecture": [
+                "Clean Architecture",
+                "OOP",
+                "Design Patterns",
+                "UML Modeling",
+                "Legacy Modernization"
+            ],
+            "Frameworks": [
+                "Xamarin/.NET MAUI",
+                "Vue.js",
+                "Android"
+            ],
+            "Systems": [
+                "Windows",
+                "Linux",
+                "PowerShell",
+                "Bash",
+                "Docker"
+            ],
+            "AI": [
+                "Prompt Engineering",
+                "AI Agents",
+                "Workflow Automation",
+                "Github Copilot"
+            ]
+        },
+        "Transversal": {
+            "Management": [
+                "Team Management",
+                "Software Development Life Cycle (SDLC)",
+                "Agile (SCRUM/XP)",
+                "Git"
+            ],
+            "Expertise": [
+                "Requirements Analysis",
+                "Technical Strategy",
+                "Client Management",
+                "Complex Problem Solving"
+            ]
+        }
+    },
+    "experience_professionnelle": [
+        {
+            "titre": "Lead Full-Stack Developer & Project Manager",
+            "entreprise": "Pharmavitale",
+            "periode": "2023-2025",
+            "description": "Complete rewrite of the Pharmacy Management Software (LGO) into a modern web application (PHP/Vue.js) after a migration from VB. Team leadership using SCRUM and XP methodologies, architecture modeling via UML and development of critical modules in C# (.NET). Responsible for the project lifecycle: technical specifications, testing, deployment, security and evolutionary maintenance."
+        },
+        {
+            "titre": "Life Experience & Commitment",
+            "entreprise": null,
+            "periode": "2015-2021",
+            "description": "Experience in the medico-social sector dedicated to supporting people with severe disabilities. This period strengthened my emotional intelligence and leadership, allowing me to align technical rigor with active listening to serve user needs."
+        },
+        {
+            "titre": "Founder",
+            "entreprise": "NT Service",
+            "periode": "2011-2014",
+            "description": "Creation and management of a sole proprietorship specialized in digital solutions development. Design of dynamic websites (PHP, Vanilla JS) and development of native Android mobile applications (Java). Full management of client relations, from technical needs analysis to delivery and deployment of digital tools."
+        },
+        {
+            "titre": "Systems, Networks & Electronics Technician",
+            "entreprise": null,
+            "periode": "2004-2010",
+            "description": "Installation and maintenance of telephony (PABX/IPBX) and IT solutions for SMEs, including system programming, user training and remote support. Testing and troubleshooting of electronic boards, programming and debugging of microcontrollers and logic circuits in C and Assembly."
+        }
+    ],
+    "centres_d_interets": "Passion for technology focused on solving cybersecurity challenges on Root-Me, complemented by interests in home automation, gastronomy and swimming."
+}

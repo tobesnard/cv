@@ -9,7 +9,8 @@
     "actions": {
         "print": "Print",
         "toggleTheme": "Toggle Theme",
-        "downloadPdf": "Download PDF"
+        "downloadPdf": "Download PDF",
+        "toggleLanguage": "Change Language"
     },
     "status": {
         "loading": "Loading data..."

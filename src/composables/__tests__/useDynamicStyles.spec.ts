@@ -26,7 +26,7 @@ describe('useDynamicStyles', () => {
             typography: {
                 title: { color: 'primary' }
             }
-        } as DesignTheme))
+        } as unknown as DesignTheme))
 
         const { cssProps } = useDynamicStyles(mockConfig, mockTheme)
 

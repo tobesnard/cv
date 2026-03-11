@@ -9,6 +9,7 @@
       <div class="cv-content">
         <!-- Barre d'outils flottante -->
         <CvToolbar :icons="icons" :isDarkMode="isDarkMode" @print="handlePrint" @toggle-theme="toggleTheme"
+          @toggle-language="toggleLanguage"
           @download-pdf="downloadPDF(`CV_${data?.entete?.nom?.replace(' ', '_')}.pdf`)" />
 
         <!-- État de chargement si les données ne sont pas présentes -->
@@ -68,6 +69,7 @@ import CvFooter from './CvFooter.vue'
 import CvCard from './CvCard.vue'
 
 /** Importation des composables métier */
+import { useI18n } from 'vue-i18n'
 import { useCvData } from '../composables/useCvData'
 import { useTheme } from '../composables/useTheme'
 import { useDynamicStyles } from '../composables/useDynamicStyles'
@@ -75,7 +77,7 @@ import { useCvActions } from '../composables/useCvActions'
 
 /** 1. Chargement des données métier et config via le store */
 // @ts-ignore - Temporary ignore until useCvData is fully typed
-const { data, config, profilePhoto } = useCvData()
+const { data, config, profilePhoto, setLocale } = useCvData()
 
 /** 
  * 2. Initialisation du thème (State Management).
@@ -91,6 +93,16 @@ const { cssProps } = useDynamicStyles(config, currentTheme)
  * 4. Actions utilisateur.
  */
 const { handlePrint, downloadPDF } = useCvActions()
+
+/**
+ * 5. Internationalisation.
+ */
+const i18n = useI18n()
+const toggleLanguage = () => {
+  const newLocale = i18n.locale.value === 'fr' ? 'en' : 'fr'
+  i18n.locale.value = newLocale
+  setLocale(newLocale)
+}
 
 </script>
 

@@ -14,6 +14,10 @@
             <component :is="isDarkMode ? icons.sun : icons.moon" :size="20" />
             <span class="button-text">{{ isDarkMode ? 'Mode Clair' : 'Mode Sombre' }}</span>
         </button>
+        <button @click="$emit('toggle-language')" class="action-button" :title="$t('actions.toggleLanguage')">
+            <component :is="icons.languages" :size="20" />
+            <span class="button-text">{{ $t('actions.toggleLanguage') }}</span>
+        </button>
     </div>
 </template>
 
@@ -35,6 +39,7 @@ defineEmits<{
     (e: 'print'): void;
     (e: 'toggle-theme'): void;
     (e: 'download-pdf'): void;
+    (e: 'toggle-language'): void;
 }>()
 </script>
 

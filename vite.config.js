@@ -10,7 +10,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,json,jsonc}']
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,json,jsonc}'],
+        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024 // Limite augmentée à 4 Mo pour la photo de profil
       },
       manifest: {
         "name": "CV Tony BESNARD - Lead Développeur Full-Stack",

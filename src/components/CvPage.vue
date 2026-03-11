@@ -127,9 +127,9 @@
           <ReuseCard title="FORMATION" :icon="icons.graduation" customClass="formation-section">
             <div class="formation-list">
               <div v-for="edu in data.formation" :key="edu.annee" class="formation-item">
-                <span class="formation-year">{{ edu.annee }}</span>
+                <span class="formation-year font-date">{{ edu.annee }}</span>
                 <div class="formation-details">
-                  <span class="formation-title">{{ edu.diplome }}</span>
+                  <span class="formation-title font-section-title">{{ edu.diplome }}</span>
                   <span class="formation-school font-body"> — {{ edu.etablissement }} </span>
                 </div>
               </div>
@@ -659,7 +659,7 @@ const cssProps = computed(() => {
 /* Footer Grid */
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
+  grid-template-columns: 67fr 33fr;
   gap: 5mm;
 }
 
@@ -671,7 +671,8 @@ const cssProps = computed(() => {
 
 .formation-item {
   display: flex;
-  gap: 3mm;
+  align-items: center;
+  /* gap: 3mm; */
   color: var(--color-textMuted, #e2e8f0);
 }
 

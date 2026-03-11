@@ -27,6 +27,12 @@
       "diplome": "Technicien Réseaux et Télécommunications d'entreprise",
       "etablissement": "Consulcom",
       "lieu": "Rouen"
+    },
+    {
+      "annee": 2003,
+      "diplome": "DUT Génie Electrique et Informatique Industrielle (2ème année)",
+      "etablissement": "Tours",
+      "lieu": "Tours"
     }
   ],
   "competences": {
@@ -34,26 +40,34 @@
       "Développement": [
         "C# (.NET 8.0)",
         "PHP 8.x",
-        "JS (Vanilla/Vue.js)",
+        "Vanilla JS",
+        "Python",
         "C / Assembleur"
       ],
       "Architecture": [
         "Clean Architecture",
         "POO",
         "Design Patterns",
-        "UML",
-        "Modélisation",
+        "Modélisation UML",
         "Modernisation Legacy"
       ],
       "Frameworks": [
-        ".NET MAUI",
+        "Xamarin/.NET MAUI",
+        "Vue.js",
         "Android"
       ],
       "Systèmes": [
         "Windows",
         "Linux",
         "PowerShell",
-        "Bash"
+        "Bash",
+        "Docker"
+      ],
+      "IA": [
+        "Prompt Engineering",
+        "Agent IA",
+        "Workflow Automation",
+        "Github Copilot"
       ]
     },
     "Transverses": {

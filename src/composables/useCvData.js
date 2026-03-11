@@ -1,19 +1,30 @@
 /**
  * @file useCvData.js
- * @description Composable pour la gestion des données brutes et des assets (images, icônes) du CV.
+ * @description Composable pour charger et fournir les données du CV ainsi que la configuration du design.
+ * Ce composable centralise l'accès aux données statiques (JSON) et aux assets globaux.
  */
 import { ref } from 'vue'
-import cvData from '../data/cv-data.json'
-import designConfig from '../data/design-config.json'
 
-// Assets (Images & Icônes)
-import photoImage from '@/assets/images/photo-profil-ameliore.png'
+// Chargement des données statiques du CV et de la configuration du design
+import cvDataJson from '../data/cv-data.json'
+import designConfigJson from '../data/design-config.json'
 
+// Import de l'asset image de profil (résolu par Vite/Webpack)
+import photoProfile from '@/assets/images/photo-profil-ameliore.png'
+
+/**
+ * Composable useCvData
+ * @returns {Object} Un objet contenant les données réactives et les assets du CV.
+ */
 export function useCvData() {
-    const data = ref(cvData)
-    const config = ref(designConfig)
+    /** @type {import('vue').Ref<Object>} Les données personnelles du CV (expériences, compétences, etc.) */
+    const data = ref(cvDataJson)
 
-    const profilePhoto = photoImage
+    /** @type {import('vue').Ref<Object>} La configuration globale du design (couleurs, thèmes, polices) */
+    const config = ref(designConfigJson)
+
+    /** @type {string} Le chemin résolu vers la photo de profil */
+    const profilePhoto = photoProfile
 
     return {
         data,

@@ -1,12 +1,18 @@
 /**
  * @file useCvActions.js
- * @description Composable pour les actions utilisateur telles que l'impression.
+ * @description Composable regroupant les actions utilisateur et les fonctionnalités utilitaires (ex: Impression).
  */
 
+/**
+ * Composable useCvActions
+ * Fournit les méthodes d'interaction principales pour l'interface du CV.
+ * @returns {Object} Un ensemble de fonctions d'action.
+ */
 export function useCvActions() {
     /**
-     * Gère le déclenchement de l'impression du document.
-     * Cette fonction lance simplement l'impression système du navigateur.
+     * Déclenche la boîte de dialogue d'impression du navigateur.
+     * Les styles CSS spécifiques à l'impression gèrent la mise en page A4 automatique.
+     * @function
      */
     const handlePrint = () => {
         window.print()

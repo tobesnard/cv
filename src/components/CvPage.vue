@@ -158,36 +158,43 @@
 
 <script setup>
 /**
- * Logique du composant CV refactorisée en composables
+ * @file CvPage.vue
+ * @description Composant principal gérant l'affichage du CV.
+ * Il orchestre la mise en page, l'intégration des données et la gestion du thème via des composables spécialisés.
  */
 import { createReusableTemplate } from '@vueuse/core'
-import { watch } from 'vue'
 
-// Import des composables métier
+/** Importation des composables métier encapsulant la logique d'affichage et de données */
 import { useCvData } from '../composables/useCvData'
 import { useTheme } from '../composables/useTheme'
 import { useDynamicStyles } from '../composables/useDynamicStyles'
 import { useCvActions } from '../composables/useCvActions'
 
-// Initialisation des données
+/** 1. Chargement des données primaires et de la configuration du design JSON */
 const { data, config, profilePhoto } = useCvData()
 
-// Initialisation du thème avec synchronisation
+/** 
+ * 2. Initialisation du système de thème.
+ * useTheme gère l'état clair/sombre, les icônes correspondantes et l'image de fond.
+ */
 const { isDarkMode, currentTheme, icons, activeBackgroundImage, toggleTheme } = useTheme(config, config.value?.defaultTheme || 'dark')
 
-// Initialisation des styles dynamiques
+/** 
+ * 3. Génération des variables CSS dynamiques.
+ * Utilise la configuration et le thème actif pour produire un objet de propriétés CSS injectables (:style).
+ */
 const { cssProps } = useDynamicStyles(config, currentTheme)
 
-// Initialisation des actions utilisateur
+/** 
+ * 4. Initialisation des actions utilisateur (Impression).
+ */
 const { handlePrint } = useCvActions()
 
-// Template réutilisable pour les sections (Card)
-const [DefineCard, ReuseCard] = createReusableTemplate()
-
-/**
- * Le script ne contient maintenant plus de logique métier brute,
- * tout est délégué aux composables.
+/** 
+ * 5. Configuration d'un template réutilisable pour les cartes de section (VueUse).
+ * Permet de définir une structure commune (Card header / body) pour chaque partie du CV.
  */
+const [DefineCard, ReuseCard] = createReusableTemplate()
 </script>
 
 <style scoped>

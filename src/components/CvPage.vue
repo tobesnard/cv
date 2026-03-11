@@ -21,13 +21,12 @@
         <!-- Barre d'outils flottante (masquée à l'impression) -->
         <div class="action-buttons no-print">
           <button @click="handlePrint" class="action-button" title="Imprimer le CV">
-            <PrinterIcon :size="20" />
+            <component :is="icons.printer" :size="20" />
             <span class="button-text">Imprimer</span>
           </button>
           <button @click="toggleTheme" class="action-button"
             :title="isDarkMode ? 'Passer au mode clair' : 'Passer au mode sombre'">
-            <SunIcon v-if="isDarkMode" :size="20" />
-            <MoonIcon v-else :size="20" />
+            <component :is="isDarkMode ? icons.sun : icons.moon" :size="20" />
             <span class="button-text">{{ isDarkMode ? 'Mode Clair' : 'Mode Sombre' }}</span>
           </button>
         </div>
@@ -162,7 +161,6 @@
  * Logique du composant CV refactorisée en composables
  */
 import { createReusableTemplate } from '@vueuse/core'
-import { Printer as PrinterIcon, Sun as SunIcon, Moon as MoonIcon } from 'lucide-vue-next'
 import { watch } from 'vue'
 
 // Import des composables métier
@@ -175,13 +173,10 @@ import { useCvActions } from '../composables/useCvActions'
 const { data, config, profilePhoto } = useCvData()
 
 // Initialisation du thème avec synchronisation
-const { isDarkMode, currentTheme, icons, toggleTheme, syncTheme } = useTheme(config, config.value?.defaultTheme || 'dark')
-watch(() => config.value?.defaultTheme, (newVal) => {
-  if (newVal) syncTheme(newVal)
-})
+const { isDarkMode, currentTheme, icons, activeBackgroundImage, toggleTheme } = useTheme(config, config.value?.defaultTheme || 'dark')
 
 // Initialisation des styles dynamiques
-const { cssProps, activeBackgroundImage } = useDynamicStyles(config, currentTheme)
+const { cssProps } = useDynamicStyles(config, currentTheme)
 
 // Initialisation des actions utilisateur
 const { handlePrint } = useCvActions()

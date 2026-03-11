@@ -1,17 +1,10 @@
 /**
- * @file useDynamicStyles.js
- * @description Composable pour transformer la configuration JSON en styles CSS dynamiques.
- */
-import { computed } from 'vue'
-import backgroundImage from '@/assets/images/background.png'
-
-/**
  * useDynamicStyles s'occupe uniquement du calcul des variables CSS.
  * Il ne gère plus la logique de sélection de thème (délégué à useTheme).
  */
-export function useDynamicStyles(config, currentTheme) {
+import { computed } from 'vue'
 
-    const activeBackgroundImage = backgroundImage
+export function useDynamicStyles(config, currentTheme) {
 
     // 1. Fusion des couleurs de base et des couleurs du thème
     const activeColors = computed(() => {
@@ -81,7 +74,6 @@ export function useDynamicStyles(config, currentTheme) {
 
     return {
         cssProps,
-        currentTheme,
-        activeBackgroundImage
+        currentTheme
     }
 }

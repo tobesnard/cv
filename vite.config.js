@@ -24,25 +24,25 @@ export default defineConfig({
         "scope": "/cv/",
         "icons": [
           {
-            "src": "/cv/favicon.png",
+            "src": "favicon.png?v=2",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "any"
           },
           {
-            "src": "/cv/favicon.png",
+            "src": "favicon.png?v=2",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any"
           },
           {
-            "src": "/cv/favicon.png",
+            "src": "favicon.png?v=2",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "maskable"
           },
           {
-            "src": "/cv/favicon.png",
+            "src": "favicon.png?v=2",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"

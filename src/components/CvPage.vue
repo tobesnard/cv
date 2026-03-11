@@ -112,7 +112,7 @@ const toggleLanguage = () => {
   justify-content: center;
   align-items: flex-start;
   padding: 20px;
-  background: var(--color-background-dark, #ffffff);
+  background: var(--color-background, #ffffff);
 }
 
 .cv-page {

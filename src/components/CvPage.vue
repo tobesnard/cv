@@ -17,130 +17,140 @@
       <div v-if="activeBackgroundImage" class="cv-background"
         :style="{ backgroundImage: `url(${activeBackgroundImage})` }"></div>
 
-      <!-- Content -->
       <div class="cv-content">
-        <!-- Floating Action Buttons (no-print) -->
+        <!-- Barre d'outils flottante (masquée à l'impression) -->
         <div class="action-buttons no-print">
-          <button @click="printPage" class="action-button" title="Imprimer">
+          <button @click="handlePrint" class="action-button" title="Imprimer le CV">
             <PrinterIcon :size="20" />
             <span class="button-text">Imprimer</span>
           </button>
-          <button @click="toggleTheme" class="action-button" :title="isDarkMode ? 'Light Mode' : 'Dark Mode'">
+          <button @click="toggleTheme" class="action-button"
+            :title="isDarkMode ? 'Passer au mode clair' : 'Passer au mode sombre'">
             <SunIcon v-if="isDarkMode" :size="20" />
             <MoonIcon v-else :size="20" />
-            <span class="button-text">{{ isDarkMode ? 'Light Mode' : 'Dark Mode' }}</span>
+            <span class="button-text">{{ isDarkMode ? 'Mode Clair' : 'Mode Sombre' }}</span>
           </button>
         </div>
 
-        <!-- Header -->
-        <header class="cv-header">
+        <!-- État de chargement si les données ne sont pas présentes -->
+        <div v-if="!data" class="loading-state">
+          Chargement des données...
+        </div>
+
+        <!-- En-tête : Informations personnelles et Photo -->
+        <header v-else class="cv-header">
           <div class="header-left">
             <h1 class="title">
-              <span class="title-main font-title">{{ data.titre.toUpperCase() }}</span>
+              <span class="title-main font-title">{{ data.titre?.toUpperCase() }}</span>
               <span class="title-sub font-subtitle">{{ data.subtitle }}</span>
             </h1>
-            <h2 class="name font-name">{{ data.entete.nom }}</h2>
+            <h2 class="name font-name">{{ data.entete?.nom }}</h2>
+
+            <!-- Informations de contact -->
             <div class="contact-info font-contact">
               <div class="contact-row">
                 <div class="contact-item">
-                  <img src="@/assets/icons/map-pin.svg" class="icon" alt="Location" />
-                  <span>{{ data.entete.adresse }}</span>
+                  <img src="@/assets/icons/map-pin.svg" class="icon" alt="Localisation" />
+                  <span>{{ data.entete?.adresse }}</span>
                 </div>
                 <div class="contact-item">
-                  <img src="@/assets/icons/phone.svg" class="icon" alt="Phone" />
-                  <span>{{ data.entete.telephone }}</span>
+                  <img src="@/assets/icons/phone.svg" class="icon" alt="Téléphone" />
+                  <span>{{ data.entete?.telephone }}</span>
                 </div>
               </div>
               <div class="contact-row">
                 <div class="contact-item">
                   <img src="@/assets/icons/github.svg" class="icon" alt="GitHub" />
-                  <a :href="data.entete.github" target="_blank" rel="noopener noreferrer" class="font-link">{{
-                    data.entete.github.replace('https://', '') }}</a>
+                  <a v-if="data.entete?.github" :href="data.entete.github" target="_blank" rel="noopener noreferrer"
+                    class="font-link">
+                    {{ data.entete.github.replace('https://', '') }}
+                  </a>
                 </div>
                 <div class="contact-item">
                   <img src="@/assets/icons/mail.svg" class="icon" alt="Email" />
-                  <a :href="'mailto:' + data.entete.email" class="font-link">{{ data.entete.email }}</a>
+                  <a v-if="data.entete?.email" :href="'mailto:' + data.entete.email" class="font-link">{{
+                    data.entete.email }}</a>
                 </div>
               </div>
             </div>
           </div>
+
+          <!-- Photo de profil avec cadre stylisé -->
           <div class="header-right">
             <div class="photo-container">
               <div class="photo-wrapper">
-                <img :src="config.assets.photo" :alt="data.entete.nom" class="photo" />
+                <img :src="profilePhoto" :alt="'Photo de ' + data.entete?.nom" class="photo" />
               </div>
             </div>
           </div>
         </header>
 
-        <!-- Profile Section -->
-        <ReuseCard title="PROFIL" :icon="icons.user" customClass="profile-section">
-          <p class="profile-text">{{ data.profil }}</p>
-        </ReuseCard>
+        <template v-if="data">
+          <!-- Section Profil / Résumé -->
+          <ReuseCard title="PROFIL" :icon="icons.user" customClass="profile-section">
+            <p class="profile-text">{{ data.profil }}</p>
+          </ReuseCard>
 
-        <!-- Main Content Grid -->
-        <div class="main-grid">
-          <!-- Left Column -->
-          <div class="left-column">
-            <ReuseCard :title="section_name" :icon="icons.code" customClass="transverses-section"
-              v-for="(competences, section_name) in data.competences" :key="section_name">
-              <div class="skills-group" v-for="(skills, category) in competences" :key="category">
-                <h4 class="skills-subtitle font-section-title">
-                  <span class="skill-icon"></span>
-                  {{ category }}
-                </h4>
-                <div class="skills-list">
-                  <div class="skill-item">
-                    {{ skills.join(', ') }}
+          <!-- Grille principale : Compétences et Expériences -->
+          <div class="main-grid">
+            <!-- Colonne de gauche : Compétences techniques -->
+            <div class="left-column">
+              <ReuseCard :title="sectionName" :icon="icons.code" v-for="(competences, sectionName) in data.competences"
+                :key="sectionName">
+                <div class="skills-group" v-for="(skills, category) in competences" :key="category">
+                  <h4 class="skills-subtitle font-section-title">
+                    <span class="skill-marker"></span>
+                    {{ category }}
+                  </h4>
+                  <div class="skills-list">
+                    <div class="skill-item">
+                      {{ skills.join(', ') }}
+                    </div>
+                  </div>
+                </div>
+              </ReuseCard>
+            </div>
+
+            <!-- Colonne de droite : Expériences Professionnelles (Timeline) -->
+            <div class="right-column-container">
+              <ReuseCard title="EXPÉRIENCE PROFESSIONNELLE" :icon="icons.briefcase">
+                <div class="timeline-container">
+                  <div v-for="exp in data.experience_professionnelle" :key="exp.entreprise + exp.periode"
+                    class="experience-item timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="exp-header">
+                      <h4 class="exp-title">
+                        <span class="exp-title-main font-section-title">{{ exp.titre }}</span>
+                        <span class="exp-company" v-if="exp.entreprise">&nbsp;| {{ exp.entreprise }}</span>
+                      </h4>
+                      <span class="exp-period font-date">{{ exp.periode }}</span>
+                    </div>
+                    <p class="exp-description">{{ exp.description }}</p>
+                  </div>
+                </div>
+              </ReuseCard>
+            </div>
+          </div>
+
+          <!-- Pied de page : Formation et Centres d'intérêt -->
+          <div class="footer-grid">
+            <ReuseCard title="FORMATION" :icon="icons.graduation" customClass="formation-section">
+              <div class="formation-list">
+                <div v-for="edu in data.formation" :key="edu.annee + edu.diplome" class="formation-item">
+                  <span class="formation-year font-date">{{ edu.annee }}</span>
+                  <div class="formation-details">
+                    <span class="formation-title font-section-title">{{ edu.diplome }}</span>
+                    <span class="formation-school font-body"> — {{ edu.etablissement }} </span>
                   </div>
                 </div>
               </div>
             </ReuseCard>
+
+            <ReuseCard title="CENTRES D'INTÉRÊT" :icon="icons.heart" customClass="interests-section">
+              <p class="interests-text">{{ data.centres_d_interets }}</p>
+            </ReuseCard>
           </div>
-
-          <!-- Right Column -->
-          <ReuseCard customClass="right-column" :icon="icons.briefcase" title="EXPÉRIENCE PROFESSIONNELLE">
-            <section class="section timeline-container">
-              <div v-for="exp in data.experience_professionnelle" :key="exp.entreprise"
-                class="experience-item timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="exp-header">
-                  <h4 class="exp-title">
-                    <span class="exp-title-main font-section-title">
-                      {{ exp.titre }}
-                    </span>
-                    <span class="exp-company" v-if="exp.entreprise">&nbsp;| {{ exp.entreprise || '' }}</span>
-                  </h4>
-                  <span class="exp-period font-date">
-                    {{ exp.periode }}
-                  </span>
-                </div>
-                <p class="profile-text exp-description">{{ exp.description }}</p>
-              </div>
-            </section>
-          </ReuseCard>
-        </div>
-
-        <!-- Footer Grid -->
-        <div class="footer-grid">
-          <!-- Formation -->
-          <ReuseCard title="FORMATION" :icon="icons.graduation" customClass="formation-section">
-            <div class="formation-list">
-              <div v-for="edu in data.formation" :key="edu.annee" class="formation-item">
-                <span class="formation-year font-date">{{ edu.annee }}</span>
-                <div class="formation-details">
-                  <span class="formation-title font-section-title">{{ edu.diplome }}</span>
-                  <span class="formation-school font-body"> — {{ edu.etablissement }} </span>
-                </div>
-              </div>
-            </div>
-          </ReuseCard>
-
-          <!-- Interests -->
-          <ReuseCard title="CENTRES D'INTÉRÊT" :icon="icons.heart" customClass="interests-section">
-            <p class="interests-text">{{ data.centres_d_interets }}</p>
-          </ReuseCard>
-        </div>
+        </template>
       </div>
     </div>
   </div>
@@ -148,131 +158,39 @@
 
 
 <script setup>
-import { ref, computed } from 'vue'
+/**
+ * Logique du composant CV refactorisée en composables
+ */
 import { createReusableTemplate } from '@vueuse/core'
 import { Printer as PrinterIcon, Sun as SunIcon, Moon as MoonIcon } from 'lucide-vue-next'
-import cvData from '../data/cv-data.json'
-import designConfig from '../data/design-config.json'
-import backgroundImageDark from '@/assets/images/background.png'
-import backgroundImageLight from '@/assets/images/background.png'
-import photoImage from '@/assets/images/photo-profil-ameliore.png'
+import { watch } from 'vue'
 
-// Import icons
-import userIcon from '@/assets/icons/user.svg'
-import codeIcon from '@/assets/icons/code.svg'
-import briefcaseIcon from '@/assets/icons/briefcase.svg'
-import graduationIcon from '@/assets/icons/graduation-cap.svg'
-import heartIcon from '@/assets/icons/heart.svg'
+// Import des composables métier
+import { useCvData } from '../composables/useCvData'
+import { useTheme } from '../composables/useTheme'
+import { useDynamicStyles } from '../composables/useDynamicStyles'
 
+// Initialisation des données
+const { data, config, icons, profilePhoto } = useCvData()
+
+// Initialisation du thème avec synchronisation
+const { isDarkMode, toggleTheme, syncTheme } = useTheme(config.value?.defaultTheme || 'dark')
+watch(() => config.value?.defaultTheme, (newVal) => {
+  if (newVal) syncTheme(newVal)
+})
+
+// Initialisation des styles dynamiques
+const { cssProps, activeBackgroundImage } = useDynamicStyles(config, isDarkMode)
+
+// Template réutilisable pour les sections (Card)
 const [DefineCard, ReuseCard] = createReusableTemplate()
 
-const data = ref(cvData)
-const config = ref(designConfig)
-const isDarkMode = ref(config.value.defaultTheme === 'dark')
-
-// Couleurs actives = couleurs partagées + couleurs du thème courant
-const currentTheme = computed(() => config.value.themes[isDarkMode.value ? 'dark' : 'light'])
-
-const activeBackgroundImage = computed(() => currentTheme.value.backgroundImage)
-
-const activeColors = computed(() => {
-  const { typography, ...themeColors } = currentTheme.value
-  return { ...config.value.colors, ...themeColors }
-})
-
-// Typography active = base + surcharges du thème courant
-const activeTypography = computed(() => {
-  const base = config.value.typography
-  const overrides = currentTheme.value.typography || {}
-  const merged = {}
-  for (const [section, values] of Object.entries(base)) {
-    merged[section] = { ...values, ...(overrides[section] || {}) }
-  }
-  return merged
-})
-
-const icons = {
-  user: userIcon,
-  code: codeIcon,
-  briefcase: briefcaseIcon,
-  graduation: graduationIcon,
-  heart: heartIcon
+/**
+ * Gestion des actions utilisateur
+ */
+const handlePrint = () => {
+  window.print()
 }
-
-// Overwrite asset paths with imported URLs for Vite processing
-if (config.value.themes.dark.backgroundImage) config.value.themes.dark.backgroundImage = backgroundImageDark
-if (config.value.themes.light.backgroundImage) config.value.themes.light.backgroundImage = backgroundImageLight
-config.value.assets.photo = photoImage
-
-const toggleTheme = () => {
-  isDarkMode.value = !isDarkMode.value
-}
-
-const printPage = () => {
-  console.log('Démarrage de l\'impression...');
-  const elements = document.querySelectorAll('.cv-card-section, .main-grid, .footer-grid, .profile-section');
-  console.log(`Nombre d'éléments de contenu trouvés : ${elements.length}`);
-  elements.forEach((el, i) => {
-    const style = window.getComputedStyle(el);
-    console.log(`Élément ${i} (${el.className}): display=${style.display}, opacity=${style.opacity}, visibility=${style.visibility}`);
-  });
-  window.print();
-}
-
-const renderSkillLevel = (level, maxLevel = 5) => {
-  return Array.from({ length: maxLevel }, (_, i) => i < level)
-}
-
-const cssProps = computed(() => {
-  const props = {}
-
-  // Couleurs (partagées + thème actif)
-  Object.entries(activeColors.value).forEach(([key, value]) => {
-    props[`--color-${key}`] = value
-  })
-
-  // Polices de base
-  if (config.value.fonts) {
-    Object.entries(config.value.fonts).forEach(([key, value]) => {
-      props[`--font-family-${key}`] = value
-    })
-  }
-
-  // Typographie groupée (base + surcharges du thème)
-  Object.entries(activeTypography.value).forEach(([section, values]) => {
-    Object.entries(values).forEach(([prop, value]) => {
-      // Résolution des couleurs nommées
-      if (prop === 'color' && activeColors.value[value]) {
-        props[`--font-${section}-${prop}`] = `var(--color-${value})`
-      }
-      // Résolution des polices nommées (primary, secondary, etc.)
-      else if (prop === 'family' && config.value.fonts && config.value.fonts[value]) {
-        props[`--font-${section}-${prop}`] = `var(--font-family-${value})`
-      }
-      // Résolution des tailles nommées (small, medium, etc.)
-      else if (prop === 'size' && config.value.fontSizes && config.value.fontSizes[value]) {
-        props[`--font-${section}-${prop}`] = config.value.fontSizes[value]
-      }
-      // Résolution des graisses nommées (regular, bold, etc.)
-      else if (prop === 'weight' && config.value.fontWeights && config.value.fontWeights[value]) {
-        props[`--font-${section}-${prop}`] = config.value.fontWeights[value]
-      }
-      // Résolution des hauteurs de ligne nommées (tight, normal, etc.)
-      else if (prop === 'lineHeight' && config.value.lineHeights && config.value.lineHeights[value]) {
-        props[`--font-${section}-${prop}`] = config.value.lineHeights[value]
-      }
-      // Résolution des espacements de lettres nommés (none, wide, etc.)
-      else if (prop === 'letterSpacing' && config.value.letterSpacings && config.value.letterSpacings[value]) {
-        props[`--font-${section}-${prop}`] = config.value.letterSpacings[value]
-      }
-      else {
-        props[`--font-${section}-${prop}`] = value
-      }
-    })
-  })
-
-  return props
-})
 </script>
 
 <style scoped>

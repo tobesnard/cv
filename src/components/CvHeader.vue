@@ -135,6 +135,7 @@ defineProps<{
     overflow: visible;
     padding: 3mm;
     z-index: 1;
+    top: 7pt;
 }
 
 .photo-container::before {

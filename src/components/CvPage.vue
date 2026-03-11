@@ -169,28 +169,30 @@ import { watch } from 'vue'
 import { useCvData } from '../composables/useCvData'
 import { useTheme } from '../composables/useTheme'
 import { useDynamicStyles } from '../composables/useDynamicStyles'
+import { useCvActions } from '../composables/useCvActions'
 
 // Initialisation des données
 const { data, config, icons, profilePhoto } = useCvData()
 
 // Initialisation du thème avec synchronisation
-const { isDarkMode, toggleTheme, syncTheme } = useTheme(config.value?.defaultTheme || 'dark')
+const { isDarkMode, currentTheme, toggleTheme, syncTheme } = useTheme(config, config.value?.defaultTheme || 'dark')
 watch(() => config.value?.defaultTheme, (newVal) => {
   if (newVal) syncTheme(newVal)
 })
 
 // Initialisation des styles dynamiques
-const { cssProps, activeBackgroundImage } = useDynamicStyles(config, isDarkMode)
+const { cssProps, activeBackgroundImage } = useDynamicStyles(config, currentTheme)
+
+// Initialisation des actions utilisateur
+const { handlePrint } = useCvActions()
 
 // Template réutilisable pour les sections (Card)
 const [DefineCard, ReuseCard] = createReusableTemplate()
 
 /**
- * Gestion des actions utilisateur
+ * Le script ne contient maintenant plus de logique métier brute,
+ * tout est délégué aux composables.
  */
-const handlePrint = () => {
-  window.print()
-}
 </script>
 
 <style scoped>

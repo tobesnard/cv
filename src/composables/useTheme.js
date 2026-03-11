@@ -4,8 +4,17 @@
  */
 import { ref, computed } from 'vue'
 
-export function useTheme(initialTheme = 'dark') {
+export function useTheme(config, initialTheme = 'dark') {
     const isDarkMode = ref(initialTheme === 'dark')
+
+    /**
+     * Thème actif basé sur le mode sombre/clair extrait de la config.
+     * Déplacé de useDynamicStyles vers useTheme pour une meilleure cohésion.
+     */
+    const currentTheme = computed(() => {
+        const themeKey = isDarkMode.value ? 'dark' : 'light'
+        return config.value?.themes?.[themeKey] || {}
+    })
 
     const toggleTheme = () => {
         isDarkMode.value = !isDarkMode.value
@@ -18,6 +27,7 @@ export function useTheme(initialTheme = 'dark') {
 
     return {
         isDarkMode,
+        currentTheme,
         toggleTheme,
         syncTheme
     }

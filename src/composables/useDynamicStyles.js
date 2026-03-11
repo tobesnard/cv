@@ -5,26 +5,27 @@
 import { computed } from 'vue'
 import backgroundImage from '@/assets/images/background.png'
 
-export function useDynamicStyles(config, isDarkMode) {
-
-    // 1. Thème actif basé sur le mode sombre/clair
-    const currentTheme = computed(() => {
-        const themeKey = isDarkMode.value ? 'dark' : 'light'
-        return config.value.themes[themeKey]
-    })
+/**
+ * useDynamicStyles s'occupe uniquement du calcul des variables CSS.
+ * Il ne gère plus la logique de sélection de thème (délégué à useTheme).
+ */
+export function useDynamicStyles(config, currentTheme) {
 
     const activeBackgroundImage = backgroundImage
 
-    // 2. Fusion des couleurs de base et des couleurs du thème
+    // 1. Fusion des couleurs de base et des couleurs du thème
     const activeColors = computed(() => {
-        const { typography, ...themeColors } = currentTheme.value
-        return { ...config.value.colors, ...themeColors }
+        const themeValues = currentTheme.value || {}
+        const { typography, ...themeColors } = themeValues
+        const baseColors = config.value?.colors || {}
+        return { ...baseColors, ...themeColors }
     })
 
-    // 3. Fusion de la typographie de base et des surcharges du thème
+    // 2. Fusion de la typographie de base et des surcharges du thème
     const activeTypography = computed(() => {
-        const base = config.value.typography
-        const overrides = currentTheme.value.typography || {}
+        const themeValues = currentTheme.value || {}
+        const base = config.value?.typography || {}
+        const overrides = themeValues.typography || {}
         const merged = {}
 
         for (const [section, values] of Object.entries(base)) {

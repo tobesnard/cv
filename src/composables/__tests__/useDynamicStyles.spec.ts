@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { ref, computed } from 'vue'
-import { useDynamicStyles } from '../composables/useDynamicStyles'
-import type { DesignConfig, DesignTheme } from '../domain/cv.types'
+import { useDynamicStyles } from '../useDynamicStyles'
+import type { DesignConfig, DesignTheme } from '../../domain/cv.types'
 
 describe('useDynamicStyles', () => {
     it('should generate correct CSS variables from config', () => {

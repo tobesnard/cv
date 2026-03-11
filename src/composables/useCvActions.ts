@@ -98,7 +98,7 @@ export function useCvActions(): UseCvActionsReturn {
                     scrollY: 0,
                     windowWidth: 1200 // Assure une résolution stable pour le calcul
                 },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' as const }
             }
 
             // Lancer l'export

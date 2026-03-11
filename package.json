@@ -7,6 +7,8 @@
     "dev": "vite",
     "build": "pnpm run optimize-images && vite build",
     "preview": "vite preview",
+    "test": "vitest",
+    "test:run": "vitest run",
     "optimize-images": "node scripts/optimize-images.js"
   },
   "dependencies": {

@@ -22,15 +22,20 @@
  * @file CvToolbar.vue
  * @description Composant pour la barre d'outils flottante (Impression, Thème).
  */
+import type { Component } from 'vue';
 
 interface Props {
-    icons: Record<string, any>;
+    icons: Record<string, Component>;
     isDarkMode: boolean;
 }
 
 defineProps<Props>()
 
-defineEmits(['print', 'toggle-theme', 'download-pdf'])
+defineEmits<{
+    (e: 'print'): void;
+    (e: 'toggle-theme'): void;
+    (e: 'download-pdf'): void;
+}>()
 </script>
 
 <style scoped>

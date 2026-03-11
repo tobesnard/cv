@@ -1,37 +1,46 @@
 /**
- * @file useDynamicStyles.js
+ * @file useDynamicStyles.ts
  * @description Composable spécialisé dans le calcul des variables CSS dynamiques.
  * Transforme la configuration JSON du design en un objet CSS injecté via :style dans l'application.
  */
-import { computed } from 'vue'
+import { computed, type ComputedRef, type Ref } from 'vue'
+import type { DesignConfig, DesignTheme } from '../domain/cv.types'
+
+/**
+ * Interface pour les propriétés CSS générées
+ */
+export type CSSProperties = Record<string, string | number>;
 
 /**
  * Composable useDynamicStyles
  * Centralise la conversion des règles de style du design-config vers des propriétés CSS standard.
  *
- * @param {import('vue').Ref<Object>} config - La configuration globale du design (Design system).
- * @param {import('vue').ComputedRef<Object>} currentTheme - Le thème actif (light/dark) extrait via useTheme.
- * @returns {Object} Un objet contenant les propriétés CSS (cssProps) prêtes à l'emploi.
+ * @param {Ref<DesignConfig | null>} config - La configuration globale du design (Design system).
+ * @param {ComputedRef<DesignTheme | null>} currentTheme - Le thème actif (light/dark) extrait via useTheme.
+ * @returns {{ cssProps: ComputedRef<CSSProperties> }} Un objet contenant les propriétés CSS (cssProps) prêtes à l'emploi.
  */
-export function useDynamicStyles(config, currentTheme) {
+export function useDynamicStyles(
+    config: Ref<DesignConfig | null>,
+    currentTheme: ComputedRef<DesignTheme | null>
+): { cssProps: ComputedRef<CSSProperties> } {
 
-    /** @type {import('vue').ComputedRef<Object>} Fusion des palettes de couleurs globales et thématiques */
-    const activeColors = computed(() => {
-        const themeValues = currentTheme.value || {}
+    /** Fusion des palettes de couleurs globales et thématiques */
+    const activeColors = computed<Record<string, string>>(() => {
+        const themeValues = (currentTheme.value || {}) as any
         // On sépare la typographie des couleurs directes du thème
-        const { typography, ...themeColors } = themeValues
+        const { typography: _, ...themeColors } = themeValues
         const baseColors = config.value?.colors || {}
 
         // Les couleurs spécifiques au thème (ex: background) surchargent les couleurs de base
         return { ...baseColors, ...themeColors }
     })
 
-    /** @type {import('vue').ComputedRef<Object>} Fusion de la typographie système et des variations par thème */
-    const activeTypography = computed(() => {
-        const themeValues = currentTheme.value || {}
+    /** Fusion de la typographie système et des variations par thème */
+    const activeTypography = computed<Record<string, Record<string, string>>>(() => {
+        const themeValues = currentTheme.value || {} as DesignTheme
         const base = config.value?.typography || {}
         const overrides = themeValues.typography || {}
-        const merged = {}
+        const merged: Record<string, Record<string, string>> = {}
 
         // Parcours de chaque section typographique (title, subtitle, etc.)
         for (const [section, values] of Object.entries(base)) {
@@ -44,10 +53,9 @@ export function useDynamicStyles(config, currentTheme) {
     /**
      * Génération finale de l'objet de styles injecté dans le composant racine.
      * Cette méthode convertit les jetons du design system en variables CSS injectables (--color-*, --font-*, etc.).
-     * @type {import('vue').ComputedRef<Object>}
      */
-    const cssProps = computed(() => {
-        const props = {}
+    const cssProps = computed<CSSProperties>(() => {
+        const props: CSSProperties = {}
         const colors = activeColors.value
         const typography = activeTypography.value
 
@@ -74,7 +82,7 @@ export function useDynamicStyles(config, currentTheme) {
          */
         Object.entries(typography).forEach(([section, values]) => {
             Object.entries(values).forEach(([prop, value]) => {
-                let resolvedValue = value
+                let resolvedValue: string | number = value
 
                 // Correspondance automatique des jetons (tokens) vers les valeurs réelles
                 if (prop === 'color' && colors[value]) {
@@ -82,13 +90,13 @@ export function useDynamicStyles(config, currentTheme) {
                 } else if (prop === 'family' && fonts[value]) {
                     resolvedValue = `var(--font-family-${value})`
                 } else if (prop === 'size' && sizes[value]) {
-                    resolvedValue = sizes[value]
+                    resolvedValue = (sizes as any)[value] || value
                 } else if (prop === 'weight' && weights[value]) {
-                    resolvedValue = weights[value]
+                    resolvedValue = (weights as any)[value] || value
                 } else if (prop === 'lineHeight' && lineHeights[value]) {
-                    resolvedValue = lineHeights[value]
+                    resolvedValue = (lineHeights as any)[value] || value
                 } else if (prop === 'letterSpacing' && letterSpacings[value]) {
-                    resolvedValue = letterSpacings[value]
+                    resolvedValue = (letterSpacings as any)[value] || value
                 }
 
                 props[`--font-${section}-${prop}`] = resolvedValue

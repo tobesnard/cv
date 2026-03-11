@@ -3,15 +3,24 @@
  * @description Composable regroupant les actions utilisateur et les fonctionnalités utilitaires (ex: Impression et export PDF).
  */
 
+// @ts-ignore - html2pdf does not provide official types
 import html2pdf from 'html2pdf.js'
 import { useAppStore } from '../store/appStore'
 
 /**
+ * Interface pour les méthodes retournées par useCvActions
+ */
+interface UseCvActionsReturn {
+    handlePrint: () => void;
+    downloadPDF: (fileName?: string) => Promise<void>;
+}
+
+/**
  * Composable useCvActions
  * Fournit les méthodes d'interaction principales pour l'interface du CV.
- * @returns {Object} Un ensemble de fonctions d'action.
+ * @returns {UseCvActionsReturn} Un ensemble de fonctions d'action.
  */
-export function useCvActions() {
+export function useCvActions(): UseCvActionsReturn {
     const store = useAppStore()
 
     /**
@@ -25,7 +34,7 @@ export function useCvActions() {
      * Génère un PDF contenant deux pages : 
      * Page 1 : Version Dark Mode
      * Page 2 : Version Light Mode
-     * @param {string} fileName - Le nom du fichier PDF.
+     * @param fileName - Le nom du fichier PDF.
      */
     const downloadPDF = async (fileName: string = 'CV_Tony_Besnard.pdf'): Promise<void> => {
         const appElement = document.querySelector('.cv-page') as HTMLElement

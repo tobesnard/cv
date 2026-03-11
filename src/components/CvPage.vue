@@ -87,7 +87,7 @@
               <div class="skills-group" v-for="(skills, category) in competences" :key="category">
                 <h4 class="skills-subtitle font-section-title">
                   <span class="skill-icon"></span>
-                  {{ category.toUpperCase() }}
+                  {{ category }}
                 </h4>
                 <div class="skills-list">
                   <div class="skill-item">

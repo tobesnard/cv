@@ -90,7 +90,7 @@
       "titre": "Lead Développeur Full-Stack & Chef de Projet",
       "entreprise": "Pharmavitale",
       "periode": "2023-2025",
-      "description": "Réécriture complète du logiciel de gestion d'officine (LGO) vers une application web moderne (PHP/Vue.js) après une migration depuis VB. Pilotage d'équipe en méthodologies SCRUM et XP, modélisation de l'architecture via UML et développement de modules critiques en C# (.NET). Responsable du cycle de vie du projet : spécifications techniques, tests, déploiement, sécurité et maintenance évolutive."
+      "description": "Réécriture complète du logiciel de gestion d'officine (LGO) vers une application web moderne (PHP/Vue.js) après une migration depuis VB. Pilotage d'équipe en méthodologie SCRUM et XP, modélisation de l'architecture via UML et développement de modules critiques en C# (.NET). Responsable du cycle de vie du projet : spécifications techniques, tests, déploiement, sécurité et maintenance évolutive."
     },
     {
       "titre": "Expérience de vie et engagement",
@@ -111,5 +111,5 @@
       "description": "Installation et maintenance de solutions de téléphonie (PABX/IPBX) et informatiques pour PME, incluant la programmation système, la formation des utilisateurs et le support à distance. Réalisation de tests et dépannages sur cartes électroniques, programmation et débogage de microcontrôleurs et circuits logiques en C et Assembleur."
     }
   ],
-  "centres_d_interets": "Passion pour la technique centrée sur la résolution régulière de challenges de cybersécurité sur Root-Me, complétée par des intérêts pour la domotique, la gastronomie et la pratique de la natation."
+  "centres_d_interets": "Passion pour la technique centrée sur la résolution de challenges de cybersécurité sur Root-Me, complétée par des intérêts pour la domotique, la gastronomie et la pratique de la natation."
 }

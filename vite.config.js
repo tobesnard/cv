@@ -18,7 +18,7 @@ export default defineConfig({
         "name": "CV Tony BESNARD - Lead Développeur Full-Stack",
         "short_name": "CV Tony BESNARD",
         "description": "CV de Tony BESNARD, Lead Développeur Full-Stack et Pilotage de Projets.",
-        "theme_color": "#0d1f3c",
+        "theme_color": "#131e2e",
         "background_color": "#ffffff",
         "display": "standalone",
         "display_override": ["window-controls-overlay"],

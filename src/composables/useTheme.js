@@ -4,8 +4,23 @@
  */
 import { ref, computed } from 'vue'
 
+// Assets Icônes (lié à l'apparence car leur couleur dépend du mode)
+import userIcon from '@/assets/icons/user.svg'
+import codeIcon from '@/assets/icons/code.svg'
+import briefcaseIcon from '@/assets/icons/briefcase.svg'
+import graduationIcon from '@/assets/icons/graduation-cap.svg'
+import heartIcon from '@/assets/icons/heart.svg'
+
 export function useTheme(config, initialTheme = 'dark') {
     const isDarkMode = ref(initialTheme === 'dark')
+
+    const icons = {
+        user: userIcon,
+        code: codeIcon,
+        briefcase: briefcaseIcon,
+        graduation: graduationIcon,
+        heart: heartIcon
+    }
 
     /**
      * Thème actif basé sur le mode sombre/clair extrait de la config.
@@ -28,6 +43,7 @@ export function useTheme(config, initialTheme = 'dark') {
     return {
         isDarkMode,
         currentTheme,
+        icons,
         toggleTheme,
         syncTheme
     }

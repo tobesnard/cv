@@ -172,10 +172,10 @@ import { useDynamicStyles } from '../composables/useDynamicStyles'
 import { useCvActions } from '../composables/useCvActions'
 
 // Initialisation des données
-const { data, config, icons, profilePhoto } = useCvData()
+const { data, config, profilePhoto } = useCvData()
 
 // Initialisation du thème avec synchronisation
-const { isDarkMode, currentTheme, toggleTheme, syncTheme } = useTheme(config, config.value?.defaultTheme || 'dark')
+const { isDarkMode, currentTheme, icons, toggleTheme, syncTheme } = useTheme(config, config.value?.defaultTheme || 'dark')
 watch(() => config.value?.defaultTheme, (newVal) => {
   if (newVal) syncTheme(newVal)
 })

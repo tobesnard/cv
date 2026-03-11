@@ -18,18 +18,8 @@
         :style="{ backgroundImage: `url(${activeBackgroundImage})` }"></div>
 
       <div class="cv-content">
-        <!-- Barre d'outils flottante (masquée à l'impression) -->
-        <div class="action-buttons no-print">
-          <button @click="handlePrint" class="action-button" title="Imprimer le CV">
-            <component :is="icons.printer" :size="20" />
-            <span class="button-text">Imprimer</span>
-          </button>
-          <button @click="toggleTheme" class="action-button"
-            :title="isDarkMode ? 'Passer au mode clair' : 'Passer au mode sombre'">
-            <component :is="isDarkMode ? icons.sun : icons.moon" :size="20" />
-            <span class="button-text">{{ isDarkMode ? 'Mode Clair' : 'Mode Sombre' }}</span>
-          </button>
-        </div>
+        <!-- Barre d'outils flottante -->
+        <CvToolbar :icons="icons" :isDarkMode="isDarkMode" @print="handlePrint" @toggle-theme="toggleTheme" />
 
         <!-- État de chargement si les données ne sont pas présentes -->
         <div v-if="!data" class="loading-state">
@@ -37,52 +27,8 @@
         </div>
 
         <!-- En-tête : Informations personnelles et Photo -->
-        <header v-else class="cv-header">
-          <div class="header-left">
-            <h1 class="title">
-              <span class="title-main font-title">{{ data.titre?.toUpperCase() }}</span>
-              <span class="title-sub font-subtitle">{{ data.subtitle }}</span>
-            </h1>
-            <h2 class="name font-name">{{ data.entete?.nom }}</h2>
-
-            <!-- Informations de contact -->
-            <div class="contact-info font-contact">
-              <div class="contact-row">
-                <div class="contact-item">
-                  <img src="@/assets/icons/map-pin.svg" class="icon" alt="Localisation" />
-                  <span>{{ data.entete?.adresse }}</span>
-                </div>
-                <div class="contact-item">
-                  <img src="@/assets/icons/phone.svg" class="icon" alt="Téléphone" />
-                  <span>{{ data.entete?.telephone }}</span>
-                </div>
-              </div>
-              <div class="contact-row">
-                <div class="contact-item">
-                  <img src="@/assets/icons/github.svg" class="icon" alt="GitHub" />
-                  <a v-if="data.entete?.github" :href="data.entete.github" target="_blank" rel="noopener noreferrer"
-                    class="font-link">
-                    {{ data.entete.github.replace('https://', '') }}
-                  </a>
-                </div>
-                <div class="contact-item">
-                  <img src="@/assets/icons/mail.svg" class="icon" alt="Email" />
-                  <a v-if="data.entete?.email" :href="'mailto:' + data.entete.email" class="font-link">{{
-                    data.entete.email }}</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Photo de profil avec cadre stylisé -->
-          <div class="header-right">
-            <div class="photo-container">
-              <div class="photo-wrapper">
-                <img :src="profilePhoto" :alt="'Photo de ' + data.entete?.nom" class="photo" />
-              </div>
-            </div>
-          </div>
-        </header>
+        <CvHeader v-else :entete="{ ...data.entete, titre: data.titre, subtitle: data.subtitle }"
+          :profilePhoto="profilePhoto" />
 
         <template v-if="data">
           <!-- Section Profil / Résumé -->
@@ -96,59 +42,21 @@
             <div class="left-column">
               <ReuseCard :title="sectionName" :icon="icons.code" v-for="(competences, sectionName) in data.competences"
                 :key="sectionName">
-                <div class="skills-group" v-for="(skills, category) in competences" :key="category">
-                  <h4 class="skills-subtitle font-section-title">
-                    <span class="skill-marker"></span>
-                    {{ category }}
-                  </h4>
-                  <div class="skills-list">
-                    <div class="skill-item">
-                      {{ skills.join(', ') }}
-                    </div>
-                  </div>
-                </div>
+                <CvSkillSection :data="competences" />
               </ReuseCard>
             </div>
 
             <!-- Colonne de droite : Expériences Professionnelles (Timeline) -->
             <div class="right-column-container">
               <ReuseCard title="EXPÉRIENCE PROFESSIONNELLE" :icon="icons.briefcase">
-                <div class="timeline-container">
-                  <div v-for="exp in data.experience_professionnelle" :key="exp.entreprise + exp.periode"
-                    class="experience-item timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="exp-header">
-                      <h4 class="exp-title">
-                        <span class="exp-title-main font-section-title">{{ exp.titre }}</span>
-                        <span class="exp-company" v-if="exp.entreprise">&nbsp;| {{ exp.entreprise }}</span>
-                      </h4>
-                      <span class="exp-period font-date">{{ exp.periode }}</span>
-                    </div>
-                    <p class="exp-description">{{ exp.description }}</p>
-                  </div>
-                </div>
+                <CvExperienceTimeline :experiences="data.experience_professionnelle" />
               </ReuseCard>
             </div>
           </div>
 
           <!-- Pied de page : Formation et Centres d'intérêt -->
-          <div class="footer-grid">
-            <ReuseCard title="FORMATION" :icon="icons.graduation" customClass="formation-section">
-              <div class="formation-list">
-                <div v-for="edu in data.formation" :key="edu.annee + edu.diplome" class="formation-item">
-                  <span class="formation-year font-date">{{ edu.annee }}</span>
-                  <div class="formation-details">
-                    <span class="formation-title font-section-title">{{ edu.diplome }}</span>
-                    <span class="formation-school font-body"> — {{ edu.etablissement }} </span>
-                  </div>
-                </div>
-              </div>
-            </ReuseCard>
-
-            <ReuseCard title="CENTRES D'INTÉRÊT" :icon="icons.heart" customClass="interests-section">
-              <p class="interests-text">{{ data.centres_d_interets }}</p>
-            </ReuseCard>
-          </div>
+          <CvFooter :formations="data.formation" :centresDInterets="data.centres_d_interets" :icons="icons"
+            :ReuseCard="ReuseCard" />
         </template>
       </div>
     </div>
@@ -159,40 +67,43 @@
 <script setup>
 /**
  * @file CvPage.vue
- * @description Composant principal gérant l'affichage du CV.
- * Il orchestre la mise en page, l'intégration des données et la gestion du thème via des composables spécialisés.
+ * @description Composant principal gérant l'orchestration du CV.
  */
 import { createReusableTemplate } from '@vueuse/core'
 
-/** Importation des composables métier encapsulant la logique d'affichage et de données */
+/** Import des sous-composants atomiques */
+import CvToolbar from './CvToolbar.vue'
+import CvHeader from './CvHeader.vue'
+import CvSkillSection from './CvSkillSection.vue'
+import CvExperienceTimeline from './CvExperienceTimeline.vue'
+import CvFooter from './CvFooter.vue'
+
+/** Importation des composables métier */
 import { useCvData } from '../composables/useCvData'
 import { useTheme } from '../composables/useTheme'
 import { useDynamicStyles } from '../composables/useDynamicStyles'
 import { useCvActions } from '../composables/useCvActions'
 
-/** 1. Chargement des données primaires et de la configuration du design JSON */
+/** 1. Chargement des données métier et config via le store */
 const { data, config, profilePhoto } = useCvData()
 
 /** 
- * 2. Initialisation du système de thème.
- * useTheme gère l'état clair/sombre, les icônes correspondantes et l'image de fond.
+ * 2. Initialisation du thème (State Management).
  */
-const { isDarkMode, currentTheme, icons, activeBackgroundImage, toggleTheme } = useTheme(config, config.value?.defaultTheme || 'dark')
+const { isDarkMode, currentTheme, icons, activeBackgroundImage, toggleTheme } = useTheme()
 
 /** 
  * 3. Génération des variables CSS dynamiques.
- * Utilise la configuration et le thème actif pour produire un objet de propriétés CSS injectables (:style).
  */
 const { cssProps } = useDynamicStyles(config, currentTheme)
 
 /** 
- * 4. Initialisation des actions utilisateur (Impression).
+ * 4. Actions utilisateur.
  */
 const { handlePrint } = useCvActions()
 
 /** 
- * 5. Configuration d'un template réutilisable pour les cartes de section (VueUse).
- * Permet de définir une structure commune (Card header / body) pour chaque partie du CV.
+ * 5. Template pour les cartes de section.
  */
 const [DefineCard, ReuseCard] = createReusableTemplate()
 </script>
@@ -230,77 +141,6 @@ const [DefineCard, ReuseCard] = createReusableTemplate()
   z-index: 1;
   padding: 8mm;
   height: 100%;
-}
-
-/* Floating Action Buttons */
-.action-buttons {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  /* Garde les boutons alignés à droite */
-  gap: 15px;
-  z-index: 1000;
-}
-
-.action-button svg {
-  display: block;
-  width: 20px;
-  height: 20px;
-  min-width: 20px;
-  min-height: 20px;
-  stroke-width: 2.5px;
-  margin: 0;
-  flex-shrink: 0;
-}
-
-.action-button {
-  background: var(--color-backgroundLight, #0d1f3c);
-  border: 1.5px solid var(--color-primary, #00d4aa);
-  color: var(--color-primary, #00d4aa);
-  padding: 0;
-  border-radius: 50px;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0;
-  overflow: hidden;
-  transition: width 0.3s ease, background 0.3s ease, color 0.3s ease;
-  white-space: nowrap;
-  width: 42px;
-  height: 42px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-  line-height: 1;
-}
-
-.action-button:hover {
-  width: 150px;
-  justify-content: flex-start;
-  padding-left: 11px;
-  gap: 8px;
-  background: var(--color-primary, #00d4aa);
-  color: var(--color-background, #0a1628);
-}
-
-.button-text {
-  display: none;
-  font-family: var(--font-family-secondary);
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
-}
-
-.action-button:hover .button-text {
-  display: inline;
-}
-
-@media print {
-  .no-print {
-    display: none !important;
-  }
 }
 
 /* Header */
@@ -693,6 +533,88 @@ const [DefineCard, ReuseCard] = createReusableTemplate()
   .no-print {
     display: none !important;
   }
+}
+
+:deep(.font-date) {
+  color: var(--font-date-color) !important;
+  font-family: var(--font-date-family) !important;
+  font-size: var(--font-date-size) !important;
+  font-weight: var(--font-date-weight) !important;
+  line-height: var(--font-date-lineHeight) !important;
+  letter-spacing: var(--font-date-letterSpacing) !important;
+}
+
+:deep(.font-title) {
+  color: var(--font-title-color) !important;
+  font-family: var(--font-title-family) !important;
+  font-size: var(--font-title-size) !important;
+  font-weight: var(--font-title-weight) !important;
+  line-height: var(--font-title-lineHeight) !important;
+  letter-spacing: var(--font-title-letterSpacing) !important;
+}
+
+:deep(.font-subtitle) {
+  color: var(--font-subtitle-color) !important;
+  font-family: var(--font-subtitle-family) !important;
+  font-size: var(--font-subtitle-size) !important;
+  font-weight: var(--font-subtitle-weight) !important;
+  line-height: var(--font-subtitle-lineHeight) !important;
+  letter-spacing: var(--font-subtitle-letterSpacing) !important;
+}
+
+:deep(.font-name) {
+  color: var(--font-name-color) !important;
+  font-family: var(--font-name-family) !important;
+  font-size: var(--font-name-size) !important;
+  font-weight: var(--font-name-weight) !important;
+  line-height: var(--font-name-lineHeight) !important;
+  letter-spacing: var(--font-name-letterSpacing) !important;
+}
+
+:deep(.font-contact) {
+  color: var(--font-contact-color) !important;
+  font-family: var(--font-contact-family) !important;
+  font-size: var(--font-contact-size) !important;
+  font-weight: var(--font-contact-weight) !important;
+  line-height: var(--font-contact-lineHeight) !important;
+  letter-spacing: var(--font-contact-letterSpacing) !important;
+}
+
+:deep(.font-section-title) {
+  color: var(--font-sectionTitle-color) !important;
+  font-family: var(--font-cardTitle-family) !important;
+  /* Note: Utilise cardTitle car cardTitle gère les titres de sections */
+  font-size: var(--font-cardTitle-size) !important;
+  font-weight: var(--font-cardTitle-weight) !important;
+  line-height: var(--font-cardTitle-lineHeight) !important;
+  letter-spacing: var(--font-cardTitle-letterSpacing) !important;
+}
+
+:deep(.font-card-title) {
+  color: var(--font-cardTitle-color) !important;
+  font-family: var(--font-cardTitle-family) !important;
+  font-size: var(--font-cardTitle-size) !important;
+  font-weight: var(--font-cardTitle-weight) !important;
+  line-height: var(--font-cardTitle-lineHeight) !important;
+  letter-spacing: var(--font-cardTitle-letterSpacing) !important;
+}
+
+:deep(.font-body) {
+  color: var(--font-body-color) !important;
+  font-family: var(--font-body-family) !important;
+  font-size: var(--font-body-size) !important;
+  font-weight: var(--font-body-weight) !important;
+  line-height: var(--font-body-lineHeight) !important;
+  letter-spacing: var(--font-body-letterSpacing) !important;
+}
+
+:deep(.font-link) {
+  color: var(--font-link-color) !important;
+  font-family: var(--font-link-family) !important;
+  font-size: var(--font-link-size) !important;
+  font-weight: var(--font-link-weight) !important;
+  line-height: var(--font-link-lineHeight) !important;
+  letter-spacing: var(--font-link-letterSpacing) !important;
 }
 </style>
 

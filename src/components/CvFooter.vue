@@ -1,6 +1,6 @@
 <template>
     <div class="footer-grid">
-        <CvCard title="FORMATION" :icon="icons.graduation" customClass="formation-section">
+        <CvCard :title="$t('sections.education')" :icon="icons.Graduation" customClass="formation-section">
             <div class="formation-list">
                 <div v-for="edu in formations" :key="edu.annee + edu.diplome" class="formation-item">
                     <span class="formation-year font-date">{{ edu.annee }}</span>
@@ -12,24 +12,26 @@
             </div>
         </CvCard>
 
-        <CvCard title="CENTRES D'INTÉRÊT" :icon="icons.heart" customClass="interests-section">
+        <CvCard :title="$t('sections.interests')" :icon="icons.Heart" customClass="interests-section">
             <p class="interests-text">{{ centresDInterets }}</p>
         </CvCard>
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 /**
  * @file CvFooter.vue
  * @description Pied de page du CV : Formation et Centres d'intérêt.
  */
-import CvCard from './CvCard.vue'
+import type { Formation } from '@/domain/cv.types';
+import CvCard from './CvCard.vue';
+import type { Component } from 'vue';
 
-defineProps({
-    formations: { type: Array, required: true },
-    centresDInterets: { type: String, required: true },
-    icons: { type: Object, required: true }
-})
+defineProps<{
+    formations: Formation[];
+    centresDInterets: string;
+    icons: Record<string, Component>;
+}>();
 </script>
 
 <style scoped>

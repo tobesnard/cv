@@ -14,14 +14,16 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 /**
  * @file CvExperienceTimeline.vue
  * @description Rendu de la frise chronologique des expériences professionnelles.
  */
-defineProps({
-    experiences: { type: Array, required: true }
-})
+import type { Experience } from '@/domain/cv.types'
+
+defineProps<{
+    experiences: Experience[]
+}>()
 </script>
 
 <style scoped>

@@ -11,24 +11,24 @@
             <div class="contact-info font-contact">
                 <div class="contact-row">
                     <div class="contact-item">
-                        <img src="@/assets/icons/map-pin.svg" class="icon" alt="Localisation" />
+                        <component :is="icons.MapPin" class="icon" aria-hidden="true" />
                         <span>{{ entete.adresse }}</span>
                     </div>
                     <div class="contact-item">
-                        <img src="@/assets/icons/phone.svg" class="icon" alt="Téléphone" />
+                        <component :is="icons.Phone" class="icon" aria-hidden="true" />
                         <span>{{ entete.telephone }}</span>
                     </div>
                 </div>
                 <div class="contact-row">
                     <div class="contact-item">
-                        <img src="@/assets/icons/github.svg" class="icon" alt="GitHub" />
+                        <component :is="icons.Github" class="icon" aria-hidden="true" />
                         <a v-if="entete.github" :href="entete.github" target="_blank" rel="noopener noreferrer"
                             class="font-link">
                             {{ entete.github.replace('https://', '') }}
                         </a>
                     </div>
                     <div class="contact-item">
-                        <img src="@/assets/icons/mail.svg" class="icon" alt="Email" />
+                        <component :is="icons.Mail" class="icon" aria-hidden="true" />
                         <a v-if="entete.email" :href="'mailto:' + entete.email" class="font-link">
                             {{ entete.email }}
                         </a>
@@ -48,15 +48,19 @@
     </header>
 </template>
 
-<script setup>
+<script setup lang="ts">
 /**
  * @file CvHeader.vue
  * @description Sous-composant pour l'en-tête du CV (Infos perso + Photo).
  */
-defineProps({
-    entete: { type: Object, required: true },
-    profilePhoto: { type: String, required: true }
-})
+import type { Entete } from '@/domain/cv.types';
+import type { Component } from 'vue';
+
+defineProps<{
+    entete: Entete;
+    profilePhoto: string;
+    icons: Record<string, Component>;
+}>();
 </script>
 
 <style scoped>

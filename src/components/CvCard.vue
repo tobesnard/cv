@@ -1,7 +1,8 @@
 <template>
     <section :class="['cv-card-section', customClass]">
         <div v-if="title" class="card-header font-card-title">
-            <img v-if="icon" :src="icon" class="card-icon icon" alt="" />
+            <!-- Rendu dynamique du composant d'icône -->
+            <component v-if="icon" :is="icon" class="card-icon icon" aria-hidden="true" />
             <h3 class="card-title">{{ title }}</h3>
         </div>
         <div class="card-body">
@@ -10,25 +11,23 @@
     </section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 /**
  * @file CvCard.vue
- * @description Composant conteneur pour les sections du CV (Cartes).
+ * @description Composant conteneur pour les sections du CV.
  */
+import type { Component } from 'vue';
 
-defineProps({
-    title: {
-        type: String,
-        default: ''
-    },
-    icon: {
-        type: [String, Object],
-        default: null
-    },
-    customClass: {
-        type: String,
-        default: ''
-    }
+interface Props {
+    title?: string;
+    icon?: string | Component | null;
+    customClass?: string;
+}
+
+withDefaults(defineProps<Props>(), {
+    title: '',
+    icon: null,
+    customClass: ''
 })
 </script>
 
@@ -59,7 +58,7 @@ defineProps({
     height: 14px;
     flex-shrink: 0;
     display: block;
-    filter: var(--color-iconFilter);
+    color: var(--color-primary, #00d4aa);
 }
 
 .card-body {

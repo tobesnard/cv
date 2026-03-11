@@ -8,20 +8,21 @@
 
       <div class="cv-content">
         <!-- Barre d'outils flottante -->
-        <CvToolbar :icons="icons" :isDarkMode="isDarkMode" @print="handlePrint" @toggle-theme="toggleTheme" />
+        <CvToolbar :icons="icons" :isDarkMode="isDarkMode" @print="handlePrint" @toggle-theme="toggleTheme"
+          @download-pdf="downloadPDF(`CV_${data?.entete?.nom?.replace(' ', '_')}.pdf`)" />
 
         <!-- État de chargement si les données ne sont pas présentes -->
         <div v-if="!data" class="loading-state">
-          Chargement des données...
+          {{ $t('status.loading') }}
         </div>
 
         <!-- En-tête : Informations personnelles et Photo -->
         <CvHeader v-else :entete="{ ...data.entete, titre: data.titre, subtitle: data.subtitle }"
-          :profilePhoto="profilePhoto" />
+          :profilePhoto="profilePhoto" :icons="icons" />
 
         <template v-if="data">
           <!-- Section Profil / Résumé -->
-          <CvCard title="PROFIL" :icon="icons.user" customClass="profile-section">
+          <CvCard :title="$t('sections.profile')" :icon="icons.User" customClass="profile-section">
             <p class="profile-text">{{ data.profil }}</p>
           </CvCard>
 
@@ -29,7 +30,7 @@
           <div class="main-grid">
             <!-- Colonne de gauche : Compétences techniques -->
             <div class="left-column">
-              <CvCard :title="sectionName" :icon="icons.code" v-for="(competences, sectionName) in data.competences"
+              <CvCard :title="sectionName" :icon="icons.Code" v-for="(competences, sectionName) in data.competences"
                 :key="sectionName">
                 <CvSkillSection :data="competences" />
               </CvCard>
@@ -37,7 +38,7 @@
 
             <!-- Colonne de droite : Expériences Professionnelles (Timeline) -->
             <div class="right-column-container">
-              <CvCard title="EXPÉRIENCE PROFESSIONNELLE" :icon="icons.briefcase">
+              <CvCard :title="$t('sections.experience')" :icon="icons.Briefcase">
                 <CvExperienceTimeline :experiences="data.experience_professionnelle" />
               </CvCard>
             </div>
@@ -52,7 +53,7 @@
 </template>
 
 
-<script setup>
+<script setup lang="ts">
 /**
  * @file CvPage.vue
  * @description Composant principal gérant l'orchestration du CV.
@@ -73,6 +74,7 @@ import { useDynamicStyles } from '../composables/useDynamicStyles'
 import { useCvActions } from '../composables/useCvActions'
 
 /** 1. Chargement des données métier et config via le store */
+// @ts-ignore - Temporary ignore until useCvData is fully typed
 const { data, config, profilePhoto } = useCvData()
 
 /** 
@@ -88,7 +90,7 @@ const { cssProps } = useDynamicStyles(config, currentTheme)
 /** 
  * 4. Actions utilisateur.
  */
-const { handlePrint } = useCvActions()
+const { handlePrint, downloadPDF } = useCvActions()
 
 </script>
 

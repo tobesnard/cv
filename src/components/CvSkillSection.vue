@@ -12,14 +12,16 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 /**
  * @file CvSkillSection.vue
  * @description Rendu d'une section de compétences (ex: Langages, Outils).
  */
-defineProps({
-    data: { type: Object, required: true }
-})
+import type { SkillGroup } from '@/domain/cv.types';
+
+defineProps<{
+    data: SkillGroup;
+}>();
 </script>
 
 <style scoped>

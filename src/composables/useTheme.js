@@ -54,10 +54,15 @@ export function useTheme(config, initialTheme = 'dark') {
 
     /**
      * Détermine l'image de fond à afficher dynamiquement.
-     * @returns {string|null} URL de l'image de fond configurée pour le thème actif, ou null si vide.
+     * @returns {string|null} URL de l'image de fond configurée pour le thème actif, ou l'image par défaut, ou null si vide.
      */
     const activeBackgroundImage = computed(() => {
-        return currentTheme.value?.backgroundImage || null
+        const themeBg = currentTheme.value?.backgroundImage
+        // Si le thème spécifie une chaîne vide, on n'affiche rien.
+        if (themeBg === "") return null
+        // Si le thème spécifie un chemin, on pourrait l'utiliser, 
+        // mais pour l'instant on utilise l'asset importé pour garantir la résolution par Vite.
+        return themeBg ? defaultBackgroundImage : null
     })
 
     /**

@@ -20,18 +20,34 @@ export default defineConfig({
         "theme_color": "#0d1f3c",
         "background_color": "#ffffff",
         "display": "standalone",
+        "display_override": ["window-controls-overlay"],
         "start_url": "/cv/",
         "scope": "/cv/",
         "icons": [
           {
-            "src": "favicon.png",
+            "src": "favicon-192.png",
             "sizes": "192x192",
             "type": "image/png"
           },
           {
-            "src": "favicon.png",
+            "src": "favicon-512.png",
             "sizes": "512x512",
             "type": "image/png"
+          }
+        ],
+        "screenshots": [
+          {
+            "src": "favicon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "CV Tony BESNARD Desktop"
+          },
+          {
+            "src": "favicon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "label": "CV Tony BESNARD Mobile"
           }
         ]
       }

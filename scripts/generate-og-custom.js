@@ -8,21 +8,17 @@ async function generateOptimizedOG() {
     try {
         console.log(`Processing: ${inputPath}...`);
         
-        // Largeur cible basée sur votre ratio (2762x3480)
-        // Mais adaptée à Facebook (1200x630)
-        // On va créer un canevas 1200x630 et y placer l'image redimensionnée au ratio souhaité
+        // Largeur cible basée sur votre demande précise (ratio 2762x3480)
+        const targetWidth = 2762;
+        const targetHeight = 3480;
         
-        const targetWidth = 1200;
-        const targetHeight = 630;
-        
-        // On redimensionne l'icone-profile pour qu'elle tienne dans la hauteur du rectangle OG
-        // tout en gardant une marge de sécurité
-        const iconSize = 580; 
+        // On redimensionne l'icone-profile pour qu'elle tienne dans ce format vertical
+        const iconSize = 2500; 
 
         await sharp(inputPath)
             .resize(iconSize, iconSize, {
                 fit: 'contain',
-                background: { r: 0, g: 0, b: 0, alpha: 0 }
+                background: { r: 13, g: 31, b: 60, alpha: 1 }
             })
             .extend({
                 top: Math.floor((targetHeight - iconSize) / 2),

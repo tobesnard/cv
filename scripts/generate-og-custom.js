@@ -7,13 +7,13 @@ const outputPath = 'public/og-image.png';
 async function generateOptimizedOG() {
     try {
         console.log(`Processing: ${inputPath}...`);
-        
+
         // Largeur cible basée sur votre demande précise (ratio 2762x3480)
         const targetWidth = 2762;
         const targetHeight = 3480;
-        
+
         // On redimensionne l'icone-profile pour qu'elle tienne dans ce format vertical
-        const iconSize = 2500; 
+        const iconSize = 2500;
 
         await sharp(inputPath)
             .resize(iconSize, iconSize, {

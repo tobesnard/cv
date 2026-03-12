@@ -2,18 +2,20 @@ import sharp from 'sharp';
 import fs from 'fs';
 
 const inputPath = 'etude-preliminaire/icone-profile.png';
-const outputPath = 'public/og-image.png';
+const outputPath = 'public/og-v5.png';
 
 async function generateOptimizedOG() {
     try {
         console.log(`Processing: ${inputPath}...`);
 
-        // Largeur cible basée sur votre demande précise (ratio 2762x3480)
-        const targetWidth = 2762;
-        const targetHeight = 3480;
+        // Résolution optimisée pour Twitter tout en gardant exactement le ratio d'origine
+        // 2762 / 3480 = ~0.793
+        // 1110 / 1400 = ~0.792 (Correct)
+        const targetWidth = 1110;
+        const targetHeight = 1400;
 
         // On redimensionne l'icone-profile pour qu'elle tienne dans ce format vertical
-        const iconSize = 2500;
+        const iconSize = 1000;
 
         await sharp(inputPath)
             .resize(iconSize, iconSize, {

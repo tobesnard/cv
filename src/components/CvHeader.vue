@@ -99,6 +99,31 @@ defineProps<{
     flex-direction: column;
 }
 
+@media screen and (max-width: 768px) {
+    .cv-header {
+        flex-direction: column-reverse;
+        align-items: center;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .header-right {
+        margin-right: 0;
+        padding: 30px;
+    }
+
+    .contact-row {
+        flex-direction: column;
+        gap: 0 !important;
+        align-items: center;
+    }
+
+    .contact-info {
+        gap: 10px;
+        margin-top: 15px;
+    }
+}
+
 .contact-row {
     display: flex;
     gap: 4mm;

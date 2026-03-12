@@ -145,8 +145,46 @@ const toggleLanguage = () => {
   display: grid;
   grid-template-columns: 33fr 67fr;
   gap: 5mm;
-  margin-bottom: 4mm;
+  /* margin-bottom: 4mm; */
   align-items: stretch;
+}
+
+@media screen and (max-width: 768px) {
+  .cv-page {
+    width: 100%;
+    min-height: auto;
+    box-shadow: none;
+  }
+
+  .cv-container {
+    padding: 0;
+  }
+
+  .cv-content {
+    padding: 15px;
+  }
+
+  .main-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 4mm;
+    margin-top: 4mm;
+  }
+
+  /* Réordonner : Profil (déjà en haut), puis Expérience, puis Compétences */
+  .profile-section {
+    order: 1;
+  }
+
+  .right-column-container {
+    order: 2;
+  }
+
+  .left-column {
+    order: 3;
+  }
 }
 
 .left-column,

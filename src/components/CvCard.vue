@@ -115,4 +115,10 @@ withDefaults(defineProps<Props>(), {
     line-height: var(--font-cardTitle-lineHeight) !important;
     letter-spacing: var(--font-cardTitle-letterSpacing) !important;
 }
+
+@media screen and (max-width: 768px) {
+    .cv-card-section {
+        margin-bottom: 0 !important;
+    }
+}
 </style>

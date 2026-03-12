@@ -41,6 +41,24 @@ defineProps<{
     gap: 5mm;
 }
 
+@media screen and (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .formation-section {
+        order: 4;
+        /* Après les compétences */
+    }
+
+    .interests-section {
+        order: 5;
+    }
+}
+
 .formation-list {
     display: flex;
     flex-direction: column;

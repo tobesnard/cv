@@ -1,9 +1,9 @@
 {
     "sections": {
         "profile": "PROFILE",
-        "experience": "WORK EXPERIENCE",
-        "skills": "SKILLS",
-        "education": "EDUCATION & TRAINING",
+        "experience": "PROFESSIONAL EXPERIENCE",
+        "skills": "SKILLS & EXPERTISE",
+        "education": "EDUCATION & QUALIFICATIONS",
         "interests": "INTERESTS"
     },
     "actions": {

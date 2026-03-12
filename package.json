@@ -12,8 +12,10 @@
     "optimize-images": "node scripts/optimize-images.js"
   },
   "dependencies": {
+    "@pdf-lib/upng": "^1.0.1",
     "@vueuse/core": "^14.2.1",
     "lucide-vue-next": "^0.577.0",
+    "pdf-lib": "^1.17.1",
     "pinia": "^3.0.4",
     "vue": "^3.4.0"
   },

@@ -1,4 +1,6 @@
 User-agent: *
+Disallow: /assets/profilePicture-*.png
+Disallow: /src/assets/images/profilePicture.png
 Allow: /
 
 Sitemap: https://tobesnard.github.io/cv/sitemap.xml

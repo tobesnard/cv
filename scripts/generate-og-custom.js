@@ -2,20 +2,19 @@ import sharp from 'sharp';
 import fs from 'fs';
 
 const inputPath = 'etude-preliminaire/icone-profile.png';
-const outputPath = 'public/og-v6.png';
+const outputPath = 'public/og-v7.png';
 
 async function generateOptimizedOG() {
     try {
         console.log(`Processing: ${inputPath}...`);
 
-        // Format standard LinkedIn/Facebook (Ratio ~1.91:1)
-        // 1200x630 est le format universel pour éviter les troncatures
+        // Format standard paysage pour Twitter/X (1200x630)
+        // On s'assure que l'image est bien reconnue avec un nouveau nom v7
         const targetWidth = 1200;
         const targetHeight = 630;
 
-        // On réduit l'icône pour qu'elle soit entièrement visible dans ce rectangle 
-        // avec des marges de sécurité
-        const iconSize = 580;
+        // On réduit légèrement l'icône pour laisser des marges (safe zone)
+        const iconSize = 600; 
 
         await sharp(inputPath)
             .resize(iconSize, iconSize, {
@@ -27,7 +26,7 @@ async function generateOptimizedOG() {
                 bottom: Math.ceil((targetHeight - iconSize) / 2),
                 left: Math.floor((targetWidth - iconSize) / 2),
                 right: Math.ceil((targetWidth - iconSize) / 2),
-                background: { r: 13, g: 31, b: 60, alpha: 1 } // Bleu sombre
+                background: { r: 13, g: 31, b: 60, alpha: 1 }
             })
             .toFile(outputPath);
 

@@ -49,7 +49,7 @@ export interface CvData {
     competences: Competences;
     experience_professionnelle: Experience[];
     formation: Formation[];
-    centres_d_interets: string;
+    centres_d_interets: string | string[];
 }
 
 export interface DesignTheme {

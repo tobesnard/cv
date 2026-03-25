@@ -110,5 +110,10 @@
       "description": "Installation et maintenance de solutions de téléphonie (PABX/IPBX) et informatiques pour PME, incluant la programmation système, la formation des utilisateurs et le support à distance. Réalisation de tests et dépannages sur cartes électroniques, programmation et débogage de microcontrôleurs et circuits logiques en C et Assembleur."
     }
   ],
-  "centres_d_interets": "Passion pour la technique centrée sur la résolution de challenges de cybersécurité sur Root-Me, complétée par des intérêts pour la domotique, la gastronomie et la pratique de la natation."
+  "centres_d_interets": [
+    "Résolution de challenges de cybersécurité sur Root-Me",
+    "La domotique",
+    "La gastronomie",
+    "La natation"
+  ]
 }

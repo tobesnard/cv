@@ -110,5 +110,10 @@
             "description": "Installed and maintained telephony (PABX/IPBX) and IT solutions for SMEs, including system programming, user training, and remote support. Conducted testing and troubleshooting of electronic boards, as well as programming and debugging microcontrollers and logic circuits using C and Assembly."
         }
     ],
-    "centres_d_interets": "Tech enthusiast focused on solving cybersecurity challenges on Root-Me, alongside interests in smart home design (home automation), gastronomy, and swimming."
+    "centres_d_interets": [
+        "Solving cybersecurity challenges on Root-Me",
+        "Smart home design (home automation)",
+        "Gastronomy",
+        "Swimming"
+    ]
 }

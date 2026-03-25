@@ -13,7 +13,13 @@
         </CvCard>
 
         <CvCard :title="$t('sections.interests')" :icon="icons.Heart" customClass="interests-section">
-            <p class="interests-text">{{ centresDInterets }}</p>
+            <div v-if="Array.isArray(centresDInterets)" class="interests-list">
+                <div v-for="interest in centresDInterets" :key="interest" class="interest-item font-body">
+                    <span class="interest-marker"></span>
+                    {{ interest }}
+                </div>
+            </div>
+            <p v-else class="interests-text">{{ centresDInterets }}</p>
         </CvCard>
     </div>
 </template>
@@ -30,7 +36,7 @@ import type { Component } from 'vue';
 
 defineProps<{
     formations: Formation[];
-    centresDInterets: string;
+    centresDInterets: string | string[];
     icons: Record<string, Component>;
 }>();
 
@@ -90,6 +96,27 @@ onMounted(() => {
 
 .interests-text {
     margin: 0;
+}
+
+.interests-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5mm;
+}
+
+.interest-item {
+    display: flex;
+    align-items: center;
+    gap: 2mm;
+    color: var(--color-text, #e2e8f0);
+}
+
+.interest-marker {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--color-primary, #00d4aa);
+    flex-shrink: 0;
 }
 
 .formation-school {

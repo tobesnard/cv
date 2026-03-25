@@ -3,7 +3,7 @@
         <CvCard :title="$t('sections.education')" :icon="icons.Graduation" customClass="formation-section">
             <div class="formation-list">
                 <div v-for="edu in formations" :key="edu.annee + edu.diplome" class="formation-item">
-                    <span class="formation-year font-date">{{ edu.annee }}</span>
+                    <span v-if="displayDates" class="formation-year font-date">{{ edu.annee }}</span>
                     <div class="formation-details">
                         <span class="formation-title font-section-title">{{ edu.diplome }}</span>
                         <span class="formation-school font-body"> — {{ edu.etablissement }} </span>
@@ -23,6 +23,7 @@
  * @file CvFooter.vue
  * @description Pied de page du CV : Formation et Centres d'intérêt.
  */
+import { onMounted, ref } from 'vue';
 import type { Formation } from '@/domain/cv.types';
 import CvCard from './CvCard.vue';
 import type { Component } from 'vue';
@@ -32,6 +33,13 @@ defineProps<{
     centresDInterets: string;
     icons: Record<string, Component>;
 }>();
+
+const displayDates = ref(false);
+
+onMounted(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    displayDates.value = urlParams.has('date') && urlParams.get('date') !== '0';
+});
 </script>
 
 <style scoped>

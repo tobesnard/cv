@@ -27,7 +27,7 @@
           </CvCard>
 
           <!-- Grille principale : Compétences et Expériences -->
-          <div class="main-grid">
+          <div class="main-grid" :class="{ 'experience-first': isExperienceFirst }">
             <!-- Colonne de gauche : Compétences techniques -->
             <div class="left-column">
               <CvCard :title="sectionName" :icon="icons.Code" v-for="(competences, sectionName) in data.competences"
@@ -94,7 +94,13 @@ const { cssProps } = useDynamicStyles(config, currentTheme)
 const { handlePrint } = useCvActions()
 
 /**
- * 5. Internationalisation.
+ * 5. Détection de l'ordre d'affichage (URL parameter)
+ */
+const urlParams = new URLSearchParams(window.location.search)
+const isExperienceFirst = urlParams.has('experience-first')
+
+/**
+ * 6. Internationalisation.
  */
 const i18n = useI18n()
 const toggleLanguage = () => {
@@ -147,6 +153,18 @@ const toggleLanguage = () => {
   gap: 5mm;
   /* margin-bottom: 4mm; */
   align-items: stretch;
+}
+
+.main-grid.experience-first {
+  grid-template-columns: 67fr 33fr;
+}
+
+.main-grid.experience-first .left-column {
+  order: 2;
+}
+
+.main-grid.experience-first .right-column-container {
+  order: 1;
 }
 
 @media screen and (max-width: 768px) {

@@ -1,5 +1,5 @@
 <template>
-    <div class="footer-grid">
+    <div class="footer-grid" :class="{ 'interests-first': isInterestsFirst }">
         <CvCard :title="$t('sections.education')" :icon="icons.Graduation" customClass="formation-section">
             <div class="formation-list">
                 <div v-for="edu in formations" :key="edu.annee + edu.diplome" class="formation-item">
@@ -41,10 +41,12 @@ defineProps<{
 }>();
 
 const displayDates = ref(false);
+const isInterestsFirst = ref(false);
 
 onMounted(() => {
     const urlParams = new URLSearchParams(window.location.search);
     displayDates.value = urlParams.has('date') && urlParams.get('date') !== '0';
+    isInterestsFirst.value = urlParams.has('interests-first');
 });
 </script>
 
@@ -53,6 +55,18 @@ onMounted(() => {
     display: grid;
     grid-template-columns: 67fr 33fr;
     gap: 5mm;
+}
+
+.footer-grid.interests-first {
+    grid-template-columns: 33fr 67fr;
+}
+
+.footer-grid.interests-first .formation-section {
+    order: 2;
+}
+
+.footer-grid.interests-first .interests-section {
+    order: 1;
 }
 
 @media screen and (max-width: 768px) {

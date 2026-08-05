@@ -32,6 +32,12 @@
                             {{ entete.email }}
                         </a>
                     </div>
+                    <div class="contact-item" v-if="entete.linkedin">
+                        <component :is="icons.Linkedin" class="icon" aria-hidden="true" />
+                        <a :href="entete.linkedin" class="font-link">
+                            {{ entete.linkedin.replace('https://', '')}}
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

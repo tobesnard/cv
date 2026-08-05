@@ -17,6 +17,7 @@ export interface Entete {
     telephone: string;
     email: string;
     github: string;
+    linkedin: string;
 }
 
 export interface SkillGroup {

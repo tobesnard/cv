@@ -13,7 +13,8 @@ import {
     MapPin as MapPinIcon,
     Phone as PhoneIcon,
     Github as GithubIcon,
-    Mail as MailIcon
+    Mail as MailIcon,
+    Linkedin as LinkedinIcon
 } from 'lucide-vue-next'
 
 /**
@@ -37,7 +38,8 @@ export function useTheme() {
         printer: PrinterIcon,
         sun: SunIcon,
         moon: MoonIcon,
-        languages: LanguagesIcon
+        languages: LanguagesIcon,
+        Linkedin: LinkedinIcon
     }
 
     /** Mapping direct vers l'état du store */

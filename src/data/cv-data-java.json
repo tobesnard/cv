@@ -1,4 +1,19 @@
 {
     "titre": "Développeur Full-Stack | Java",
-    "subtitle": ""
+    "subtitle": "",
+    "competences": {
+        "Compétences": {
+            "Développement": [
+                "Java",
+                "Angular",
+                "Vanilla JS",
+                "TypeScript",
+                "Python",
+                "C / Assembleur"
+            ],
+            "Frameworks": [
+                "Spring"
+            ]
+        }
+    }
 }

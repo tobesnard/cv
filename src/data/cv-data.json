@@ -46,17 +46,17 @@
                 "Python",
                 "C / Assembleur"
             ],
+            "Frameworks": [
+                "Xamarin/.NET MAUI",
+                "Vue.js",
+                "Android"
+            ],
             "Architecture": [
                 "Clean Architecture",
                 "POO",
                 "Design Patterns",
                 "Modélisation UML",
                 "Modernisation Legacy"
-            ],
-            "Frameworks": [
-                "Xamarin/.NET MAUI",
-                "Vue.js",
-                "Android"
             ],
             "Systèmes": [
                 "Windows",

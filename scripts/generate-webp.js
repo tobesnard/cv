@@ -8,7 +8,21 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 async function generateWebp() {
-    const url = 'http://localhost:5173/cv/'; // URL avec préfixe (/cv/)
+    // Utilise la variable d'environnement `VITE_BASE_URL` fournie par le CI
+    // (déployée) si disponible, sinon le serveur local de dev Vite.
+    const envBase = process.env.VITE_BASE_URL
+    let url
+    if (envBase) {
+        try {
+            // Assurer que l'URL cible contient le chemin /cv/
+            url = new URL('/cv/', envBase).toString()
+        } catch (e) {
+            // Si envBase n'est pas une URL absolue, concaténer simplement
+            url = envBase.replace(/\/$/, '') + '/cv/'
+        }
+    } else {
+        url = 'http://localhost:5173/cv/'
+    }
     const tempPngPath = path.resolve(__dirname, '../public/temp-cv-capture.png');
     const outputPath = path.resolve(__dirname, '../public/cv-capture.webp');
 

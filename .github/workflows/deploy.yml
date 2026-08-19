@@ -42,6 +42,8 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -77,10 +79,7 @@ jobs:
         run: pnpm exec playwright install chromium --with-deps
 
       - name: Generate CV WebP
-        run: |
-          pnpm dev &
-          sleep 10
-          pnpm run generate-webp
+        run: pnpm run generate-webp
         env:
           VITE_BASE_URL: ${{ needs.deploy.outputs.page_url }}
 

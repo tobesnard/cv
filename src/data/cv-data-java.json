@@ -1,18 +1,22 @@
 {
     "titre": "Développeur Full-Stack | Java",
     "subtitle": "",
+    "profil": "Développeur Full-Stack expérimenté et polyvalent, je transpose ma maîtrise de l'ingénierie logicielle vers l'écosystème Java (Spring Boot). Fort d'une solide culture web et agiliste, je souhaite mettre ma rigueur de concepteur et ma capacité d'adaptation au service d'une équipe Full-Stack Java pour développer des applications performantes.",
     "competences": {
         "Compétences": {
             "Développement": [
                 "Java",
-                "Angular",
                 "Vanilla JS",
                 "TypeScript",
                 "Python",
-                "C / Assembleur"
+                "PHP",
+                "HTML / CSS"
             ],
             "Frameworks": [
-                "Spring"
+                "Spring Boot",
+                "Vuejs",
+                "Angular",
+                "react"
             ]
         }
     }
